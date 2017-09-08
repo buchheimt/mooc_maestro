@@ -1,0 +1,9 @@
+<h2>Welcome back, <%= @user.username %></h2>
+<% @user.programs.uniq.each do |program| %>
+  <h3><%= program.name %></h3>
+  <% program.courses.each do |course| %>
+    <p><%= course.name %></p>
+  <% end %>
+  <br>
+<% end %>
+<a href="/users/logout">Log Out</a>
