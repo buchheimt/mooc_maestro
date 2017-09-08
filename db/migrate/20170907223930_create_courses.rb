@@ -3,7 +3,7 @@ class CreateCourses < ActiveRecord::Migration[5.1]
     create_table :courses do |t|
       t.string :name
       t.string :description
-      t.integer :length
+      t.float :length_in_hours
       t.integer :program_id
     end
   end
