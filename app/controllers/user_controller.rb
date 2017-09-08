@@ -19,13 +19,13 @@ class UserController < ApplicationController
   end
 
   post '/users' do
-    if params[:student].any? {|k, v| v.empty?}
-
+    if params[:user].any? {|k, v| v.empty?} || User.find_by(username: params[:user][:username])
+      redirect '/users/signup'
     else
       @user = User.create(params[:user])
-
+      session[:user_id] = @user.id
+      redirect '/users/homepage'
     end
-
   end
 
   get '/users/logout' do
