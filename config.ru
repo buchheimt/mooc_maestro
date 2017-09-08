@@ -8,5 +8,6 @@ end
 use Rack::MethodOverride
 
 use UserController
+use CourseController
 
 run ApplicationController
