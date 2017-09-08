@@ -4,7 +4,7 @@ class CreatePrograms < ActiveRecord::Migration[5.1]
       t.string :name
       t.string :certification
       t.float :cost
-      t.integer :provider_id
+      t.integer :platform_id
       t.string :affiliation
     end
   end
