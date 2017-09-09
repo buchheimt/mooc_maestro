@@ -9,11 +9,11 @@
 <% end %>
 
 <% if @course.program.name != "Individual Courses" %>
-  <p>Program: <%= @course.program.name %></p>
+  <p>Program: <a href="/programs/<%= @course.program.slug %>"><%= @course.program.name %></a></p>
   <p>Platform: <%= @course.platform.name %></p>
 <% end %>
-<p>Subjects:</p>
-<p><%= @course.subjects.map {|s| s.name}.join(", ") %></p>
+
+<p>Subjects: <%= @course.subjects.map {|s| s.name}.join(", ") %></p>
 
 <h3>My Info</h3>
 <p>Start Date: </p>

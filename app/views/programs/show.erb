@@ -13,9 +13,7 @@
   <% end %>
 </ul>
 
-
-<p>Subjects:</p>
-<p><%= @program.subjects.uniq.map {|s| s.name}.join(", ") %></p>
+<p>Subjects: <%= @program.subjects.uniq.map {|s| s.name}.join(", ") %></p>
 
 <h3>My Info</h3>
 <p>Start Date: </p>
