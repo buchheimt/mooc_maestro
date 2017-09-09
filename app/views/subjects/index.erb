@@ -1,0 +1,5 @@
+<h1>Subject Index</h1>
+
+<% @subjects.each do |subject| %>
+  <a href="/subjects/<%= subject.slug %>"><%= subject.name %></a><br>
+<% end %>

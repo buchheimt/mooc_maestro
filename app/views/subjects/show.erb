@@ -1,0 +1,11 @@
+<h1><%= @subject.name %></h1>
+<h3>Subject Info</h3>
+<% if @subject.description %>
+  <p>Description: <%= @subject.description %></p>
+<% end %>
+
+<p>Courses: <%= @subject.courses.map {|s| s.name}.join(", ") %></p>
+<p>Programs: <%= @subject.programs.uniq.map {|s| s.name}.join(", ") %></p>
+<p>Platforms: <%= @subject.platforms.uniq.map {|s| s.name}.join(", ") %></p>
+
+<a href="/users/homepage">My Homepage</a>
