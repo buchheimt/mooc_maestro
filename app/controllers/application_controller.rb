@@ -1,12 +1,13 @@
 class ApplicationController < Sinatra::Base
 
   configure do
+    enable :sessions
+    set :session_secret, "learn"
     set :public_folder, 'public'
     set :views, 'app/views'
   end
 
-  enable :sessions
-  set :session_secret, "learn"
+
 
   get '/' do
     redirect '/users/login'

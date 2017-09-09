@@ -1,5 +1,5 @@
 <h1>Course Index</h1>
 
 <% @courses.each do |course| %>
-  <p><%= course.name %></p>
+  <a href="/courses/<%= course.slug %>"><%= course.name %></a><br>
 <% end %>
