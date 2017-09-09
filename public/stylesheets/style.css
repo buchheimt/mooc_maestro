@@ -1,25 +1,50 @@
 a {
   display: inline-block;
-  background: #DDD;
   color: black;
   text-decoration: none;
 }
 
 a h3 {
-  background: #CCC;
   margin: 10px;
 }
 
-a:hover h3 {
-  background: #888;
+a:hover {
+  background: #648CB2;
 }
 
 body {
-  background: #B23B3B
+  background: #A8D4FF;
+}
+
+nav {
+  padding: 0;
+  background: #648CB2;
+}
+
+nav span {
+  text-align: center;
+  display: inline-block;
+  width: 18%;
+  color: white;
+  padding: 20px 0;
+  background: #05607A;
+}
+
+nav a {
+  display: inline-block;
+  text-align: center;
+  width: 15.94%;
+  padding: 20px 0;
+  background: #648CB2;
+  color: white;
+}
+
+nav a:hover {
+  background: #05607A;
 }
 
 .wrapper {
-  background: #FFE8E8;
+  background: #E4F2FF;
   padding: 10px 25px;
 }
 
