@@ -1,7 +1,7 @@
 <h1><%= @course.name %></h1>
-
+<h3>Course Info</h3>
 <% if @course.description %>
-  <h3>"<%= @course.description %>"</h3>
+  <p>Description: <%= @course.description %></p>
 <% end %>
 
 <% if @course.length_in_hours %>
@@ -11,9 +11,14 @@
 <% if @course.program.name != "Individual Courses" %>
   <p>Program: <%= @course.program.name %></p>
   <p>Platform: <%= @course.platform.name %></p>
-<% end %><br>
-
+<% end %>
 <p>Subjects:</p>
 <p><%= @course.subjects.map {|s| s.name}.join(", ") %></p>
+
+<h3>My Info</h3>
+<p>Start Date: </p>
+<p>End Date: </p>
+<p>Progress: </p>
+<p>Note: </p>
 
 <a href="/users/homepage">My Homepage</a>
