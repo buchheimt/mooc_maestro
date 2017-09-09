@@ -10,7 +10,13 @@ class SubjectController < ApplicationController
   end
 
   get '/subjects/new' do
+    if logged_in?
+      @courses = Course.all.sort {|a,b| a.name <=> b.name}
 
+      erb :'subjects/new'
+    else
+      redirect '/users/login'
+    end
   end
 
   get '/subjects/:slug' do
