@@ -1,0 +1,16 @@
+<h1><%= @platform.name %></h1>
+<h3>Platform Info</h3>
+<% if @platform.description %>
+  <p>Description: <%= @platform.description %></p>
+<% end %>
+
+<h3>Programs:</h3>
+<ul>
+  <% @platform.programs.each do |program| %>
+    <li><a href="/programs/<%= program.slug %>"><%= program.name %></a></li>
+  <% end %>
+</ul>
+
+<p>Subjects: <%= @platform.subjects.uniq.map {|s| s.name}.join(", ") %></p>
+
+<a href="/users/homepage">My Homepage</a>

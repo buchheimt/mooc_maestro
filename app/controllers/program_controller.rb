@@ -2,7 +2,7 @@ class ProgramController < ApplicationController
 
   get '/programs' do
     if logged_in?
-      @programs = Program.all.sort {|a,b| a.name <=> b.name}
+      @programs = Program.all.reject {|pr| pr.name == "Individual Courses"}.sort {|a,b| a.name <=> b.name}
       erb :'programs/index'
     else
       redirect '/users/login'
@@ -22,7 +22,7 @@ class ProgramController < ApplicationController
 
   post '/programs' do
     if !logged_in? || params[:program][:name].empty? || Program.find_by(name: params[:program][:name])
-      redirect '/courses/new'
+      redirect '/programs/new'
     else
       @program = Program.new(name: params[:program][:name])
       @program.description = params[:program][:description] unless params[:program][:description].empty?

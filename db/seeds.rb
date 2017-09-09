@@ -9,7 +9,7 @@ platform4 = Platform.new(name: "Unassigned")
 
 program1 = platform1.programs.build(name: "Fullstack Web Development with React",
                           description: "Learn full stack web development in Ruby and Javascript", cost: 6000)
-program2 = platform2.programs.build(name: "Java Programming and Software Engineering Fundamentals", certification: "specialization",
+program2 = platform3.programs.build(name: "Java Programming and Software Engineering Fundamentals", certification: "specialization",
                           description: "Learn the basics of programming and software development", cost: 300, affiliation: "Duke")
 program3 = platform2.programs.build(name: "Python For Everybody", certification: "specialization",
                           description: "Learn to Program and Analyze Data with Python.", cost: 300, affiliation: "Michigan")
