@@ -1,8 +1,24 @@
-h1 {
-  color: rgb(255, 20, 20);
+a {
+  display: inline-block;
+  background: #DDD;
+  color: black;
+  text-decoration: none;
 }
 
-a {
-  color: green;
-  text-decoration: none;
+a h3 {
+  background: #CCC;
+  margin: 10px;
+}
+
+a:hover h3 {
+  background: #888;
+}
+
+body {
+  background: #B23B3B
+}
+
+.wrapper {
+  background: #FFE8E8;
+  padding: 10px 25px;
 }
