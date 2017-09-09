@@ -1,0 +1,28 @@
+<h1>Add a New Program</h1>
+
+<form action="/programs" method="POST">
+  <label for="name">Name: </label>
+  <input type="text" name="program[name]" id="name"><br>
+  <label for="description">Description: </label>
+  <input type="text" name="program[description]" id="description">
+  <span>(optional)</span><br>
+
+  <h4>Platform: (please select or create one)</h4>
+  <% @platforms.each do |platform| %>
+    <input type="radio" name="platform_id" value="<%= platform.id %>" id="<%= platform.name %>">
+      <%= platform.name %>
+    </input>
+  <% end %><br>
+  <input type="radio" name="platform_id" value="" id="">
+    Add New Program
+  </input>
+  <input type="text" name="platform_name" id="platform_name">
+
+  <h4>Courses: </h4>
+  <% @courses.each do |course| %>
+    <input type="checkbox" name="program[course_ids][]" value="<%= course.id %>" id="<%= course.name %>">
+      <%= course.name %>
+    </input>
+  <% end %><br>
+  <input type="submit" name="submit" value="Create Program">
+</form>

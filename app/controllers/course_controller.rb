@@ -29,7 +29,7 @@ class CourseController < ApplicationController
       @course.description = params[:course][:description] unless params[:course][:description].empty?
       @course.lengh_in_hours = params[:course][:length_in_hours].to_f unless params[:course][:length_in_hours].empty?
 
-      if params[:program_id].empty? && params[:program_name].empty?
+      if ! params.include?(:program_id) && params[:program_name].empty?
         @course.program = Program.find_by(name: "Individual Courses")
       elsif params[:program_id].empty?
         @course.program = Program.new(name: params[:program_name])
