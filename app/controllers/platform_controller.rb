@@ -9,11 +9,13 @@ class PlatformController < ApplicationController
     end
   end
 
-  get '/programs/new' do
+  get '/platforms/new' do
     if logged_in?
-      @programs = Program.all.select {|pr| pr.platform.name == "Unassigned"}.sort {|a,b| a.name <=> b.name}
+      @programs = Program.all.select do |pr|
+        pr.platform.name == "Unassigned" && pr.name != "Individual Courses"
+      end.sort {|a,b| a.name <=> b.name}
 
-      erb :'programs/new'
+      erb :'platforms/new'
     else
       redirect '/users/login'
     end

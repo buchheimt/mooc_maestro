@@ -5,6 +5,7 @@ user3 = User.create(username: "HarryP", password: "alohomora", email: "hp@hogwar
 platform1 = Platform.new(name: "Flatiron School", description: "Coding Bootcamp")
 platform2 = Platform.new(name: "Udacity", description: "MOOCs and nanodegrees")
 platform3 = Platform.new(name: "Coursera", description: "MOOCs through top universities")
+platform4 = Platform.new(name: "Unassigned")
 
 program1 = platform1.programs.build(name: "Fullstack Web Development with React",
                           description: "Learn full stack web development in Ruby and Javascript", cost: 6000)
@@ -14,7 +15,7 @@ program3 = platform2.programs.build(name: "Python For Everybody", certification:
                           description: "Learn to Program and Analyze Data with Python.", cost: 300, affiliation: "Michigan")
 program4 = platform3.programs.build(name: "Android Developer Nanodegree", certification: "nanodegree", affiliation: "Google",
                           description: "Learn full stack web development in Ruby and Javascript", cost: 6000)
-Program.create(name: "Individual Courses")
+program5 = platform4.programs.build(name: "Individual Courses")
 
 course1 = program1.courses.build(name: "Ruby", description: "An intro to Ruby", length_in_hours: 150, creator_id: user1.id)
 course2 = program1.courses.build(name: "Sinatra", description: "Sinatra, SQL, ActiveRecord", length_in_hours: 150, creator_id: user1.id)
@@ -30,10 +31,13 @@ course11 = program3.courses.build(name: "Using Databases with Python", descripti
 course12 = program4.courses.build(name: "Developing Android Apps", description: "Learn to build apps", length_in_hours: 80, creator_id: user1.id)
 course13 = program4.courses.build(name: "Advanced Android Development", description: "Add responsiveness to your apps", length_in_hours: 80, creator_id: user1.id)
 course14 = program4.courses.build(name: "Gradle For Android and Java", description: "Learn Gradle Builds", length_in_hours: 80, creator_id: user1.id)
+course15 = program5.courses.build(name: "Learn Python the Hard Way", description: "Learn Python", length_in_hours: 80, creator_id: user1.id)
+
 
 platform1.save
 platform2.save
 platform3.save
+platform4.save
 
 subject1 = Subject.new(name: "Computer Science")
 subject2 = Subject.new(name: "Web Development")
@@ -76,3 +80,4 @@ user3.save
 platform1.save
 platform2.save
 platform3.save
+platform4.save
