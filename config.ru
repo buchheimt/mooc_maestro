@@ -10,5 +10,7 @@ use Rack::MethodOverride
 use UserController
 use CourseController
 use ProgramController
+use PlatformController
+
 
 run ApplicationController

@@ -1,0 +1,5 @@
+<h1>Platform Index</h1>
+
+<% @platforms.each do |platform| %>
+  <a href="/platforms/<%= platform.slug %>"><%= platform.name %></a><br>
+<% end %>

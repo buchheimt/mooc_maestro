@@ -31,7 +31,7 @@ class ProgramController < ApplicationController
       @program.affiliation = params[:program][:affiliation] unless params[:program][:affiliation].empty?
 
       if ! params.include?(:platform_id) && params[:platform_name].empty?
-        redirect '/programs/new'
+        @program.platform = Platform.new(name: "Unassigned")
       elsif params[:platform_id].empty?
         @program.platform = Platform.new(name: params[:platform_name])
       else
