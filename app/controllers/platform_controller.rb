@@ -39,6 +39,15 @@ class PlatformController < ApplicationController
     end
   end
 
+  get '/platforms/:slug/edit' do
+    @platform = Platform.find_by_slug(params[:slug])
+    if @platform && user_created?(@platform)
+      erb :'platforms/edit'
+    else
+      redirect '/platforms'
+    end
+  end
+
   get '/platforms/:slug' do
     @platform = Platform.find_by_slug(params[:slug])
     if @platform && logged_in?

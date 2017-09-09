@@ -25,5 +25,10 @@ class ApplicationController < Sinatra::Base
     def log_out
       session.clear
     end
+
+    def user_created?(topic)
+      @user = current_user
+      @user.id == topic.creator_id
+    end
   end
 end
