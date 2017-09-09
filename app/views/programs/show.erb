@@ -1,0 +1,25 @@
+<h1><%= @program.name %></h1>
+<h3>Course Info</h3>
+<% if @program.description %>
+  <p>Description: <%= @program.description %></p>
+<% end %>
+
+<p>Program Length: Stub!!</p>
+
+<h3>Courses:</h3>
+<ul>
+  <% @program.courses.each do |course| %>
+    <li><a href="/courses/<%= course.slug %>"><%= course.name %></a></li>
+  <% end %>
+</ul>
+
+
+<p>Subjects:</p>
+<p><%= @program.subjects.uniq.map {|s| s.name}.join(", ") %></p>
+
+<h3>My Info</h3>
+<p>Start Date: </p>
+<p>End Date: </p>
+<p>Progress: </p>
+
+<a href="/users/homepage">My Homepage</a>
