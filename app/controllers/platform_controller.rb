@@ -30,7 +30,7 @@ class PlatformController < ApplicationController
 
       if params[:platform].include?(:program_ids)
         params[:platform][:program_ids].each do |program_id|
-          @platform.courses << Program.find(program_id)
+          @platform.programs << Program.find(program_id)
         end
       end
 

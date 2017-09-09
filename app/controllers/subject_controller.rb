@@ -19,6 +19,25 @@ class SubjectController < ApplicationController
     end
   end
 
+  post '/subjects' do
+    if !logged_in? || params[:subject][:name].empty? || Subject.find_by(name: params[:subject][:name])
+      redirect '/subjects/new'
+    else
+      @subject = Subject.new(name: params[:subject][:name])
+      @subject.description = params[:subject][:description] unless params[:subject][:description].empty?
+
+      if params[:subject].include?(:course_ids)
+        params[:subject][:course_ids].each do |course_id|
+          @subject.courses << Course.find(course_id)
+        end
+      end
+
+      @subject.save
+
+      redirect "/subjects/#{@subject.slug}"
+    end
+  end
+
   get '/subjects/:slug' do
     @subject = Subject.find_by_slug(params[:slug])
     if @subject && logged_in?
