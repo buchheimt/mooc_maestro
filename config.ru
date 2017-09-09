@@ -11,6 +11,6 @@ use UserController
 use CourseController
 use ProgramController
 use PlatformController
-
+use SubjectController
 
 run ApplicationController
