@@ -1,0 +1,17 @@
+<h1><%= @course.name %></h1>
+
+<% if @course.description %>
+  <h3><%= @course.description %></h3>
+<% end %>
+
+<% if @course.length_in_hours %>
+  <p>Course Length: <%= @course.length_in_hours %> hours</p>
+<% end %>
+
+<% if @course.program.name != "Individual Courses" %>
+  <p>Program: <%= @course.program.name %></p>
+  <p>Platform: <%= @course.platform.name %></p>
+<% end %><br>
+
+<p>Subjects:</p>
+<p><%= @course.subjects.map {|s| s.name}.join(", ") %></p>

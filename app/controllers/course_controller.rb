@@ -48,4 +48,13 @@ class CourseController < ApplicationController
     end
   end
 
+  get '/courses/:slug' do
+    @course = Course.find_by_slug(params[:slug])
+    if @course && logged_in?
+      erb :'courses/show'
+    else
+      redirect '/users/login'
+    end
+  end
+
 end

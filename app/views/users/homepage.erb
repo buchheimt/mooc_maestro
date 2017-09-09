@@ -2,7 +2,7 @@
 <% @user.programs.uniq.each do |program| %>
   <h3><%= program.name %></h3>
   <% program.courses.each do |course| %>
-    <p><%= course.name %></p>
+    <a href="/courses/<%= course.slug %>"><%= course.name %></a><br>
   <% end %>
   <br>
 <% end %>
