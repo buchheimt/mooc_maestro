@@ -1,0 +1,5 @@
+<h1>Program Index</h1>
+
+<% @programs.each do |program| %>
+  <a href="/programs/<%= program.slug %>"><%= program.name %></a><br>
+<% end %>
