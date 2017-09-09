@@ -6,6 +6,15 @@
   <label for="description">Description: </label>
   <input type="text" name="program[description]" id="description">
   <span>(optional)</span><br>
+  <label for="certification">Certification: </label>
+  <input type="text" name="program[certification]" id="certification">
+  <span>(optional)</span><br>
+  <label for="cost">Cost: </label>
+  <input type="text" name="program[cost]" id="cost">
+  <span>(optional)</span><br>
+  <label for="affiliation">Affiliation: </label>
+  <input type="text" name="program[affiliation]" id="affiliation">
+  <span>(optional)</span><br>
 
   <h4>Platform: (please select or create one)</h4>
   <% @platforms.each do |platform| %>
@@ -14,7 +23,7 @@
     </input>
   <% end %><br>
   <input type="radio" name="platform_id" value="" id="">
-    Add New Program
+    Add New Platform
   </input>
   <input type="text" name="platform_name" id="platform_name">
 
@@ -23,6 +32,6 @@
     <input type="checkbox" name="program[course_ids][]" value="<%= course.id %>" id="<%= course.name %>">
       <%= course.name %>
     </input>
-  <% end %><br>
+  <% end %><br><br>
   <input type="submit" name="submit" value="Create Program">
 </form>

@@ -21,7 +21,7 @@ class CourseController < ApplicationController
   end
 
   post '/courses' do
-    if !logged_in? || params[:course][:name].empty? || User.find_by(username: params[:course][:name])
+    if !logged_in? || params[:course][:name].empty? || Course.find_by(name: params[:course][:name])
       redirect '/courses/new'
     else
       @user = current_user
@@ -44,7 +44,7 @@ class CourseController < ApplicationController
       @course.subjects << Subject.create(name: params[:subject_name])
 
       @user.save
-      redirect '/users/homepage'
+      redirect "/courses/#{@course.slug}"
     end
   end
 
