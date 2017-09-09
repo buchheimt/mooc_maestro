@@ -22,3 +22,8 @@ body {
   background: #FFE8E8;
   padding: 10px 25px;
 }
+
+footer {
+  margin: 5px 10px;
+  float: right;
+}

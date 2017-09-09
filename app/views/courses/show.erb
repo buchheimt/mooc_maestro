@@ -1,7 +1,7 @@
 <h1><%= @course.name %></h1>
 
 <% if @course.description %>
-  <h3><%= @course.description %></h3>
+  <h3>"<%= @course.description %>"</h3>
 <% end %>
 
 <% if @course.length_in_hours %>
@@ -15,3 +15,5 @@
 
 <p>Subjects:</p>
 <p><%= @course.subjects.map {|s| s.name}.join(", ") %></p>
+
+<a href="/users/homepage">My Homepage</a>
