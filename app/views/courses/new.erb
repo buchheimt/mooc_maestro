@@ -9,5 +9,25 @@
   <label for="length_in_hours">Course Length (hours): </label>
   <input type="text" name="course[length_in_hours]" id="length_in_hours">
   <span>(optional)</span><br>
+
+  <h4>Program: </h4>
+  <% @programs.each do |program| %>
+    <input type="radio" name="program_id" value="<%= program.id %>" id="<%= program.name %>">
+      <%= program.name %>
+    </input>
+  <% end %><br>
+  <input type="radio" name="program_id" value="" id="">
+    Add New Program
+  </input>
+  <input type="text" name="program_name" id="program_name">
+
+  <h4>Subjects: </h4>
+  <% @subjects.each do |subject| %>
+    <input type="checkbox" name="course[subject_ids][]" value="<%= subject.id %>" id="<%= subject.name %>">
+      <%= subject.name %>
+    </input>
+  <% end %><br>
+  <label for="subject_name">New Subject Name: </label>
+  <input type="text" name="subject_name" id="subject_name"><br><br>
   <input type="submit" name="submit" value="Create Course">
 </form>

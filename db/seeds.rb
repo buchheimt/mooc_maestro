@@ -14,6 +14,7 @@ program3 = platform2.programs.build(name: "Python For Everybody", certification:
                           description: "Learn to Program and Analyze Data with Python.", cost: 300, affiliation: "Michigan")
 program4 = platform3.programs.build(name: "Android Developer Nanodegree", certification: "nanodegree", affiliation: "Google",
                           description: "Learn full stack web development in Ruby and Javascript", cost: 6000)
+Program.create(name: "Individual Courses")
 
 course1 = program1.courses.build(name: "Ruby", description: "An intro to Ruby", length_in_hours: 150, creator_id: user1.id)
 course2 = program1.courses.build(name: "Sinatra", description: "Sinatra, SQL, ActiveRecord", length_in_hours: 150, creator_id: user1.id)
