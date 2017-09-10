@@ -1,0 +1,35 @@
+=> [[32m#<Course:0x00000004af3a08[0m
+  id: [1;34m1[0m,
+  name: [31m[1;31m"[0m[31mRuby[1;31m"[0m[31m[0m,
+  description: [31m[1;31m"[0m[31mAn intro to Ruby[1;31m"[0m[31m[0m,
+  length_in_hours: [1;35m150.0[0m,
+  program_id: [1;34m1[0m,
+  creator_id: [1;34m1[0m[32m>[0m,
+ [32m#<Course:0x00000004b19000[0m
+  id: [1;34m2[0m,
+  name: [31m[1;31m"[0m[31mSinatra[1;31m"[0m[31m[0m,
+  description: [31m[1;31m"[0m[31mSinatra, SQL, ActiveRecord[1;31m"[0m[31m[0m,
+  length_in_hours: [1;35m150.0[0m,
+  program_id: [1;34m1[0m,
+  creator_id: [1;34m1[0m[32m>[0m,
+ [32m#<Course:0x00000004b18b00[0m
+  id: [1;34m3[0m,
+  name: [31m[1;31m"[0m[31mRails[1;31m"[0m[31m[0m,
+  description: [31m[1;31m"[0m[31mPut it all together in Ruby on Rails[1;31m"[0m[31m[0m,
+  length_in_hours: [1;35m150.0[0m,
+  program_id: [1;34m1[0m,
+  creator_id: [1;34m1[0m[32m>[0m,
+ [32m#<Course:0x00000004b18678[0m
+  id: [1;34m4[0m,
+  name: [31m[1;31m"[0m[31mRails and JavaScript[1;31m"[0m[31m[0m,
+  description: [31m[1;31m"[0m[31mLearn JS to take the next step[1;31m"[0m[31m[0m,
+  length_in_hours: [1;35m150.0[0m,
+  program_id: [1;34m1[0m,
+  creator_id: [1;34m1[0m[32m>[0m,
+ [32m#<Course:0x00000004b181f0[0m
+  id: [1;34m5[0m,
+  name: [31m[1;31m"[0m[31mReact and Redux[1;31m"[0m[31m[0m,
+  description: [31m[1;31m"[0m[31mFull Stack JS Development[1;31m"[0m[31m[0m,
+  length_in_hours: [1;35m150.0[0m,
+  program_id: [1;34m1[0m,
+  creator_id: [1;34m1[0m[32m>[0m]

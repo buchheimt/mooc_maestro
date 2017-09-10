@@ -13,4 +13,11 @@ class Program < ActiveRecord::Base
     self.all.detect {|program| program.slug == slug}
   end
 
+  def length
+    return nil if self.courses.any? {|c| c.length_in_hours.nil?}
+    sum = 0
+    self.courses.each {|c| sum += c.length_in_hours}
+    sum
+  end
+
 end
