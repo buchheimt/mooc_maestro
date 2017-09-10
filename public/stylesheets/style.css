@@ -9,6 +9,7 @@ a h3 {
 }
 
 a:hover {
+  color: white;
   background: #648CB2;
 }
 

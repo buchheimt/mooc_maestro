@@ -8,29 +8,33 @@
   <div class="button"><a href="/courses/<%= @course.slug %>/join">Join Course</a></div>
 <% end %>
 
-<h3>Course Info</h3>
+<h2>Course Info</h2>
 <% if @course.description %>
-  <p>Description: <%= @course.description %></p>
+  <p><strong>Description:</strong> <%= @course.description %></p>
 <% end %>
 
 <% if @course.length_in_hours %>
-  <p>Course Length: <%= @course.length_in_hours %> hours</p>
+  <p><strong>Course Length:</strong> <%= @course.length_in_hours %> hours</p>
 <% end %>
 
 <% if @course.program.name != "Individual Courses" %>
-  <p>Program: <a href="/programs/<%= @course.program.slug %>"><%= @course.program.name %></a></p>
-  <p>Platform: <%= @course.platform.name %></p>
+  <p><strong>Program:</strong> <a href="/programs/<%= @course.program.slug %>"><%= @course.program.name %></a></p>
+  <p><strong>Platform:</strong> <a href="/platforms/<%= @course.platform.slug %>"><%= @course.platform.name %></a></p>
 <% end %>
 
-<p>Subjects: <%= @course.subjects.map {|s| s.name}.join(", ") %></p>
+<span><strong>Subjects:</strong> </span>
+<% @course.subjects.each do |subject| %>
+  <span><a href="/subjects/<%= subject.slug %>"><%= subject.name %></a></span>
+  <span><%= ", " unless subject == @course.subjects.last %></span>
+<% end %>
 
 <% if current_user.courses.include?(@course) %>
-  <h3>My Info</h3>
-  <p>Start Date: <%= @user_course.start_date.month %>-<%= @user_course.start_date.day %>-<%= @user_course.start_date.year %></p>
+  <h2>My Info</h2>
+  <p><strong>Start Date:</strong> <%= @user_course.start_date.month %>-<%= @user_course.start_date.day %>-<%= @user_course.start_date.year %></p>
   <% if @course.length_in_hours == @user_course.progress_in_hours %>
-    <p>End Date: <%= @user_course.end_date.month %>-<%= @user_course.end_date.day %>-<%= @user_course.end_date.year %></p>
+    <p><strong>End Date:</strong> <%= @user_course.end_date.month %>-<%= @user_course.end_date.day %>-<%= @user_course.end_date.year %></p>
   <% end %>
   <% unless @course.length_in_hours.nil? %>
-    <p>Progress: <%= @user_course.progress_in_hours %></p>
+    <p><strong>Progress:</strong> <%= @user_course.progress_in_hours %> hours</p>
   <% end %>
 <% end %>
