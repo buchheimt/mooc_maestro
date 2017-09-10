@@ -1,5 +1,5 @@
 <h1><%= @platform.name %></h1>
-<h3>Platform Info</h3>
+
 <% if @platform.description %>
   <p>Description: <%= @platform.description %></p>
 <% end %>
@@ -11,6 +11,7 @@
   <% end %>
 </ul>
 
-<p>Subjects: <%= @platform.subjects.uniq.map {|s| s.name}.join(", ") %></p>
-
-<a href="/users/homepage">My Homepage</a>
+<span>Subjects: </span>
+<% @platform.subjects.uniq.each do |subject| %>
+  <span><a href="/subjects/<%= subject.slug %>"><%= subject.name %></a>, </span>
+<% end %>
