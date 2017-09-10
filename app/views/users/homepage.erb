@@ -1,12 +1,21 @@
 <h2>Welcome back, <%= @user.username %>!</h2>
-<% @user.programs.uniq.each do |program| %>
-  <h3><a href="/programs/<%= program.slug %>"> <%= program.name %></a></h3>
-  <% program.courses.each do |course| %>
-    <% if @user.courses.include?(course) %>
-      <a href="/courses/<%= course.slug %>"><%= course.name %></a><br>
+
+<form action="/users" method="POST">
+  <input type="hidden" name="_method" value="PATCH" id="hidden">
+  <% @user.programs.uniq.each do |program| %>
+    <h3><a href="/programs/<%= program.slug %>"> <%= program.name %></a></h3>
+    <% program.courses.each do |course| %>
+      <% if @user.courses.include?(course) %>
+        <a href="/courses/<%= course.slug %>"><%= course.name %></a>
+        <% @user_course = UserCourse.find_on_join(@user, course) %>
+        <% unless course.length_in_hours.nil? %>
+          <span><%= @user_course.progress_in_hours / course.length_in_hours * 100 %>%</span><br>
+        <% end %>
+      <% end %>
     <% end %>
+    <br>
   <% end %>
-  <br>
-<% end %>
-<a href="/courses/new">Add New Course</a>
-<a href="/users/logout">Log Out</a>
+  <input class="form-button" type="submit" name="submit" value="Update Progress">
+</form>
+
+<div class="button"><a href="/users/logout">Logout</a></div>
