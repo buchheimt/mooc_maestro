@@ -83,6 +83,22 @@ class CourseController < ApplicationController
     end
   end
 
+  get '/courses/:slug/join' do
+    @user = current_user
+    @course = Course.find_by_slug(params[:slug])
+    if @course && logged_in? && ! @user.courses.include?(@course)
+      @user.courses << @course
+      @user.save
+      @user_course = UserCourse.find_on_join(@user, @course)
+      @user_course.start_date = Time.now
+      @user_course.progress_in_hours = 0;
+      @user_course.save
+      redirect "/users/homepage"
+    else
+      redirect "/courses/#{@course.slug}"
+    end
+  end
+
   get '/courses/:slug' do
     @course = Course.find_by_slug(params[:slug])
     if @course && logged_in?
