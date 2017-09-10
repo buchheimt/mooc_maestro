@@ -83,6 +83,45 @@ class ProgramController < ApplicationController
     end
   end
 
+  get '/programs/:slug/join' do
+    @user = current_user
+    @program = Program.find_by_slug(params[:slug])
+    if @program && logged_in?
+      # add helper to add course and set up user_course!
+      @program.courses.each do |course|
+        unless @user.courses.include?(course)
+          @user.courses << course
+          @user.save
+          @user_course = UserCourse.find_on_join(@user, course)
+          @user_course.start_date = Time.now
+          @user_course.progress_in_hours = 0;
+          @user_course.save
+        end
+      end
+      redirect "/users/homepage"
+    else
+      redirect "/programs/#{@program.slug}"
+    end
+  end
+
+  get '/programs/:slug/leave' do
+    @user = current_user
+    @program = Program.find_by_slug(params[:slug])
+    if @program && logged_in? && @user.programs.include?(@program)
+      # add helper to rem course and del user_course!
+      @program.courses.each do |course|
+        UserCourse.find_on_join(@user, course).delete
+        @user.courses.delete(course)
+        @user.save
+        course.users.delete(@user)
+        course.save
+      end
+      redirect '/users/homepage'
+    else
+      redirect "/programs/#{@program.slug}"
+    end
+  end
+
   get '/programs/:slug' do
     @program = Program.find_by_slug(params[:slug])
     if @program && logged_in?

@@ -2,6 +2,10 @@
 
 <% if user_created?(@program)  %>
   <div class="button"><a href="/programs/<%= @program.slug %>/edit">Edit Program</a></div>
+<% elsif current_user.programs.include?(@program) %>
+  <div class="button"><a href="/programs/<%= @program.slug %>/leave">Leave Program</a></div>
+<% else %>
+  <div class="button"><a href="/programs/<%= @program.slug %>/join">Join Program</a></div>
 <% end %>
 
 <h3>Program Info</h3>
