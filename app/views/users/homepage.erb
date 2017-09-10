@@ -9,13 +9,14 @@
         <a href="/courses/<%= course.slug %>"><%= course.name %></a>
         <% @user_course = UserCourse.find_on_join(@user, course) %>
         <% unless course.length_in_hours.nil? %>
-          <span><%= @user_course.progress_in_hours / course.length_in_hours * 100 %>%</span><br>
+          <span class="progress"><%= (@user_course.progress_in_hours / course.length_in_hours * 100).round %>%</span>
+          <input class="progress" type="text" name="course_ids[<%= course.id %>]"><br>
         <% end %>
       <% end %>
     <% end %>
     <br>
   <% end %>
-  <input class="form-button" type="submit" name="submit" value="Update Progress">
+  <input class="form-button" type="submit" name="submit" value="Add Progress">
 </form>
 
 <div class="button"><a href="/users/logout">Logout</a></div>

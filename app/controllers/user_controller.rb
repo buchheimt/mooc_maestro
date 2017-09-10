@@ -32,6 +32,21 @@ class UserController < ApplicationController
     end
   end
 
+  patch '/users' do
+    if logged_in?
+      @user = current_user
+      params[:course_ids].each do |c_id, v|
+        @course = Course.find(c_id.to_i)
+        @user_course = UserCourse.find_on_join(@user, @course)
+        @user_course.progress_in_hours += v.to_i unless v.empty?
+        @user_course.save
+      end
+      redirect '/users/homepage'
+    else
+      redirect '/users/login'
+    end
+  end
+
   get '/users/logout' do
     log_out
     redirect '/users/login'
