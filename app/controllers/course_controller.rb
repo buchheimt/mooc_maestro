@@ -99,6 +99,21 @@ class CourseController < ApplicationController
     end
   end
 
+  get '/courses/:slug/leave' do
+    @user = current_user
+    @course = Course.find_by_slug(params[:slug])
+    if @course && logged_in? && @user.courses.include?(@course)
+      UserCourse.find_on_join(@user, @course).delete
+      @user.courses.delete(@course)
+      @user.save
+      @course.users.delete(@user)
+      @course.save
+      redirect '/users/homepage'
+    else
+      redirect "/courses/#{@course.slug}"
+    end
+  end
+
   get '/courses/:slug' do
     @course = Course.find_by_slug(params[:slug])
     if @course && logged_in?
