@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170908163033) do
+ActiveRecord::Schema.define(version: 20170909225639) do
 
   create_table "course_subjects", force: :cascade do |t|
     t.integer "course_id"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 20170908163033) do
   create_table "platforms", force: :cascade do |t|
     t.string "name"
     t.string "description"
+    t.integer "creator_id"
   end
 
   create_table "programs", force: :cascade do |t|
@@ -37,11 +38,13 @@ ActiveRecord::Schema.define(version: 20170908163033) do
     t.float "cost"
     t.string "affiliation"
     t.integer "platform_id"
+    t.integer "creator_id"
   end
 
   create_table "subjects", force: :cascade do |t|
     t.string "name"
     t.string "description"
+    t.integer "creator_id"
   end
 
   create_table "user_courses", force: :cascade do |t|

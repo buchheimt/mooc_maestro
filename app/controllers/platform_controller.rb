@@ -42,6 +42,8 @@ class PlatformController < ApplicationController
   get '/platforms/:slug/edit' do
     @platform = Platform.find_by_slug(params[:slug])
     if @platform && user_created?(@platform)
+      @programs = Program.all.select {|pr| pr.name == "Unassigned" || pr.platform == @platform}
+      binding.pry
       erb :'platforms/edit'
     else
       redirect '/platforms'

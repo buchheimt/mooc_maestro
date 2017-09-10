@@ -1,1 +1,18 @@
-working!
+<h1>Edit <%= @platform.name %></h1>
+
+<form action="/platforms/<%= @platform.slug %>" method="POST">
+  <input type="hidden" name="_method" value="PATCH" id="hidden">
+  <label for="name">Name: </label>
+  <input type="text" name="platform[name]" id="name" value="<%= @platform.name %>"><br>
+  <label for="description">Description: </label>
+  <input type="text" name="platform[description]" id="description" value="<%= @platform.description %>">
+  <span>(optional)</span><br>
+
+  <h4>Programs: </h4>
+  <% @programs.each do |program| %>
+    <input type="checkbox" name="platform[program_ids][]" value="<%= program.id %>" id="<%= program.name %>" <%= 'checked' if @platform.programs.include?(program) %>>
+      <%= program.name %>
+    </input>
+  <% end %><br><br>
+  <input type="submit" name="submit" value="Edit Platform">
+</form>
