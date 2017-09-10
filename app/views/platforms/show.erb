@@ -1,5 +1,9 @@
 <h1><%= @platform.name %></h1>
 
+<% if user_created?(@platform)  %>
+  <div class="button"><a href="/platforms/<%= @platform.slug %>/edit">Edit Platform</a></div>
+<% end %>
+
 <% if @platform.description %>
   <p>Description: <%= @platform.description %></p>
 <% end %>

@@ -54,3 +54,30 @@ footer {
   margin: 5px 30px;
   float: right;
 }
+
+.form-button {
+  color: white;
+  padding: 5px;
+  background: #648CB2;
+  border-radius: 5px;
+  border: 1px solid #666;
+}
+
+.form-button:hover {
+  background: #05607A;
+  border-color: black;
+  cursor: pointer;
+}
+
+.button a {
+  color: white;
+  padding: 5px;
+  background: #648CB2;
+  border-radius: 5px;
+  border: 1px solid #666;
+}
+
+.button a:hover {
+  background: #05607A;
+  border-color: black;
+}
