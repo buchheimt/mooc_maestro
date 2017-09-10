@@ -1,4 +1,9 @@
 <h1><%= @course.name %></h1>
+
+<% if user_created?(@course)  %>
+  <div class="button"><a href="/courses/<%= @course.slug %>/edit">Edit Course</a></div>
+<% end %>
+
 <h3>Course Info</h3>
 <% if @course.description %>
   <p>Description: <%= @course.description %></p>

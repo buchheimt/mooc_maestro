@@ -73,6 +73,8 @@ class ProgramController < ApplicationController
           c.program = Program.find_by(name: "Individual Courses")
           c.save
         end
+        @program.platform = Platform.find(params[:platform_id].to_i)
+
         @program.save
         redirect "/programs/#{@program.slug}"
       end

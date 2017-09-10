@@ -1,0 +1,28 @@
+<h1>Edit <%= @course.name %></h1>
+
+<form action="/courses/<%= @course.slug %>" method="POST">
+  <input type="hidden" name="_method" value="PATCH" id="hidden">
+  <label for="name">Name: </label>
+  <input type="text" name="course[name]" id="name" value="<%= @course.name %>"><br>
+  <label for="description">Description: </label>
+  <input type="text" name="course[description]" id="description" value="<%= @course.description %>">
+  <span>(optional)</span><br>
+  <label for="length_in_hours">Course Length (hours): </label>
+  <input type="text" name="course[length_in_hours]" id="length_in_hours" value="<%= @course.length_in_hours %>">
+  <span>(optional)</span><br>
+
+  <h4>Program: </h4>
+  <% @programs.each do |program| %>
+    <input type="radio" name="program_id" value="<%= program.id %>" id="<%= program.name %>" <%= 'checked' if @course.program == program %>>
+      <%= program.name %>
+    </input>
+  <% end %><br>
+
+  <h4>Subjects: </h4>
+  <% @subjects.each do |subject| %>
+    <input type="checkbox" name="course[subject_ids][]" value="<%= subject.id %>" id="<%= subject.name %>" <%= 'checked' if @course.subjects.include?(subject) %>>
+      <%= subject.name %>
+    </input>
+  <% end %><br><br>
+  <input class="form-button" type="submit" name="submit" value="Edit Course">
+</form>

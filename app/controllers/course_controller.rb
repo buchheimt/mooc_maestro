@@ -48,6 +48,39 @@ class CourseController < ApplicationController
     end
   end
 
+  get '/courses/:slug/edit' do
+    @course = Course.find_by_slug(params[:slug])
+    if @course && user_created?(@course)
+      @programs = Program.all
+      @subjects = Subject.all
+      erb :'courses/edit'
+    else
+      redirect '/courses'
+    end
+  end
+
+  patch '/courses/:slug' do
+    @course = Course.find_by_slug(params[:slug])
+    @new_name = params[:course][:name]
+    if @course && user_created?(@course) && ! @new_name.empty?
+      if @new_name != @course.name && Course.find_by(name: @new_name)
+        redirect "/courses/#{@course.slug}/edit"
+      else
+        @course.name = @new_name
+        @course.description = params[:course][:description] unless params[:course][:description].empty?
+        @course.length_in_hours = params[:course][:length_in_hours].to_f unless params[:course][:length_in_hours].empty?
+        @course.subjects.clear
+        params[:course][:subject_ids].each {|s_id| @course.subjects << Subject.find(s_id)}
+        @course.program = Program.find(params[:program_id].to_i)
+
+        @course.save
+        redirect "/courses/#{@course.slug}"
+      end
+    else
+      redirect "/courses/#{@course.slug}/edit"
+    end
+  end
+
   get '/courses/:slug' do
     @course = Course.find_by_slug(params[:slug])
     if @course && logged_in?
