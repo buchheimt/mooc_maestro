@@ -87,15 +87,9 @@ class ProgramController < ApplicationController
     @user = current_user
     @program = Program.find_by_slug(params[:slug])
     if @program && logged_in?
-      # add helper to add course and set up user_course!
       @program.courses.each do |course|
         unless @user.courses.include?(course)
-          @user.courses << course
-          @user.save
-          @user_course = UserCourse.find_on_join(@user, course)
-          @user_course.start_date = Time.now
-          @user_course.progress_in_hours = 0;
-          @user_course.save
+          UserCourse.establish(@user, course)
         end
       end
       redirect "/users/homepage"

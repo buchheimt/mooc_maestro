@@ -1,6 +1,5 @@
 user1 = User.create(username: "TylerB", password: "1234", email: "tb@somesuch", goal: "become a fullstack dev")
-user2 = User.create(username: "JonS", password: "ghost", email: "js@thewall", goal: "know something")
-user3 = User.create(username: "HarryP", password: "alohomora", email: "hp@hogwarts", goal: "magic stuff")
+user2 = User.create(username: "JonT", password: "dany", email: "kingindanorf@winterfell.net", goal: "know something")
 
 platform1 = Platform.new(name: "Flatiron School", description: "Coding Bootcamp", creator_id: user1.id)
 platform2 = Platform.new(name: "Udacity", description: "MOOCs and nanodegrees", creator_id: user1.id)
@@ -63,19 +62,13 @@ program4.courses.each {|c| c.subjects << subject7}
 course2.subjects << subject8
 course11.subjects << subject8
 
-program1.courses.each {|c| user1.courses << c}
-program2.courses.each {|c| user1.courses << c}
-program3.courses.each {|c| user1.courses << c}
-program4.courses.each {|c| user1.courses << c}
-program1.courses.each {|c| user2.courses << c}
-program3.courses.each {|c| user2.courses << c}
-program1.courses.each {|c| user3.courses << c}
-program2.courses.each {|c| user3.courses << c}
-program4.courses.each {|c| user3.courses << c}
+program1.courses.each {|c| UserCourse.establish(user1, c)}
+program2.courses.each {|c| UserCourse.establish(user1, c)}
+program3.courses.each {|c| UserCourse.establish(user1, c)}
+program4.courses.each {|c| UserCourse.establish(user1, c)}
 
-user1.save
-user2.save
-user3.save
+program1.courses.each {|c| UserCourse.establish(user2, c)}
+program2.courses.each {|c| UserCourse.establish(user2, c)}
 
 platform1.save
 platform2.save
