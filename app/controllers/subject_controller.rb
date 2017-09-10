@@ -38,6 +38,35 @@ class SubjectController < ApplicationController
     end
   end
 
+  get '/subjects/:slug/edit' do
+    @subject = Subject.find_by_slug(params[:slug])
+    if @subject && user_created?(@subject)
+      @courses = Course.all
+      erb :'subjects/edit'
+    else
+      redirect '/subjects'
+    end
+  end
+
+  patch '/subjects/:slug' do
+    @subject = Subject.find_by_slug(params[:slug])
+    @new_name = params[:subject][:name]
+    if @subject && user_created?(@subject) && ! @new_name.empty?
+      if @new_name != @subject.name && Subject.find_by(name: @new_name)
+        redirect "/subjects/#{@subject.slug}/edit"
+      else
+        @subject.name = @new_name
+        @subject.description = params[:subject][:description] unless params[:subject][:description].empty?
+        @subject.courses.clear
+        params[:subject][:course_ids].each {|c_id| @subject.courses << Course.find(c_id)}
+        @subject.save
+        redirect "/subjects/#{@subject.slug}"
+      end
+    else
+      redirect "/subjects/#{@subject.slug}/edit"
+    end
+  end
+
   get '/subjects/:slug' do
     @subject = Subject.find_by_slug(params[:slug])
     if @subject && logged_in?

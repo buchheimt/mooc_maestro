@@ -1,5 +1,9 @@
 <h1><%= @subject.name %></h1>
-<h3>Subject Info</h3>
+
+<% if user_created?(@subject)  %>
+  <div class="button"><a href="/subjects/<%= @subject.slug %>/edit">Edit Subject</a></div>
+<% end %>
+
 <% if @subject.description %>
   <p>Description: <%= @subject.description %></p>
 <% end %>
