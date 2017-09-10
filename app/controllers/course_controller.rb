@@ -28,7 +28,6 @@ class CourseController < ApplicationController
       @course = @user.courses.build(name: params[:course][:name])
       @course.description = params[:course][:description] unless params[:course][:description].empty?
       @course.lengh_in_hours = params[:course][:length_in_hours].to_f unless params[:course][:length_in_hours].empty?
-
       if ! params.include?(:program_id) && params[:program_name].empty?
         @course.program = Program.find_by(name: "Individual Courses")
       elsif params[:program_id].empty?
@@ -36,14 +35,17 @@ class CourseController < ApplicationController
       else
         @course.program = Program.find_by_id(params[:program_id])
       end
-
       params[:course][:subject_ids].each do |subject_id|
         @course.subjects << Subject.find_by_id(subject_id)
       end
-
-      @course.subjects << Subject.create(name: params[:subject_name])
-
+      @course.subjects << Subject.create(name: params[:subject_name]) unless params[:subject_name].empty?
       @user.save
+
+      @user_course = UserCourse.find_on_join(@user, @course)
+      @user_course.start_date = Time.now
+      @user_course.progress_in_hours = 0
+      @user_course.save
+
       redirect "/courses/#{@course.slug}"
     end
   end
@@ -84,6 +86,8 @@ class CourseController < ApplicationController
   get '/courses/:slug' do
     @course = Course.find_by_slug(params[:slug])
     if @course && logged_in?
+      @user_course = UserCourse.find_on_join(current_user, @course)
+      #binding.pry
       erb :'courses/show'
     else
       redirect '/users/login'

@@ -20,10 +20,16 @@
 
 <p>Subjects: <%= @course.subjects.map {|s| s.name}.join(", ") %></p>
 
-<h3>My Info</h3>
-<p>Start Date: </p>
-<p>End Date: </p>
-<p>Progress: </p>
-<p>Note: </p>
-
-<a href="/users/homepage">My Homepage</a>
+<% if current_user.courses.include?(@course) %>
+  <h3>My Info</h3>
+  <p>Start Date: <%= @user_course.start_date.month %>-<%= @user_course.start_date.day %>-<%= @user_course.start_date.year %></p>
+  <% if @course.length_in_hours == @user_course.progress_in_hours %>
+    <p>End Date: <%= @user_course.end_date.month %>-<%= @user_course.end_date.day %>-<%= @user_course.end_date.year %></p>
+  <% end %>
+  <% unless @course.length_in_hours.nil? %>
+    <p>Progress: <%= @user_course.progress_in_hours %></p>
+  <% end %>
+  <% unless @user_course.note.nil? %>
+    <p>Note: <%= @user_course.note %></p>
+  <% end %>
+<% end %>
