@@ -1,0 +1,34 @@
+<h1>Edit <%= @program.name %></h1>
+
+<form action="/programs/<%= @program.slug %>" method="POST">
+  <input type="hidden" name="_method" value="PATCH" id="hidden">
+  <label for="name">Name: </label>
+  <input type="text" name="program[name]" id="name" value="<%= @program.name %>"><br>
+  <label for="description">Description: </label>
+  <input type="text" name="program[description]" id="description" value="<%= @program.description %>">
+  <span>(optional)</span><br>
+  <label for="certification">Certification: </label>
+  <input type="text" name="program[certification]" id="certification" value="<%= @program.certification %>">
+  <span>(optional)</span><br>
+  <label for="cost">Cost: </label>
+  <input type="text" name="program[cost]" id="cost" value="<%= @program.cost %>">
+  <span>(optional)</span><br>
+  <label for="affiliation">Affiliation: </label>
+  <input type="text" name="program[affiliation]" id="affiliation" value="<%= @program.affiliation %>">
+  <span>(optional)</span><br>
+
+  <h4>Platform: </h4>
+  <% @platforms.each do |platform| %>
+    <input type="radio" name="platform_id" value="<%= platform.id %>" id="<%= platform.name %>" <%= 'checked' if @program.platform == platform %>>
+      <%= platform.name %>
+    </input>
+  <% end %><br>
+
+  <h4>Courses: </h4>
+  <% @courses.each do |course| %>
+    <input type="checkbox" name="program[course_ids][]" value="<%= course.id %>" id="<%= course.name %>" <%= 'checked' if @program.courses.include?(course) %>>
+      <%= course.name %>
+    </input>
+  <% end %><br><br>
+  <input class="form-button" type="submit" name="submit" value="Edit Program">
+</form>
