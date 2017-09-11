@@ -1,22 +1,34 @@
-<h1>Add a New Program</h1>
+<div class="row">
+  <h1 class="col-sm-12">Add a New Program</h1>
+</div>
 
 <form action="/programs" method="POST">
-  <label for="name">Name: </label>
-  <input type="text" name="program[name]" id="name"><br>
-  <label for="description">Description: </label>
-  <input type="text" name="program[description]" id="description">
-  <span>(optional)</span><br>
-  <label for="certification">Certification: </label>
-  <input type="text" name="program[certification]" id="certification">
-  <span>(optional)</span><br>
-  <label for="cost">Cost: </label>
-  <input type="text" name="program[cost]" id="cost">
-  <span>(optional)</span><br>
-  <label for="affiliation">Affiliation: </label>
-  <input type="text" name="program[affiliation]" id="affiliation">
-  <span>(optional)</span><br>
+  <div class="row">
+    <label class="col-sm-2" for="name">*Name: </label>
+    <input class="col-sm-4" type="text" name="program[name]" id="name">
+  </div>
 
-  <h4>Platform: (please select or create one)</h4>
+  <div class="row">
+    <label class="col-sm-2" for="description">Description: </label>
+    <input class="col-sm-4" type="text" name="program[description]" id="description">
+  </div>
+
+  <div class="row">
+    <label class="col-sm-2" for="certification">Certification: </label>
+    <input class="col-sm-4" type="text" name="program[certification]" id="certification">
+  </div>
+
+  <div class="row">
+    <label class="col-sm-2" for="cost">Cost: </label>
+    <input class="col-sm-4" type="text" name="program[cost]" id="cost">
+  </div>
+
+  <div class="row">
+    <label class="col-sm-2" for="affiliation">Affiliation: </label>
+    <input class="col-sm-4" type="text" name="program[affiliation]" id="affiliation">
+  </div>
+
+  <h4>Platform: </h4>
   <% @platforms.each do |platform| %>
     <input type="radio" name="platform_id" value="<%= platform.id %>" id="<%= platform.name %>">
       <%= platform.name %>
@@ -33,5 +45,5 @@
       <%= course.name %>
     </input>
   <% end %><br><br>
-  <input type="submit" name="submit" value="Create Program">
+  <input class="form-button" type="submit" name="submit" value="Create Program">
 </form>
