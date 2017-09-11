@@ -1,27 +1,44 @@
-<h1><%= @subject.name %></h1>
+<div class="row">
+  <h1 class="col-sm-8"><%= @subject.name %></h1>
 
-<% if user_created?(@subject)  %>
-  <div class="button"><a href="/subjects/<%= @subject.slug %>/edit">Edit Subject</a></div>
-<% end %>
+  <% if user_created?(@subject)  %>
+    <div class="create button col-sm-2"><a href="/subjects/<%= @subject.slug %>/edit">Edit Subject</a></div>
+  <% end %>
+</div>
 
 <% if @subject.description %>
-  <p>Description: <%= @subject.description %></p>
+  <div class="row">
+    <p class="col-sm-2"><strong>Description:</strong></p>
+    <p class="col-sm-10"><%= @subject.description %></p>
+  </div>
 <% end %>
 
-<span><strong>Courses:</strong> </span>
-<% @subject.courses.each do |course| %>
-  <span><a href="/courses/<%= course.slug %>"><%= course.name %></a></span>
-  <span><%= ", " unless course == @subject.courses.last %></span>
-<% end %><br>
+<div class="row">
+  <p class="col-sm-2"><strong>Courses: </strong></p>
+  <div class="col-sm-10">
+    <% @subject.courses.each do |course| %>
+      <span><a href="/courses/<%= course.slug %>"><%= course.name %></a></span>
+      <span><%= "| " unless course == @subject.courses.last %></span>
+    <% end %>
+  </div>
+</div>
 
-<span><strong>Programs:</strong> </span>
-<% @subject.programs.uniq.each do |program| %>
-  <span><a href="/programs/<%= program.slug %>"><%= program.name %></a></span>
-  <span><%= ", " unless program == @subject.programs.last %></span>
-<% end %><br>
+<div class="row">
+  <p class="col-sm-2"><strong>Programs: </strong></p>
+  <div class="col-sm-10">
+    <% @subject.programs.uniq.each do |program| %>
+      <span><a href="/programs/<%= program.slug %>"><%= program.name %></a></span>
+      <span><%= "| " unless program == @subject.programs.last %></span>
+    <% end %>
+  </div>
+</div>
 
-<span><strong>Platforms:</strong> </span>
-<% @subject.platforms.uniq.each do |platform| %>
-  <span><a href="/platforms/<%= platform.slug %>"><%= platform.name %></a></span>
-  <span><%= ", " unless platform == @subject.platforms.last %></span>
-<% end %>
+<div class="row">
+  <p class="col-sm-2"><strong>Platforms: </strong></p>
+  <div class="col-sm-10">
+    <% @subject.platforms.each do |platform| %>
+      <span><a href="/platforms/<%= platform.slug %>"><%= platform.name %></a></span>
+      <span><%= "| " unless platform == @subject.platforms.last %></span>
+    <% end %>
+  </div>
+</div>
