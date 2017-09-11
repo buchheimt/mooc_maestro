@@ -8,8 +8,20 @@
   <p>Description: <%= @subject.description %></p>
 <% end %>
 
-<p>Courses: <%= @subject.courses.map {|s| s.name}.join(", ") %></p>
-<p>Programs: <%= @subject.programs.uniq.map {|s| s.name}.join(", ") %></p>
-<p>Platforms: <%= @subject.platforms.uniq.map {|s| s.name}.join(", ") %></p>
+<span><strong>Courses:</strong> </span>
+<% @subject.courses.each do |course| %>
+  <span><a href="/courses/<%= course.slug %>"><%= course.name %></a></span>
+  <span><%= ", " unless course == @subject.courses.last %></span>
+<% end %><br>
 
-<a href="/users/homepage">My Homepage</a>
+<span><strong>Programs:</strong> </span>
+<% @subject.programs.uniq.each do |program| %>
+  <span><a href="/programs/<%= program.slug %>"><%= program.name %></a></span>
+  <span><%= ", " unless program == @subject.programs.last %></span>
+<% end %><br>
+
+<span><strong>Platforms:</strong> </span>
+<% @subject.platforms.uniq.each do |platform| %>
+  <span><a href="/platforms/<%= platform.slug %>"><%= platform.name %></a></span>
+  <span><%= ", " unless platform == @subject.platforms.last %></span>
+<% end %>

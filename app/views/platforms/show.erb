@@ -5,17 +5,18 @@
 <% end %>
 
 <% if @platform.description %>
-  <p>Description: <%= @platform.description %></p>
+  <p><strong>Description:</strong> <%= @platform.description %></p>
 <% end %>
 
-<h3>Programs:</h3>
+<p><strong>Programs:</strong> </p>
 <ul>
   <% @platform.programs.each do |program| %>
     <li><a href="/programs/<%= program.slug %>"><%= program.name %></a></li>
   <% end %>
 </ul>
 
-<span>Subjects: </span>
+<span><strong>Subjects:</strong> </span>
 <% @platform.subjects.uniq.each do |subject| %>
-  <span><a href="/subjects/<%= subject.slug %>"><%= subject.name %></a>, </span>
+  <span><a href="/subjects/<%= subject.slug %>"><%= subject.name %></a></span>
+  <span><%= ", " unless subject == @platform.subjects.last %></span>
 <% end %>
