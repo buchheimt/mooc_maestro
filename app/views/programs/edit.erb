@@ -1,21 +1,33 @@
-<h1>Edit <%= @program.name %></h1>
+<div class="row">
+  <h2 class="col-sm-12">Edit <%= @program.name %></h2>
+</div>
 
 <form action="/programs/<%= @program.slug %>" method="POST">
   <input type="hidden" name="_method" value="PATCH" id="hidden">
-  <label for="name">Name: </label>
-  <input type="text" name="program[name]" id="name" value="<%= @program.name %>"><br>
-  <label for="description">Description: </label>
-  <input type="text" name="program[description]" id="description" value="<%= @program.description %>">
-  <span>(optional)</span><br>
-  <label for="certification">Certification: </label>
-  <input type="text" name="program[certification]" id="certification" value="<%= @program.certification %>">
-  <span>(optional)</span><br>
-  <label for="cost">Cost: </label>
-  <input type="text" name="program[cost]" id="cost" value="<%= @program.cost %>">
-  <span>(optional)</span><br>
-  <label for="affiliation">Affiliation: </label>
-  <input type="text" name="program[affiliation]" id="affiliation" value="<%= @program.affiliation %>">
-  <span>(optional)</span><br>
+  <div class="row">
+    <label class="col-sm-2" for="name">*Name: </label>
+    <input class="col-sm-4" type="text" name="program[name]" id="name" value="<%= @program.name %>">
+  </div>
+
+  <div class="row">
+    <label class="col-sm-2" for="description">Description: </label>
+    <input class="col-sm-4" type="text" name="program[description]" id="description" value="<%= @program.description %>">
+  </div>
+
+  <div class="row">
+    <label class="col-sm-2" for="certification">Certification: </label>
+    <input class="col-sm-2" type="text" name="program[certification]" id="certification" value="<%= @program.certification %>">
+  </div>
+
+  <div class="row">
+    <label class="col-sm-2" for="cost">Cost: </label>
+    <input class="col-sm-2" type="text" name="program[cost]" id="cost" value="<%= @program.cost %>">
+  </div>
+
+  <div class="row">
+    <label class="col-sm-2" for="affiliation">Affiliation: </label>
+    <input class="col-sm-2" type="text" name="program[affiliation]" id="affiliation" value="<%= @program.affiliation %>">
+  </div>
 
   <h4>Platform: </h4>
   <% @platforms.each do |platform| %>
