@@ -129,3 +129,7 @@ input {
 .create {
   margin-top: 25px;
 }
+
+div p.progress_header {
+  margin-top: 30px;
+}

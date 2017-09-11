@@ -1,11 +1,14 @@
-<h2>Welcome back, <%= @user.username %>!</h2>
+<div class="row">
+  <h2 class="col-sm-5">Welcome back, <%= @user.username %>!</h2>
+</div>
 
 <form action="/users" method="POST">
   <input type="hidden" name="_method" value="PATCH" id="hidden">
   <% @user.programs.uniq.each do |program| %>
     <div class="row">
-      <a class="col-sm-10" href="/programs/<%= program.slug %>"><h4><%= program.name %></h4></a>
-      <span class="progress col-sm-2"> <strong><%= program.length %></strong>%</span>
+      <a class="col-sm-9" href="/programs/<%= program.slug %>"><h4><%= program.name %></h4></a>
+      <p class="program col-sm-2"> <strong><%= @user.program_progress_formatted(program) %></strong></p>
+      <p class="progress program col-sm-1"> <strong><%= @user.program_progress(program) %></strong>%</p>
     </div>
 
     <% program.courses.each do |course| %>
@@ -14,8 +17,9 @@
           <a class="col-sm-8" href="/courses/<%= course.slug %>"><%= course.name %></a>
           <% @user_course = UserCourse.find_on_join(@user, course) %>
           <% unless course.length_in_hours.nil? %>
-            <input class="progress col-sm-2" type="text" name="course_ids[<%= course.id %>]">
-            <span class="progress col-sm-2"><%= (@user_course.progress_in_hours / course.length_in_hours * 100).round %>%</span><br>
+            <input class="progress col-sm-1" type="text" name="course_ids[<%= course.id %>]">
+            <p class="col-sm-2"><%= @user_course.hours_of_total %></p>
+            <p class="progress col-sm-1"><%= (@user_course.progress_in_hours / course.length_in_hours * 100).round %>%</p><br>
           <% end %>
         </div>
       <% end %>
