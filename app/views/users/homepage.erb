@@ -1,10 +1,10 @@
 <div class="row">
-  <h2 class="col-sm-5">Welcome back, <%= @user.username %>!</h2>
+  <h2 class="col-sm-5"><%= @user.username %></h2>
 </div>
 
 <form action="/users" method="POST">
   <input type="hidden" name="_method" value="PATCH" id="hidden">
-  <% @user.programs.uniq.each do |program| %>
+  <% @programs.each do |program| %>
     <div class="row">
       <a class="col-sm-9" href="/programs/<%= program.slug %>"><h4><%= program.name %></h4></a>
       <p class="program col-sm-2"> <strong><%= @user.program_progress_formatted(program) %></strong></p>
@@ -26,7 +26,14 @@
     <% end %>
     <br>
   <% end %>
-  <input class="form-button col-sm-offset-8 col-sm-2" type="submit" name="submit" value="Add Progress">
-</form><br>
-
-<div class="logout button"><a href="/users/logout">Logout</a></div>
+  <div class="row">
+    <% if @courses.empty? %>
+      <p class="col-sm-6">Get started by adding <a href="/courses">courses</a> or <a href="/programs">programs</a> now.</p>
+    <% else %>
+      <input class="form-button col-sm-offset-8 col-sm-2" type="submit" name="submit" value="Add Progress">
+    <% end %>
+  </div>
+  </form><br>
+<div class="row">
+  <div class="logout button col-sm-2"><a href="/users/logout">Logout</a></div>
+</div>

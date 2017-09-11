@@ -55,6 +55,8 @@ class UserController < ApplicationController
   get '/users/homepage' do
     @user = current_user
     if logged_in?
+      @programs = @user.programs.uniq
+      @courses = @user.courses
       erb :'users/homepage'
     else
       redirect '/users/login'

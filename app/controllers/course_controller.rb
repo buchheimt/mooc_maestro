@@ -28,7 +28,7 @@ class CourseController < ApplicationController
       @user = current_user
       @course = @user.courses.build(name: params[:course][:name])
       @course.description = params[:course][:description] unless params[:course][:description].empty?
-      @course.lengh_in_hours = params[:course][:length_in_hours].to_f unless params[:course][:length_in_hours].empty?
+      @course.length_in_hours = params[:course][:length_in_hours].to_f unless params[:course][:length_in_hours].empty?
       if ! params.include?(:program_id) && params[:program_name].empty?
         @course.program = Program.find_by(name: "Individual Courses")
       elsif params[:program_id].empty?
@@ -42,10 +42,7 @@ class CourseController < ApplicationController
       @course.subjects << Subject.create(name: params[:subject_name]) unless params[:subject_name].empty?
       @user.save
 
-      @user_course = UserCourse.find_on_join(@user, @course)
-      @user_course.start_date = Time.now
-      @user_course.progress_in_hours = 0
-      @user_course.save
+      UserCourse.establish(@user, @course)
 
       redirect "/courses/#{@course.slug}"
     end
