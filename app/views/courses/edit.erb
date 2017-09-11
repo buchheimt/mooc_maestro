@@ -1,5 +1,6 @@
 <div class="row">
-  <h2 class="col-sm-12">Edit <%= @course.name %></h2>
+  <h2 class="col-sm-8">Edit <%= @course.name %></h2>
+  <div class="head button col-sm-2"><a href="/courses/<%= @course.slug %>/delete">Delete Course</a></div>
 </div>
 
 <form action="/courses/<%= @course.slug %>" method="POST">

@@ -71,6 +71,15 @@ class ProgramController < ApplicationController
     end
   end
 
+  get '/programs/:slug/delete' do
+    @user = current_user
+    @program = Program.find_by_slug(params[:slug])
+    if @program && user_created?(@program)
+      @program.destroy
+      redirect '/programs'
+    end
+  end
+
   get '/programs/:slug/join' do
     @user = current_user
     @program = Program.find_by_slug(params[:slug])

@@ -8,7 +8,7 @@
     <div class="row">
       <a class="col-sm-9" href="/programs/<%= program.slug %>"><h4><%= program.name %></h4></a>
       <p class="hours_of program col-sm-2"> <strong><%= @user.program_progress_formatted(program) %></strong></p>
-      <p class="progress program col-sm-1"> <strong><%= @user.program_progress_percentage(program) %></strong>%</p>
+      <p class="progress program col-sm-1"> <strong><%= @user.program_progress_percentage(program) %></strong></p>
     </div>
 
     <% program.courses.each do |course| %>

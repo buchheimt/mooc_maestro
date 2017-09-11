@@ -69,6 +69,15 @@ class PlatformController < ApplicationController
     end
   end
 
+  get '/platforms/:slug/delete' do
+    @user = current_user
+    @platform = Platform.find_by_slug(params[:slug])
+    if @platform && user_created?(@platform)
+      @platform.destroy
+      redirect '/platforms'
+    end
+  end
+
   get '/platforms/:slug' do
     @platform = Platform.find_by_slug(params[:slug])
     if @platform && logged_in?

@@ -3,7 +3,7 @@ class SubjectController < ApplicationController
   get '/subjects' do
     if logged_in?
       @topics = name_sort(Subject.all)
-      @name = name_sort(Subject.name.downcase)
+      @name = Subject.name.downcase
       erb :index
     else
       redirect '/users/login'
@@ -56,6 +56,15 @@ class SubjectController < ApplicationController
       end
     else
       redirect "/subjects/#{@subject.slug}/edit"
+    end
+  end
+
+  get '/subjects/:slug/delete' do
+    @user = current_user
+    @subject = Subject.find_by_slug(params[:slug])
+    if @subject && user_created?(@subject)
+      @subject.destroy
+      redirect '/subjects'
     end
   end
 

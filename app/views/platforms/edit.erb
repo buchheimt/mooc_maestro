@@ -1,5 +1,6 @@
 <div class="row">
-  <h2 class="col-sm-12">Edit <%= @platform.name %></h2>
+  <h2 class="col-sm-8">Edit <%= @platform.name %></h2>
+  <div class="head button col-sm-2"><a href="/platforms/<%= @platform.slug %>/delete">Delete Platform</a></div>
 </div>
 
 <form action="/platforms/<%= @platform.slug %>" method="POST">

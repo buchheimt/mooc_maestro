@@ -72,6 +72,15 @@ class CourseController < ApplicationController
     end
   end
 
+  get '/courses/:slug/delete' do
+    @user = current_user
+    @course = Course.find_by_slug(params[:slug])
+    if @course && user_created?(@course)
+      @course.destroy
+      redirect '/courses'
+    end
+  end
+
   get '/courses/:slug/join' do
     @user = current_user
     @course = Course.find_by_slug(params[:slug])
