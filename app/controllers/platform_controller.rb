@@ -2,7 +2,7 @@ class PlatformController < ApplicationController
 
   get '/platforms' do
     if logged_in?
-      @topics = Platform.all.reject {|pl| pl.name == "Unassigned"}.sort {|a,b| a.name <=> b.name}
+      @topics = name_sort(Platform.all.reject {|pl| pl.name == "Unassigned"})
       @name = Platform.name.downcase
       erb :index
     else
@@ -12,9 +12,8 @@ class PlatformController < ApplicationController
 
   get '/platforms/new' do
     if logged_in?
-      @programs = Program.all.select do |pr|
-        pr.platform.name == "Unassigned" && pr.name != "Individual Courses"
-      end.sort {|a,b| a.name <=> b.name}
+      @programs = Program.all.select {|pr| pr.platform.name == "Unassigned" && pr.name != "Individual Courses"}
+      @programs = name_sort(@programs)
       erb :'platforms/new'
     else
       redirect '/users/login'
@@ -40,6 +39,7 @@ class PlatformController < ApplicationController
       @programs = Program.all.select do |pr|
         pr.platform.name == "Unassigned" || pr.platform == @platform
       end.reject {|pr| pr.name == "Individual Courses"}
+      @programs = name_sort(@programs)
       erb :'platforms/edit'
     else
       redirect '/platforms'
@@ -53,15 +53,15 @@ class PlatformController < ApplicationController
       if @new_name != @platform.name && Platform.find_by(name: @new_name)
         redirect "/platforms/#{@platform.slug}/edit"
       else
-        @platform.name = @new_name
-        @platform.description = params[:platform][:description] unless params[:platform][:description].empty?
         @platform.programs.clear
-        params[:platform][:program_ids].each {|pr_id| @platform.programs << Program.find(pr_id)}
+        @info = params[:platform].select {|item| ! item.empty?}
+        @platform.update(@info)
+
         Program.all.select {|pr| pr.platform_id == nil}.each do |pr|
           pr.platform = Platform.find_by(name: "Unassigned")
           pr.save
         end
-        @platform.save
+
         redirect "/platforms/#{@platform.slug}"
       end
     else

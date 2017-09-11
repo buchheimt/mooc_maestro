@@ -62,7 +62,6 @@ class CourseController < ApplicationController
       if @new_name != @course.name && Course.find_by(name: @new_name)
         redirect "/courses/#{@course.slug}/edit"
       else
-        @course.name = @new_name
         @info = params[:course].select {|item| ! item.empty?}
         @course.subjects.clear
         @course.update(@info)

@@ -2,8 +2,8 @@ class SubjectController < ApplicationController
 
   get '/subjects' do
     if logged_in?
-      @topics = Subject.all.sort {|a,b| a.name <=> b.name}
-      @name = Subject.name.downcase
+      @topics = name_sort(Subject.all)
+      @name = name_sort(Subject.name.downcase)
       erb :index
     else
       redirect '/users/login'
@@ -12,7 +12,7 @@ class SubjectController < ApplicationController
 
   get '/subjects/new' do
     if logged_in?
-      @courses = Course.all.sort {|a,b| a.name <=> b.name}
+      @courses = name_sort(Course.all)
       erb :'subjects/new'
     else
       redirect '/users/login'
@@ -35,7 +35,7 @@ class SubjectController < ApplicationController
   get '/subjects/:slug/edit' do
     @subject = Subject.find_by_slug(params[:slug])
     if @subject && user_created?(@subject)
-      @courses = Course.all
+      @courses = name_sort(Course.all)
       erb :'subjects/edit'
     else
       redirect '/subjects'
@@ -49,11 +49,9 @@ class SubjectController < ApplicationController
       if @new_name != @subject.name && Subject.find_by(name: @new_name)
         redirect "/subjects/#{@subject.slug}/edit"
       else
-        @subject.name = @new_name
-        @subject.description = params[:subject][:description] unless params[:subject][:description].empty?
         @subject.courses.clear
-        params[:subject][:course_ids].each {|c_id| @subject.courses << Course.find(c_id)}
-        @subject.save
+        @info = params[:subject].select {|item| ! item.empty?}
+        @subject.update(@info)
         redirect "/subjects/#{@subject.slug}"
       end
     else
