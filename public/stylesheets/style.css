@@ -2,6 +2,10 @@ h2  {
   margin-bottom: 30px;
 }
 
+h1  {
+  margin-bottom: 30px;
+}
+
 a {
   display: inline-block;
   color: black;
@@ -110,4 +114,8 @@ footer {
 input {
   border-radius: 5px;
   margin-bottom: 10px;
+}
+
+.create {
+  margin-top: 25px;
 }

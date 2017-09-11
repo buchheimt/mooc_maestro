@@ -1,4 +1,7 @@
-<h1>Platform Index</h1>
+<div class="row">
+  <div class="col-sm-4"><h1>Platform Index</h1></div>
+  <div class="create button col-sm-3"><a href="/platforms/new">Create New Platform</a></div>
+</div>
 
 <% @platforms.each do |platform| %>
   <a href="/platforms/<%= platform.slug %>"><%= platform.name %></a><br>
