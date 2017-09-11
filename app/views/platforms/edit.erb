@@ -1,12 +1,18 @@
-<h1>Edit <%= @platform.name %></h1>
+<div class="row">
+  <h2 class="col-sm-12">Edit <%= @platform.name %></h2>
+</div>
 
 <form action="/platforms/<%= @platform.slug %>" method="POST">
   <input type="hidden" name="_method" value="PATCH" id="hidden">
-  <label for="name">Name: </label>
-  <input type="text" name="platform[name]" id="name" value="<%= @platform.name %>"><br>
-  <label for="description">Description: </label>
-  <input type="text" name="platform[description]" id="description" value="<%= @platform.description %>">
-  <span>(optional)</span><br>
+  <div class="row">
+    <label class="col-sm-2" for="name">*Name: </label>
+    <input class="col-sm-4" type="text" name="platform[name]" id="name" value="<%= @platform.name %>">
+  </div>
+
+  <div class="row">
+    <label class="col-sm-2" for="description">Description: </label>
+    <input class="col-sm-4" type="text" name="platform[description]" id="description" value="<%= @platform.description %>">
+  </div>
 
   <h4>Programs: </h4>
   <% @programs.each do |program| %>
