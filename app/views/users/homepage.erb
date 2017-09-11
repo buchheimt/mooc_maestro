@@ -7,8 +7,8 @@
   <% @programs.each do |program| %>
     <div class="row">
       <a class="col-sm-9" href="/programs/<%= program.slug %>"><h4><%= program.name %></h4></a>
-      <p class="program col-sm-2"> <strong><%= @user.program_progress_formatted(program) %></strong></p>
-      <p class="progress program col-sm-1"> <strong><%= @user.program_progress(program) %></strong>%</p>
+      <p class="hours_of program col-sm-2"> <strong><%= @user.program_progress_formatted(program) %></strong></p>
+      <p class="progress program col-sm-1"> <strong><%= @user.program_progress_percentage(program) %></strong>%</p>
     </div>
 
     <% program.courses.each do |course| %>
@@ -17,8 +17,8 @@
           <a class="col-sm-8" href="/courses/<%= course.slug %>"><%= course.name %></a>
           <% @user_course = UserCourse.find_on_join(@user, course) %>
           <% unless course.length_in_hours.nil? %>
-            <input class="progress col-sm-1" type="text" name="course_ids[<%= course.id %>]">
-            <p class="col-sm-2"><%= @user_course.hours_of_total %></p>
+            <input class="hours_of progress col-sm-1" type="text" name="course_ids[<%= course.id %>]">
+            <p class="hours_of col-sm-2"><%= @user_course.hours_of_total %></p>
             <p class="progress col-sm-1"><%= (@user_course.progress_in_hours / course.length_in_hours * 100).round %>%</p><br>
           <% end %>
         </div>

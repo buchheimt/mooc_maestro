@@ -7,24 +7,21 @@ class User < ActiveRecord::Base
   has_many :platforms, through: :programs
   has_many :subjects, through: :courses
 
-  def program_progress(program)
+  def get_program_progress(program)
     hours_complete = 0
-    hours_total = 0
     program.courses.each do |course|
-      hours_total += course.length_in_hours
-      hours_complete += UserCourse.get_progress(self, course)
+      user_course = UserCourse.find_on_join(self, course)
+      hours_complete += UserCourse.get_progress(self, course) if user_course
     end
-    (hours_complete / hours_total * 100).round
+    hours_complete
+  end
+
+  def program_progress_percentage(program)
+    (get_program_progress(program) / program.length * 100).round
   end
 
   def program_progress_formatted(program)
-    hours_complete = 0
-    hours_total = 0
-    program.courses.each do |course|
-      hours_total += course.length_in_hours
-      hours_complete += UserCourse.get_progress(self, course)
-    end
-    "#{hours_complete} / #{hours_total}"
+    "#{get_program_progress(program).round} / #{program.length.round}"
   end
 
 end

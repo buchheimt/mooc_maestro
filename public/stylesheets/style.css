@@ -146,3 +146,7 @@ input[type="radio"] {
   display: inline-block;
   margin: 0 5px;
 }
+
+.hours_of {
+  text-align: center;
+}

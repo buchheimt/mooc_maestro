@@ -3,12 +3,8 @@ class UserCourse < ActiveRecord::Base
   belongs_to :user
   belongs_to :course
 
-  def self.find_on_join(user, course)
-    self.all.find_by(user_id: user.id, course_id: course.id)
-  end
-
   def hours_of_total
-    "#{self.progress_in_hours} / #{self.course.length_in_hours}"
+    "#{self.progress_in_hours.round} / #{self.course.length_in_hours.round}"
   end
 
   def add_progress(new_hours)
@@ -23,11 +19,12 @@ class UserCourse < ActiveRecord::Base
     (self.progress_in_hours / self.course.length_in_hours * 100).round
   end
 
+  def self.find_on_join(user, course)
+    self.all.find_by(user_id: user.id, course_id: course.id)
+  end
+
   def self.establish(user, course)
     user.courses << course
-    course.users << user
-    user.save
-    course.save
     user_course = self.find_on_join(user, course)
     user_course.start_date = Time.now
     user_course.progress_in_hours = 0
