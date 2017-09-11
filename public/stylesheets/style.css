@@ -1,3 +1,7 @@
+h2  {
+  margin-bottom: 30px;
+}
+
 a {
   display: inline-block;
   color: black;
@@ -101,4 +105,9 @@ footer {
 .logout {
   clear: both;
   float: left;
+}
+
+input {
+  border-radius: 5px;
+  margin-bottom: 10px;
 }
