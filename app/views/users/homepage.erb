@@ -3,20 +3,26 @@
 <form action="/users" method="POST">
   <input type="hidden" name="_method" value="PATCH" id="hidden">
   <% @user.programs.uniq.each do |program| %>
-    <h3><a href="/programs/<%= program.slug %>"> <%= program.name %></a></h3>
+    <div class="row">
+      <a class="col-sm-10" href="/programs/<%= program.slug %>"><h4><%= program.name %></h4></a>
+      <span class="progress col-sm-2"> <strong><%= program.length %></strong>%</span>
+    </div>
+
     <% program.courses.each do |course| %>
       <% if @user.courses.include?(course) %>
-        <a href="/courses/<%= course.slug %>"><%= course.name %></a>
-        <% @user_course = UserCourse.find_on_join(@user, course) %>
-        <% unless course.length_in_hours.nil? %>
-          <span class="progress"><%= (@user_course.progress_in_hours / course.length_in_hours * 100).round %>%</span>
-          <input class="progress" type="text" name="course_ids[<%= course.id %>]"><br>
-        <% end %>
+        <div class="row">
+          <a class="col-sm-8" href="/courses/<%= course.slug %>"><%= course.name %></a>
+          <% @user_course = UserCourse.find_on_join(@user, course) %>
+          <% unless course.length_in_hours.nil? %>
+            <input class="progress col-sm-2" type="text" name="course_ids[<%= course.id %>]">
+            <span class="progress col-sm-2"><%= (@user_course.progress_in_hours / course.length_in_hours * 100).round %>%</span><br>
+          <% end %>
+        </div>
       <% end %>
     <% end %>
     <br>
   <% end %>
-  <input class="form-button" type="submit" name="submit" value="Add Progress">
-</form>
+  <input class="form-button col-sm-offset-8 col-sm-2" type="submit" name="submit" value="Add Progress">
+</form><br>
 
-<div class="button"><a href="/users/logout">Logout</a></div>
+<div class="logout button"><a href="/users/logout">Logout</a></div>
