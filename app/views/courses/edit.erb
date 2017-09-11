@@ -1,15 +1,24 @@
-<h1>Edit <%= @course.name %></h1>
+<div class="row">
+  <h2 class="col-sm-12">Edit <%= @course.name %></h2>
+</div>
 
 <form action="/courses/<%= @course.slug %>" method="POST">
   <input type="hidden" name="_method" value="PATCH" id="hidden">
-  <label for="name">Name: </label>
-  <input type="text" name="course[name]" id="name" value="<%= @course.name %>"><br>
-  <label for="description">Description: </label>
-  <input type="text" name="course[description]" id="description" value="<%= @course.description %>">
-  <span>(optional)</span><br>
-  <label for="length_in_hours">Course Length (hours): </label>
-  <input type="text" name="course[length_in_hours]" id="length_in_hours" value="<%= @course.length_in_hours %>">
-  <span>(optional)</span><br>
+  <div class="row">
+    <label class="col-sm-2" for="name">*Name: </label>
+    <input class="col-sm-4" type="text" name="course[name]" id="name" value="<%= @course.name %>">
+  </div>
+
+  <div class="row">
+    <label class="col-sm-2" for="description">Description: </label>
+    <input class="col-sm-4" type="text" name="course[description]" id="description" value="<%= @course.description %>">
+  </div>
+
+  <div class="row">
+    <label class="col-sm-2" for="length_in_hours">Course Length: </label>
+    <input class="col-sm-1" type="text" name="course[length_in_hours]" id="length_in_hours" value="<%= @course.length_in_hours %>">
+    <p class="col-sm-1">Hours</p>
+  </div>
 
   <h4>Program: </h4>
   <% @programs.each do |program| %>
