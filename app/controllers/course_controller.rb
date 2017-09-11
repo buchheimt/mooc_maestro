@@ -113,7 +113,9 @@ class CourseController < ApplicationController
   get '/courses/:slug' do
     @course = Course.find_by_slug(params[:slug])
     if @course && logged_in?
-      @user_course = UserCourse.find_on_join(current_user, @course)
+      @user = current_user
+      @user_course = UserCourse.find_on_join(@user, @course)
+      @name = @course.class.name
       erb :'courses/show'
     else
       redirect '/users/login'
