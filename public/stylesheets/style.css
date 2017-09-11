@@ -26,6 +26,8 @@ a:hover {
   text-decoration: none;
   color: white;
   background: #648CB2;
+  transition: background 0.65s, color 0.65s;
+
 }
 
 .row {
@@ -90,6 +92,7 @@ footer {
   background: #05607A;
   border-color: black;
   cursor: pointer;
+  transition: background 0.65s, color 0.65s;
 }
 
 .button  {

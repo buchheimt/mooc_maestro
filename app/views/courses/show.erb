@@ -2,16 +2,15 @@
   <h1 class="col-sm-8"><%= @course.name %></h1>
 
   <% if user_created?(@course)  %>
-    <div class="create button col-sm-2"><a href="/courses/<%= @course.slug %>/edit">Edit Course</a></div>
+    <div class="head button col-sm-2"><a href="/courses/<%= @course.slug %>/edit">Edit As Creator</a></div>
   <% end %>
 
   <% if current_user.courses.include?(@course) %>
-    <div class="create button col-sm-2"><a href="/courses/<%= @course.slug %>/leave">Leave Course</a></div>
+    <div class="head button col-sm-2"><a href="/courses/<%= @course.slug %>/leave">Leave Course</a></div>
   <% else %>
-    <div class="create button col-sm-2"><a href="/courses/<%= @course.slug %>/join">Join Course</a></div>
+    <div class="head button col-sm-2"><a href="/courses/<%= @course.slug %>/join">Join Course</a></div>
   <% end %>
 </div>
-
 
 <% if @course.description %>
   <div class="row">
@@ -23,7 +22,7 @@
 <% if @course.length_in_hours %>
   <div class="row">
     <p class="col-sm-2"><strong>Course Length:</strong></p>
-    <p class="col-sm-10"><%= @course.length_in_hours %> hours</p>
+    <p class="col-sm-10"><%= @course.length_in_hours.round %> hours</p>
   </div>
 <% end %>
 
@@ -49,7 +48,10 @@
 </div>
 
 <% if current_user.courses.include?(@course) %>
-  <h2>My Info</h2>
+  <div class="row">
+    <h2 class="col-sm-2">My Info</h2>
+  </div>
+
   <div class="row">
     <p class="col-sm-2"><strong>Start Date:</strong> </p>
     <p class="col-sm-10"><%= @user_course.start_date.strftime("%F") %></p>
@@ -63,7 +65,7 @@
   <% unless @course.length_in_hours.nil? %>
     <div class="row">
       <p class="col-sm-2"><strong>Progress: </strong> </p>
-      <p class="col-sm-10"><%= @user_course.progress_in_hours %>%</p>
+      <p class="col-sm-10"><%= @user_course.get_progress_percent %>%</p>
     </div>
   <% end %>
 <% end %>
