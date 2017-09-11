@@ -19,7 +19,19 @@
         <a class="col-sm-2" href="/subjects">Subjects</a>
       </div>
     </nav>
+
     <div class="wrapper clearfix">
+
+        <div class="row">
+          <div class="col-sm-4 col-sm-offset-4">
+            <% if flash.has?(:good)%>
+              <p class="good flash"><%= flash[:good] %></p>
+            <% elsif flash.has?(:bad) %>
+              <p class="bad flash"><%= flash[:bad] %></p>
+            <% end %>
+          </div>
+        </div>
+
       <%= yield %>
     </div>
     <footer>

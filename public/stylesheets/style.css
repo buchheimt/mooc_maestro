@@ -150,3 +150,18 @@ input[type="radio"] {
 .hours_of {
   text-align: center;
 }
+
+.flash {
+  text-align: center;
+  margin-top: 20px;
+}
+
+p.good {
+  color: #159448;
+  background: #6BEB9E;
+}
+
+p.bad {
+  color: #B24640;
+  background: #FFE3E2;
+}

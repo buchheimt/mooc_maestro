@@ -7,6 +7,7 @@ class UserController < ApplicationController
       @courses = @user.courses
       erb :'users/homepage'
     else
+      flash[:bad] = "Please Log In First"
       redirect '/users/login'
     end
   end
@@ -18,8 +19,10 @@ class UserController < ApplicationController
         @course = Course.find(c_id.to_i)
         UserCourse.find_on_join(@user, @course).add_progress(v.to_i)
       end
+      flash[:good] = "Hours Successfully Added!"
       redirect '/users/homepage'
     else
+      flash[:bad] = "Please Log In First"
       redirect '/users/login'
     end
   end
@@ -38,6 +41,7 @@ class UserController < ApplicationController
       session[:user_id] = @user.id
       redirect '/users/homepage'
     else
+      flash[:bad] = "Login Info Was Invalid"
       redirect '/users/login'
     end
   end
@@ -48,6 +52,7 @@ class UserController < ApplicationController
 
   post '/users' do
     if params[:user].any? {|k, v| v.empty?} || User.find_by(username: params[:user][:username])
+      flash[:bad] = "Please Fill Out All Fields"
       redirect '/users/signup'
     else
       @user = User.create(params[:user])
