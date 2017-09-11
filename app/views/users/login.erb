@@ -1,4 +1,7 @@
-<h2>Welcome Back!</h2>
+<div class="row">
+  <h2 class="col-sm-4">Welcome Back!</h2>
+</div>
+
 <form action="/users/login" method="POST">
   <div class="row">
     <label class="col-sm-2" for="username">Username: </label>
@@ -6,8 +9,10 @@
   </div>
   <div class="row">
     <label class="col-sm-2" for="password">Password: </label>
-    <input class="col-sm-3" type="text" name="password" id="password">
+    <input class="col-sm-3" type="password" name="password" id="password">
   </div>
-  <input class="form-button" type="submit" name="submit" value="Log In">
+  <div class="row">
+    <input class="form-button col-sm-1 col-sm-offset-2" type="submit" name="submit" value="Log In">
+    <div class="button col-sm-2"><a href="/users/signup">New User?</a></div>
+  </div>
 </form>
-<div class="button"><a href="/users/signup">New User?</a></div>

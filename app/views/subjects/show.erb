@@ -36,7 +36,7 @@
 <div class="row">
   <p class="col-sm-2"><strong>Platforms: </strong></p>
   <div class="col-sm-10">
-    <% @subject.platforms.each do |platform| %>
+    <% @subject.platforms.uniq.each do |platform| %>
       <span><a href="/platforms/<%= platform.slug %>"><%= platform.name %></a></span>
       <span><%= "| " unless platform == @subject.platforms.last %></span>
     <% end %>
