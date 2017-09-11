@@ -1,11 +1,17 @@
-<h1>Add a New Platform</h1>
+<div class="row">
+  <h1 class="col-sm-12">Add a New Platform</h1>
+</div>
 
 <form action="/platforms" method="POST">
-  <label for="name">Name: </label>
-  <input type="text" name="platform[name]" id="name"><br>
-  <label for="description">Description: </label>
-  <input type="text" name="platform[description]" id="description">
-  <span>(optional)</span><br>
+  <div class="row">
+    <label class="col-sm-2" for="name">*Name: </label>
+    <input class="col-sm-4" type="text" name="platform[name]" id="name">
+  </div>
+
+  <div class="row">
+    <label class="col-sm-2" for="description">Description: </label>
+    <input class="col-sm-4" type="text" name="platform[description]" id="description">
+  </div>
 
   <h4>Programs: </h4>
   <% @programs.each do |program| %>
