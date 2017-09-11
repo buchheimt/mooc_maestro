@@ -11,9 +11,11 @@
   <p><strong>Description:</strong> <%= @program.description %></p>
 <% end %>
 
-<p><strong>Program Length:</strong> <%= @program.length %></p>
+<% if program_length = @program.length %>
+  <p><strong>Program Length:</strong> <%= program_length %></p>
+<% end %>
 
-<h3>Courses:</h3>
+<span><strong>Courses:</strong> </span>
 <ul>
   <% @program.courses.each do |course| %>
     <li><a href="/courses/<%= course.slug %>"><%= course.name %></a></li>

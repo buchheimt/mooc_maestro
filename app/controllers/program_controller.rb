@@ -38,8 +38,10 @@ class ProgramController < ApplicationController
         @program.platform = Platform.find_by_id(params[:platform_id])
       end
 
-      params[:program][:course_ids].each do |course_id|
-        @program.courses << Course.find(course_id)
+      if params[:program].include?(:course_ids)
+        params[:program][:course_ids].each do |course_id|
+          @program.courses << Course.find(course_id)
+        end
       end
 
       @program.save

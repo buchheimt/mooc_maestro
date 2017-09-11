@@ -14,7 +14,7 @@ class Program < ActiveRecord::Base
   end
 
   def length
-    return nil if self.courses.any? {|c| c.length_in_hours.nil?}
+    return nil if self.courses.any? {|c| c.length_in_hours.nil?} || self.courses.empty?
     sum = 0
     self.courses.each {|c| sum += c.length_in_hours}
     sum
