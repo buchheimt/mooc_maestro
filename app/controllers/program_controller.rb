@@ -13,7 +13,7 @@ class ProgramController < ApplicationController
   get '/programs/new' do
     if logged_in?
       @courses = Course.all.select {|c| c.program.name == "Individual Courses"}.sort {|a,b| a.name <=> b.name}
-      @platforms = Platform.all.sort {|a,b| a.name <=> b.name}
+      @platforms = Platform.all.reject{|pl| pl.name == "Unassigned"}.sort {|a,b| a.name <=> b.name}
       erb :'programs/new'
     else
       redirect '/users/login'

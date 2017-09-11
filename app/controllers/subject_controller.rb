@@ -3,7 +3,7 @@ class SubjectController < ApplicationController
   get '/subjects' do
     if logged_in?
       @topics = Subject.all.sort {|a,b| a.name <=> b.name}
-      @name = "subject"
+      @name = Subject.name.downcase
       erb :index
     else
       redirect '/users/login'
@@ -13,7 +13,6 @@ class SubjectController < ApplicationController
   get '/subjects/new' do
     if logged_in?
       @courses = Course.all.sort {|a,b| a.name <=> b.name}
-
       erb :'subjects/new'
     else
       redirect '/users/login'
@@ -21,22 +20,15 @@ class SubjectController < ApplicationController
   end
 
   post '/subjects' do
-    if !logged_in? || params[:subject][:name].empty? || Subject.find_by(name: params[:subject][:name])
+    @user = current_user
+    @name = params[:subject][:name]
+    if !logged_in? || @name.empty? || Subject.find_by(name: @name)
       redirect '/subjects/new'
     else
-      @subject = Subject.new(name: params[:subject][:name])
-      @subject.description = params[:subject][:description] unless params[:subject][:description].empty?
-
-      if params[:subject].include?(:course_ids)
-        params[:subject][:course_ids].each do |course_id|
-          @subject.courses << Course.find(course_id)
-        end
-      end
-
-
+      @info = params[:subject].select {|item| ! item.empty?}
+      @subject = Subject.new(@info)
       @subject.creator_id = @user.id
       @subject.save
-
       redirect "/subjects/#{@subject.slug}"
     end
   end
@@ -78,5 +70,4 @@ class SubjectController < ApplicationController
       redirect '/users/login'
     end
   end
-
 end
