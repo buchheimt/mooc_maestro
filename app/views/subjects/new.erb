@@ -1,18 +1,24 @@
-<h1>Add A New Subject</h1>
+<div class="row">
+  <h2 class="col-sm-12">Add a New Subject</h2>
+</div>
 
 <form action="/subjects" method="POST">
-  <label for="name">Name: </label>
-  <input type="text" name="subject[name]" id="name"><br>
-  <label for="description">Description: </label>
-  <input type="text" name="subject[description]" id="description">
-  <span>(optional)</span><br>
+  <div class="row">
+    <label class="col-sm-2" for="name">*Name: </label>
+    <input class="col-sm-4" type="text" name="subject[name]" id="name">
+  </div>
 
-  <h3>Courses: </h3>
+  <div class="row">
+    <label class="col-sm-2" for="description">Description: </label>
+    <input class="col-sm-4" type="text" name="subject[description]" id="description">
+  </div>
+
+  <h4>Courses: </h4>
   <% @courses.each do |course| %>
   <input type="checkbox" name="subject[course_ids][]" value="<%= course.id %>" id="<%= course.name %>">
     <%= course.name %>
   </input>
   <% end %><br><br>
 
-  <input type="submit" name="submit" value="Create Subject">
+  <input class="form-button" type="submit" name="submit" value="Create Subject">
 </form>
