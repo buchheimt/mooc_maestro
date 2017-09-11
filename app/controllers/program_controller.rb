@@ -3,7 +3,7 @@ class ProgramController < ApplicationController
   get '/programs' do
     if logged_in?
       @topics = Program.all.reject {|pr| pr.name == "Individual Courses"}.sort {|a,b| a.name <=> b.name}
-      @name = "program"
+      @name = Program.name.downcase
       erb :index
     else
       redirect '/users/login'
@@ -14,7 +14,6 @@ class ProgramController < ApplicationController
     if logged_in?
       @courses = Course.all.select {|c| c.program.name == "Individual Courses"}.sort {|a,b| a.name <=> b.name}
       @platforms = Platform.all.sort {|a,b| a.name <=> b.name}
-
       erb :'programs/new'
     else
       redirect '/users/login'
@@ -22,15 +21,13 @@ class ProgramController < ApplicationController
   end
 
   post '/programs' do
-    if !logged_in? || params[:program][:name].empty? || Program.find_by(name: params[:program][:name])
+    @name = params[:program][:name]
+    if !logged_in? || @name.empty? || Program.find_by(name: @name)
       redirect '/programs/new'
     else
       @user = current_user
-      @program = Program.new(name: params[:program][:name])
-      @program.description = params[:program][:description] unless params[:program][:description].empty?
-      @program.certification = params[:program][:certification] unless params[:program][:certification].empty?
-      @program.cost = params[:program][:cost].to_f unless params[:program][:cost].empty?
-      @program.affiliation = params[:program][:affiliation] unless params[:program][:affiliation].empty?
+      @info = params[:program].select {|item| ! item.empty?}
+      @program = Program.new(@info)
 
       if ! params.include?(:platform_id) && params[:platform_name].empty?
         @program.platform = Platform.new(name: "Unassigned")
@@ -38,12 +35,6 @@ class ProgramController < ApplicationController
         @program.platform = Platform.new(name: params[:platform_name])
       else
         @program.platform = Platform.find_by_id(params[:platform_id])
-      end
-
-      if params[:program].include?(:course_ids)
-        params[:program][:course_ids].each do |course_id|
-          @program.courses << Course.find(course_id)
-        end
       end
 
       @program.creator_id = @user.id

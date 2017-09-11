@@ -27,6 +27,27 @@
   </div>
 <% end %>
 
+<% if @program.certification %>
+  <div class="row">
+    <p class="col-sm-2"><strong>Certification:</strong></p>
+    <p class="col-sm-10"><%= @program.certification %></p>
+  </div>
+<% end %>
+
+<% if @program.cost %>
+  <div class="row">
+    <p class="col-sm-2"><strong>Cost:</strong></p>
+    <p class="col-sm-10"><%= @program.cost %></p>
+  </div>
+<% end %>
+
+<% if @program.affiliation %>
+  <div class="row">
+    <p class="col-sm-2"><strong>Affiliation:</strong></p>
+    <p class="col-sm-10"><%= @program.affiliation %></p>
+  </div>
+<% end %>
+
 <div class="row">
   <p class="col-sm-2"><strong>Courses: </strong></p>
 </div>
