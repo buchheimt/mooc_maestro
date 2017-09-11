@@ -121,6 +121,7 @@ class ProgramController < ApplicationController
   get '/programs/:slug' do
     @program = Program.find_by_slug(params[:slug])
     if @program && logged_in?
+      @user = current_user
       erb :'programs/show'
     else
       redirect '/users/login'
