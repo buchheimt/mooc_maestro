@@ -1,22 +1,33 @@
-<h1><%= @platform.name %></h1>
+<div class="row">
+  <h1 class="col-sm-8"><%= @platform.name %></h1>
 
-<% if user_created?(@platform)  %>
-  <div class="button"><a href="/platforms/<%= @platform.slug %>/edit">Edit Platform</a></div>
-<% end %>
+  <% if user_created?(@platform)  %>
+    <div class="create button col-sm-2"><a href="/platforms/<%= @platform.slug %>/edit">Edit Platform</a></div>
+  <% end %>
+</div>
 
 <% if @platform.description %>
-  <p><strong>Description:</strong> <%= @platform.description %></p>
+  <div class="row">
+    <p class="col-sm-2"><strong>Description:</strong></p>
+    <p class="col-sm-10"><%= @platform.description %></p>
+  </div>
 <% end %>
 
-<p><strong>Programs:</strong> </p>
+<p><strong>Programs: </strong></p>
 <ul>
   <% @platform.programs.each do |program| %>
-    <li><a href="/programs/<%= program.slug %>"><%= program.name %></a></li>
+    <div class="row">
+      <li class="col-sm-offset-2 col-sm-10"><a href="/programs/<%= program.slug %>"><%= program.name %></a></li>
+    </div>
   <% end %>
 </ul>
 
-<span><strong>Subjects:</strong> </span>
-<% @platform.subjects.uniq.each do |subject| %>
-  <span><a href="/subjects/<%= subject.slug %>"><%= subject.name %></a></span>
-  <span><%= ", " unless subject == @platform.subjects.last %></span>
-<% end %>
+<div class="row">
+  <p class="col-sm-2"><strong>Subjects: </strong></p>
+  <div class="col-sm-10">
+    <% @platform.subjects.uniq.each do |subject| %>
+      <span><a href="/subjects/<%= subject.slug %>"><%= subject.name %></a></span>
+      <span><%= "| " unless subject == @platform.subjects.last %></span>
+    <% end %>
+  </div>
+</div>
