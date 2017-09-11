@@ -2,7 +2,7 @@
   <h1 class="col-sm-8"><%= @platform.name %></h1>
 
   <% if user_created?(@platform)  %>
-    <div class="create button col-sm-2"><a href="/platforms/<%= @platform.slug %>/edit">Edit Platform</a></div>
+    <div class="head button col-sm-2"><a href="/platforms/<%= @platform.slug %>/edit">Edit As Creator</a></div>
   <% end %>
 </div>
 
@@ -13,7 +13,10 @@
   </div>
 <% end %>
 
-<p><strong>Programs: </strong></p>
+<div class="row">
+  <p class="col-sm-2"><strong>Programs: </strong></p>
+</div>
+
 <ul>
   <% @platform.programs.each do |program| %>
     <div class="row">

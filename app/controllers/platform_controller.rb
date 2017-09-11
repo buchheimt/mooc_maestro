@@ -26,6 +26,7 @@ class PlatformController < ApplicationController
     if !logged_in? || params[:platform][:name].empty? || Platform.find_by(name: params[:platform][:name])
       redirect '/platforms/new'
     else
+      @user = current_user
       @platform = Platform.new(name: params[:platform][:name])
       @platform.description = params[:platform][:description] unless params[:platform][:description].empty?
 
