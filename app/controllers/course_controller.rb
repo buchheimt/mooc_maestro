@@ -12,7 +12,7 @@ class CourseController < ApplicationController
 
   get '/courses/new' do
     if logged_in?
-      @programs = Program.all.sort {|a,b| a.name <=> b.name}
+      @programs = Program.all.reject {|pr| pr.name == "Individual Courses"}.sort {|a,b| a.name <=> b.name}
       @subjects = Subject.all.sort {|a,b| a.name <=> b.name}
 
       erb :'courses/new'
