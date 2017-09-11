@@ -2,7 +2,7 @@ class ProgramController < ApplicationController
 
   get '/programs' do
     if logged_in?
-      @topics = Program.all.reject {|pr| pr.name == "Individual Courses"}.sort {|a,b| a.name <=> b.name}
+      @topics = name_sort(Program.all.reject {|pr| pr.name == "Individual Courses"})
       @name = Program.name.downcase
       erb :index
     else
@@ -12,9 +12,8 @@ class ProgramController < ApplicationController
 
   get '/programs/new' do
     if logged_in?
-      @courses = Course.all.select {|c| c.program.name == "Individual Courses"}.sort {|a,b| a.name <=> b.name}
-      @platforms = Platform.all.reject{|pl| pl.name == "Unassigned"}.sort {|a,b| a.name <=> b.name}
-      erb :'programs/new'
+      @courses = name_sort(Course.all.select {|c| c.program.name == "Individual Courses"})
+      @platforms = name_sort(Platform.all.reject{|pl| pl.name == "Unassigned"})
     else
       redirect '/users/login'
     end
@@ -43,8 +42,8 @@ class ProgramController < ApplicationController
   get '/programs/:slug/edit' do
     @program = Program.find_by_slug(params[:slug])
     if @program && user_created?(@program)
-      @platforms = Platform.all.reject {|pl| pl.name == "Unassigned"}
-      @courses = Course.all.select {|c| c.program.name == "Individual Courses" || c.program == @program}
+      @platforms = name_sort(Platform.all.reject {|pl| pl.name == "Unassigned"})
+      @courses = name_sort(Course.all.select {|c| c.program.name == "Individual Courses" || c.program == @program})
       erb :'programs/edit'
     else
       redirect '/programs'
@@ -58,17 +57,13 @@ class ProgramController < ApplicationController
       if @new_name != @program.name && Program.find_by(name: @new_name)
         redirect "/programs/#{@program.slug}/edit"
       else
-        @program.name = @new_name
-        @program.description = params[:program][:description] unless params[:program][:description].empty?
+        @info = params[:program].select {|item| ! item.empty?}
         @program.courses.clear
-        params[:program][:course_ids].each {|c_id| @program.courses << Course.find(c_id)}
+        @program.update(@info)
         Course.all.select {|c| c.program_id == nil}.each do |c|
           c.program = Program.find_by(name: "Individual Courses")
           c.save
         end
-        @program.platform = Platform.find(params[:platform_id].to_i)
-
-        @program.save
         redirect "/programs/#{@program.slug}"
       end
     else

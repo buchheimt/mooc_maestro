@@ -35,7 +35,7 @@
   <div class="row">
     <div class="col-sm-12">
       <% @platforms.each do |platform| %>
-        <input type="radio" name="platform_id" value="<%= platform.id %>" id="<%= platform.name %>" <%= 'checked' if @program.platform == platform %>>
+        <input type="radio" name="program[platform_id]" value="<%= platform.id %>" id="<%= platform.name %>" <%= 'checked' if @program.platform == platform %>>
           <%= platform.name %>
         </input>
       <% end %><br>
