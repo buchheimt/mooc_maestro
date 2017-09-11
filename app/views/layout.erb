@@ -3,16 +3,21 @@
   <head>
     <meta charset="utf-8">
     <title>MOOC Maestro</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/stylesheets/style.css">
   </head>
   <body>
     <nav>
-      <span>MOOC Maestro</span>
-      <a href="/users/homepage">My Homepage</a>
-      <a href="/courses">Courses</a>
-      <a href="/programs">Programs</a>
-      <a href="/platforms">Platforms</a>
-      <a href="/subjects">Subjects</a>
+      <div class="row">
+        <span class="col-sm-2">MOOC Maestro</span>
+        <a class="col-sm-2" href="/users/homepage">My Homepage</a>
+        <a class="col-sm-2" href="/courses">Courses</a>
+        <a class="col-sm-2" href="/programs">Programs</a>
+        <a class="col-sm-2" href="/platforms">Platforms</a>
+        <a class="col-sm-2" href="/subjects">Subjects</a>
+      </div>
     </nav>
     <div class="wrapper">
       <%= yield %>

@@ -9,8 +9,13 @@ a h3 {
 }
 
 a:hover {
+  text-decoration: none;
   color: white;
   background: #648CB2;
+}
+
+nav .row {
+  margin: 0;
 }
 
 body {
@@ -26,7 +31,6 @@ nav {
 nav span {
   text-align: center;
   display: inline-block;
-  width: 18%;
   color: white;
   padding: 20px 0;
   background: #05607A;
@@ -35,13 +39,13 @@ nav span {
 nav a {
   display: inline-block;
   text-align: center;
-  width: 15.94%;
   padding: 20px 0;
   background: #648CB2;
   color: white;
 }
 
 nav a:hover {
+  text-decoration: none;
   background: #05607A;
 }
 
@@ -84,6 +88,7 @@ footer {
 }
 
 .button a:hover {
+  text-decoration: none;
   background: #05607A;
   border-color: black;
 }
