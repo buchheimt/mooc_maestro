@@ -1,8 +1,0 @@
-<div class="row">
-  <div class="col-sm-4"><h1>Subject Index</h1></div>
-  <div class="create button col-sm-3"><a href="/subjects/new">Create New Subject</a></div>
-</div>
-
-<% @subjects.each do |subject| %>
-  <a href="/subjects/<%= subject.slug %>"><%= subject.name %></a><br>
-<% end %>

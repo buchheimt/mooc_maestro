@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="col-sm-4"><h1><%= @name.capitalize %> Index</h1></div>
+  <div class="head button col-sm-3">
+    <a href="/<%= @name %>s/new">Create New <%= @name.capitalize %></a>
+  </div>
+</div>
+
+
+<% @topics.each do |topic| %>
+  <div class="row">
+    <div class="col-sm-6">
+      <a href="/<%= @name %>s/<%= topic.slug %>"><%= topic.name %></a>
+    </div>
+  </div>
+<% end %>

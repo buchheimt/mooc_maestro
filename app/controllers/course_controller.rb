@@ -2,8 +2,9 @@ class CourseController < ApplicationController
 
   get '/courses' do
     if logged_in?
-      @courses = Course.all.sort {|a,b| a.name <=> b.name}
-      erb :'courses/index'
+      @topics = Course.all.sort {|a,b| a.name <=> b.name}
+      @name = "course"
+      erb :index
     else
       redirect '/users/login'
     end

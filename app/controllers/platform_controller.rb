@@ -2,8 +2,9 @@ class PlatformController < ApplicationController
 
   get '/platforms' do
     if logged_in?
-      @platforms = Platform.all.reject {|pl| pl.name == "Unassigned"}.sort {|a,b| a.name <=> b.name}
-      erb :'platforms/index'
+      @topics = Platform.all.reject {|pl| pl.name == "Unassigned"}.sort {|a,b| a.name <=> b.name}
+      @name = "platform"
+      erb :index
     else
       redirect '/users/login'
     end

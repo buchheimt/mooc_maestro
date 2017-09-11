@@ -2,8 +2,9 @@ class ProgramController < ApplicationController
 
   get '/programs' do
     if logged_in?
-      @programs = Program.all.reject {|pr| pr.name == "Individual Courses"}.sort {|a,b| a.name <=> b.name}
-      erb :'programs/index'
+      @topics = Program.all.reject {|pr| pr.name == "Individual Courses"}.sort {|a,b| a.name <=> b.name}
+      @name = "program"
+      erb :index
     else
       redirect '/users/login'
     end

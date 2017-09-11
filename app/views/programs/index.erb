@@ -1,8 +1,0 @@
-<div class="row">
-  <div class="col-sm-4"><h1>Program Index</h1></div>
-  <div class="create button col-sm-3"><a href="/programs/new">Create New Program</a></div>
-</div>
-
-<% @programs.each do |program| %>
-  <a href="/programs/<%= program.slug %>"><%= program.name %></a><br>
-<% end %>
