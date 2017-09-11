@@ -50,18 +50,17 @@
   <h2>My Info</h2>
   <div class="row">
     <p class="col-sm-2"><strong>Start Date:</strong> </p>
-    <p class="col-sm-10">???</p>
+    <% first_course = UserCourse.find_on_join(@user, @program.courses.first).start_date %>
+    <p class="col-sm-10"><%= first_course.strftime("%F") %></p>
   </div>
-  <% if false %>
+  <% if last_finish = UserCourse.find_on_join(@user, @program.courses.last).end_date %>
     <div class="row">
       <p class="col-sm-2"><strong>End Date:</strong> </p>
-      <p class="col-sm-10">???</p>
+      <p class="col-sm-10"><%= last_finish.strftime("%F") %></p>
     </div>
   <% end %>
-  <% unless false %>
-    <div class="row">
-      <p class="col-sm-2"><strong>Progress: </strong> </p>
-      <p class="col-sm-10">???</p>
-    </div>
-  <% end %>
+  <div class="row">
+    <p class="col-sm-2"><strong>Progress: </strong></p>
+    <p class="col-sm-10"><%= @user.program_progress(@program) %>%</p>
+  </div>
 <% end %>

@@ -52,18 +52,18 @@
   <h2>My Info</h2>
   <div class="row">
     <p class="col-sm-2"><strong>Start Date:</strong> </p>
-    <p class="col-sm-10"><%= @user_course.start_date.month %>-<%= @user_course.start_date.day %>-<%= @user_course.start_date.year %></p>
+    <p class="col-sm-10"><%= @user_course.start_date.strftime("%F") %></p>
   </div>
   <% if @course.length_in_hours == @user_course.progress_in_hours %>
     <div class="row">
       <p class="col-sm-2"><strong>End Date:</strong> </p>
-      <p class="col-sm-10"><%= @user_course.end_date.month %>-<%= @user_course.end_date.day %>-<%= @user_course.end_date.year %></p>
+      <p class="col-sm-10"><%= @user_course.end_date.strftime("%F") %></p>
     </div>
   <% end %>
   <% unless @course.length_in_hours.nil? %>
     <div class="row">
       <p class="col-sm-2"><strong>Progress: </strong> </p>
-      <p class="col-sm-10"><%= @user_course.progress_in_hours %> hours</p>
+      <p class="col-sm-10"><%= @user_course.progress_in_hours %>%</p>
     </div>
   <% end %>
 <% end %>

@@ -13,7 +13,14 @@ class UserCourse < ActiveRecord::Base
 
   def add_progress(new_hours)
     self.progress_in_hours += new_hours
-    self.progress_in_hours = self.course.length_in_hours if self.progress_in_hours > self.course.length_in_hours
+    if self.progress_in_hours >= self.course.length_in_hours
+      self.progress_in_hours = self.course.length_in_hours
+      self.end_date = Time.now
+    end
+  end
+
+  def get_progress_percent
+    (self.progress_in_hours / self.course.length_in_hours * 100).round
   end
 
   def self.establish(user, course)
