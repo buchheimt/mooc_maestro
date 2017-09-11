@@ -93,9 +93,7 @@ class ProgramController < ApplicationController
     @program = Program.find_by_slug(params[:slug])
     if @program && logged_in?
       @program.courses.each do |course|
-        unless @user.courses.include?(course)
-          UserCourse.establish(@user, course)
-        end
+        UserCourse.establish(@user, course) unless @user.courses.include?(course)
       end
       redirect "/users/homepage"
     else
@@ -107,13 +105,9 @@ class ProgramController < ApplicationController
     @user = current_user
     @program = Program.find_by_slug(params[:slug])
     if @program && logged_in? && @user.programs.include?(@program)
-      # add helper to rem course and del user_course!
       @program.courses.each do |course|
-        UserCourse.find_on_join(@user, course).delete
-        @user.courses.delete(course)
-        @user.save
-        course.users.delete(@user)
-        course.save
+        @user_course = UserCourse.find_on_join(@user, course)
+        @user_course.delete if @user_course
       end
       redirect '/users/homepage'
     else
