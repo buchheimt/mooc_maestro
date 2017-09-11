@@ -30,5 +30,9 @@ class ApplicationController < Sinatra::Base
       @user = current_user
       @user.id == topic.creator_id
     end
+
+    def name_sort(topics)
+      topics.sort {|a,b| a.name <=> b.name}
+    end
   end
 end

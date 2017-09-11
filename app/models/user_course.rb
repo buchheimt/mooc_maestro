@@ -13,6 +13,7 @@ class UserCourse < ActiveRecord::Base
       self.progress_in_hours = self.course.length_in_hours
       self.end_date = Time.now
     end
+    self.save
   end
 
   def get_progress_percent

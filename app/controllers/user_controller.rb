@@ -1,5 +1,29 @@
 class UserController < ApplicationController
 
+  get '/users/homepage' do
+    @user = current_user
+    if logged_in?
+      @programs = @user.programs.uniq
+      @courses = @user.courses
+      erb :'users/homepage'
+    else
+      redirect '/users/login'
+    end
+  end
+
+  patch '/users' do
+    if logged_in?
+      @user = current_user
+      params[:course_ids].each do |c_id, v|
+        @course = Course.find(c_id.to_i)
+        UserCourse.find_on_join(@user, @course).add_progress(v.to_i)
+      end
+      redirect '/users/homepage'
+    else
+      redirect '/users/login'
+    end
+  end
+
   get '/users/login' do
     if logged_in?
       redirect 'users/homepage'
@@ -32,35 +56,8 @@ class UserController < ApplicationController
     end
   end
 
-  patch '/users' do
-    if logged_in?
-      @user = current_user
-      params[:course_ids].each do |c_id, v|
-        @course = Course.find(c_id.to_i)
-        @user_course = UserCourse.find_on_join(@user, @course)
-        @user_course.add_progress(v.to_i)
-        @user_course.save
-      end
-      redirect '/users/homepage'
-    else
-      redirect '/users/login'
-    end
-  end
-
   get '/users/logout' do
     log_out
     redirect '/users/login'
   end
-
-  get '/users/homepage' do
-    @user = current_user
-    if logged_in?
-      @programs = @user.programs.uniq
-      @courses = @user.courses
-      erb :'users/homepage'
-    else
-      redirect '/users/login'
-    end
-  end
-
 end
