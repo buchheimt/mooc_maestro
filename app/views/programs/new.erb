@@ -28,22 +28,37 @@
     <input class="col-sm-4" type="text" name="program[affiliation]" id="affiliation">
   </div>
 
-  <h4>Platform: </h4>
-  <% @platforms.each do |platform| %>
-    <input type="radio" name="platform_id" value="<%= platform.id %>" id="<%= platform.name %>">
-      <%= platform.name %>
-    </input>
-  <% end %><br>
-  <input type="radio" name="platform_id" value="" id="">
-    Add New Platform
-  </input>
-  <input type="text" name="platform_name" id="platform_name">
+  <div class="row">
+    <h4 class="col-sm-3">Platform: </h4>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <% @platforms.each do |platform| %>
+        <input type="radio" name="platform_id" value="<%= platform.id %>" id="<%= platform.name %>">
+          <%= platform.name %>
+        </input>
+      <% end %><br>
+      <input type="radio" name="platform_id" value="" id="">
+        Add New Platform
+      </input>
+      <input type="text" name="platform_name" id="platform_name">
+    </div>
+  </div>
+  
+  <div class="row">
+    <h4 class="col-sm-3">Courses: </h4>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <% @courses.each do |course| %>
+        <input type="checkbox" name="program[course_ids][]" value="<%= course.id %>" id="<%= course.name %>">
+          <%= course.name %>
+        </input>
+      <% end %><br><br>
+    </div>
+  </div>
+  <div class="row">
+    <input class="form-button col-sm-2 col-sm-offset-5" type="submit" name="submit" value="Create Program">
+  </div>
 
-  <h4>Courses: </h4>
-  <% @courses.each do |course| %>
-    <input type="checkbox" name="program[course_ids][]" value="<%= course.id %>" id="<%= course.name %>">
-      <%= course.name %>
-    </input>
-  <% end %><br><br>
-  <input class="form-button" type="submit" name="submit" value="Create Program">
 </form>
