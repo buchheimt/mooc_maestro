@@ -13,12 +13,21 @@
     <input class="col-sm-4" type="text" name="subject[description]" id="description">
   </div>
 
-  <h4>Courses: </h4>
-  <% @courses.each do |course| %>
-  <input type="checkbox" name="subject[course_ids][]" value="<%= course.id %>" id="<%= course.name %>">
-    <%= course.name %>
-  </input>
-  <% end %><br><br>
-
-  <input class="form-button" type="submit" name="submit" value="Create Subject">
+  <div class="row">
+    <div class="col-sm-3">
+      <h4>Courses: </h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <% @courses.each do |course| %>
+      <input type="checkbox" name="subject[course_ids][]" value="<%= course.id %>" id="<%= course.name %>">
+        <%= course.name %>
+      </input>
+      <% end %><br><br>
+    </div>
+  </div>
+  <div class="row">
+    <input class="form-button col-sm-2 col-sm-offset-5" type="submit" name="submit" value="Create Subject">
+  </div>
 </form>
