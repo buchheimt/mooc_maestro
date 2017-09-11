@@ -20,18 +20,24 @@
     <p class="col-sm-1">Hours</p>
   </div>
 
-  <h4>Program: </h4>
+  <div class="row">
+    <h4 class="col-sm-3">Program: </h4>
+  </div>
   <% @programs.each do |program| %>
     <input type="radio" name="program_id" value="<%= program.id %>" id="<%= program.name %>" <%= 'checked' if @course.program == program %>>
       <%= program.name %>
     </input>
   <% end %><br>
 
-  <h4>Subjects: </h4>
+  <div class="row">
+    <h4 class="col-sm-3">Subjects: </h4>
+  </div>
   <% @subjects.each do |subject| %>
     <input type="checkbox" name="course[subject_ids][]" value="<%= subject.id %>" id="<%= subject.name %>" <%= 'checked' if @course.subjects.include?(subject) %>>
       <%= subject.name %>
     </input>
   <% end %><br><br>
-  <input class="form-button" type="submit" name="submit" value="Edit Course">
+  <div class="row">
+    <input class="form-button col-sm-2 col-sm-offset-5" type="submit" name="submit" value="Edit Course">
+  </div>
 </form>
