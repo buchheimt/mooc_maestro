@@ -40,6 +40,7 @@ class CourseController < ApplicationController
         @course.subjects << Subject.find_by_id(subject_id)
       end
       @course.subjects << Subject.create(name: params[:subject_name]) unless params[:subject_name].empty?
+      @course.creator_id = @user.id
       @user.save
 
       UserCourse.establish(@user, @course)

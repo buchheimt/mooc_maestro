@@ -35,6 +35,7 @@ class PlatformController < ApplicationController
         end
       end
 
+      @platform.creator_id = @user.id
       @platform.save
       redirect "/platforms/#{@platform.slug}"
     end

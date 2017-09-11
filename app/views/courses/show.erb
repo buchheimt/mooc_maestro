@@ -1,5 +1,5 @@
 <div class="row">
-  <h1 class="col-sm-8"><%= @course.name %></h1>
+  <h2 class="col-sm-8"><%= @course.name %></h2>
 
   <% if user_created?(@course)  %>
     <div class="head button col-sm-2"><a href="/courses/<%= @course.slug %>/edit">Edit As Creator</a></div>

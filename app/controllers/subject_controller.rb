@@ -33,6 +33,8 @@ class SubjectController < ApplicationController
         end
       end
 
+
+      @subject.creator_id = @user.id
       @subject.save
 
       redirect "/subjects/#{@subject.slug}"

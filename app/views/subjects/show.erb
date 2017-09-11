@@ -1,5 +1,5 @@
 <div class="row">
-  <h1 class="col-sm-8"><%= @subject.name %></h1>
+  <h2 class="col-sm-8"><%= @subject.name %></h2>
 
   <% if user_created?(@subject)  %>
     <div class="create button col-sm-2"><a href="/subjects/<%= @subject.slug %>/edit">Edit Subject</a></div>

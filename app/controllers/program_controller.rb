@@ -25,6 +25,7 @@ class ProgramController < ApplicationController
     if !logged_in? || params[:program][:name].empty? || Program.find_by(name: params[:program][:name])
       redirect '/programs/new'
     else
+      @user = current_user
       @program = Program.new(name: params[:program][:name])
       @program.description = params[:program][:description] unless params[:program][:description].empty?
       @program.certification = params[:program][:certification] unless params[:program][:certification].empty?
@@ -45,6 +46,7 @@ class ProgramController < ApplicationController
         end
       end
 
+      @program.creator_id = @user.id
       @program.save
       redirect "/programs/#{@program.slug}"
     end
