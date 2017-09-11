@@ -3,7 +3,7 @@ class CourseController < ApplicationController
   get '/courses' do
     if logged_in?
       @topics = Course.all.sort {|a,b| a.name <=> b.name}
-      @name = "course"
+      @name = Course.name.downcase
       erb :index
     else
       redirect '/users/login'
@@ -14,7 +14,6 @@ class CourseController < ApplicationController
     if logged_in?
       @programs = Program.all.reject {|pr| pr.name == "Individual Courses"}.sort {|a,b| a.name <=> b.name}
       @subjects = Subject.all.sort {|a,b| a.name <=> b.name}
-
       erb :'courses/new'
     else
       redirect '/users/login'
@@ -22,13 +21,14 @@ class CourseController < ApplicationController
   end
 
   post '/courses' do
-    if !logged_in? || params[:course][:name].empty? || Course.find_by(name: params[:course][:name])
+    @name = params[:course][:name]
+    if !logged_in? || @name.empty? || Course.find_by(name: @name)
       redirect '/courses/new'
     else
       @user = current_user
-      @course = @user.courses.build(name: params[:course][:name])
-      @course.description = params[:course][:description] unless params[:course][:description].empty?
-      @course.length_in_hours = params[:course][:length_in_hours].to_f unless params[:course][:length_in_hours].empty?
+      @info = params[:course].select {|item| ! item.empty?}
+      @course = @user.courses.build(info)
+
       if ! params.include?(:program_id) && params[:program_name].empty?
         @course.program = Program.find_by(name: "Individual Courses")
       elsif params[:program_id].empty?
@@ -36,15 +36,10 @@ class CourseController < ApplicationController
       else
         @course.program = Program.find_by_id(params[:program_id])
       end
-      params[:course][:subject_ids].each do |subject_id|
-        @course.subjects << Subject.find_by_id(subject_id)
-      end
+
       @course.subjects << Subject.create(name: params[:subject_name]) unless params[:subject_name].empty?
-      @course.creator_id = @user.id
-      @user.save
-
+      @user.make_creator(@platform)
       UserCourse.establish(@user, @course)
-
       redirect "/courses/#{@course.slug}"
     end
   end
@@ -96,12 +91,9 @@ class CourseController < ApplicationController
   get '/courses/:slug/leave' do
     @user = current_user
     @course = Course.find_by_slug(params[:slug])
-    if @course && logged_in? && @user.courses.include?(@course)
-      UserCourse.find_on_join(@user, @course).delete
-      @user.courses.delete(@course)
-      @user.save
-      @course.users.delete(@user)
-      @course.save
+    if @course && logged_in?
+      @user_course = UserCourse.find_on_join(@user, @course)
+      @user_course.delete if @user_course
       redirect '/users/homepage'
     else
       redirect "/courses/#{@course.slug}"

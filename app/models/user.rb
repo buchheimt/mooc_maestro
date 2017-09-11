@@ -7,6 +7,11 @@ class User < ActiveRecord::Base
   has_many :platforms, through: :programs
   has_many :subjects, through: :courses
 
+  def make_creator(topic)
+    topic.creator_id = self.id
+    topic.save
+  end
+
   def get_program_progress(program)
     hours_complete = 0
     program.courses.each do |course|

@@ -28,7 +28,6 @@ class ProgramController < ApplicationController
       @user = current_user
       @info = params[:program].select {|item| ! item.empty?}
       @program = Program.new(@info)
-
       if ! params.include?(:platform_id) && params[:platform_name].empty?
         @program.platform = Platform.new(name: "Unassigned")
       elsif params[:platform_id].empty?
@@ -36,9 +35,7 @@ class ProgramController < ApplicationController
       else
         @program.platform = Platform.find_by_id(params[:platform_id])
       end
-
-      @program.creator_id = @user.id
-      @program.save
+      @user.make_creator(@program)
       redirect "/programs/#{@program.slug}"
     end
   end

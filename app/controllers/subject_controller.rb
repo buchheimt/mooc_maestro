@@ -20,15 +20,14 @@ class SubjectController < ApplicationController
   end
 
   post '/subjects' do
-    @user = current_user
     @name = params[:subject][:name]
     if !logged_in? || @name.empty? || Subject.find_by(name: @name)
       redirect '/subjects/new'
     else
+      @user = current_user
       @info = params[:subject].select {|item| ! item.empty?}
       @subject = Subject.new(@info)
-      @subject.creator_id = @user.id
-      @subject.save
+      @user.make_creator(@subject)
       redirect "/subjects/#{@subject.slug}"
     end
   end
