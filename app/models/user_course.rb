@@ -11,6 +11,11 @@ class UserCourse < ActiveRecord::Base
     "#{self.progress_in_hours} / #{self.course.length_in_hours}"
   end
 
+  def add_progress(new_hours)
+    self.progress_in_hours += new_hours
+    self.progress_in_hours = self.course.length_in_hours if self.progress_in_hours > self.course.length_in_hours
+  end
+
   def self.establish(user, course)
     user.courses << course
     course.users << user
