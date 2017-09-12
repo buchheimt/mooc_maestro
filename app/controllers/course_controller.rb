@@ -24,30 +24,43 @@ class CourseController < ApplicationController
 
   post '/courses' do
     @name = params[:course][:name]
-    if !logged_in? || Course.find_by(name: @name)
-      flash[:bad] = "Course name already taken"
-      redirect '/courses/new'
-    else
-      @user = current_user
-      @info = params[:course].select {|item| ! item.empty?}
-      @course = @user.courses.build(@info)
-
-      if ! params.include?(:program_id) && params[:program_name].empty?
-        @program = Program.find_by(name: "Individual Courses")
-      elsif params[:program_id].empty?
-        @program = Program.new(name: params[:program_name])
-        @program.platform = Platform.find_by(name: "Unassigned")
+    if logged_in?
+      case
+      when Course.find_by(name: @name)
+        flash[:bad] = "Course name already taken"
+        redirect '/courses/new'
+      when !valid_name(@name)
+        flash[:bad] = "Invalid username. Letters, numbers, spaces, and underscores only"
+        redirect '/courses/new'
+      when !valid_number(params[:course][:length_in_hours]) || params[:course][:length_in_hours].to_f < 0
+        flash[:bad] = "Enter only numbers for Course Length, or leave it blank"
+        redirect '/courses/new'
       else
-        @program = Program.find_by_id(params[:program_id])
-      end
-      @course.subjects << Subject.create(name: params[:subject_name]) unless params[:subject_name].empty?
-      @course.program = @program
-      @user.make_creator(@program)
-      @user.make_creator(@course)
-      UserCourse.establish(@user, @course)
+        @user = current_user
+        @info = params[:course].select {|item| ! item.empty?}
+        @course = @user.courses.build(@info)
 
-      flash[:good] = "Course created!"
-      redirect "/courses/#{@course.slug}"
+        if ! params.include?(:program_id) && params[:program_name].empty?
+          @program = Program.find_by(name: "Individual Courses")
+        elsif params[:program_id].empty?
+          @program = Program.new(name: params[:program_name])
+          @program.platform = Platform.find_by(name: "Unassigned")
+        else
+          @program = Program.find_by_id(params[:program_id])
+        end
+
+        @course.subjects << Subject.create(name: params[:subject_name]) unless params[:subject_name].empty?
+        @course.program = @program
+        @user.make_creator(@program)
+        @user.make_creator(@course)
+        UserCourse.establish(@user, @course)
+
+        flash[:good] = "Course created!"
+        redirect "/courses/#{@course.slug}"
+      end
+    else
+      flash[:bad] = "Please log in first"
+      redirect '/users/login'
     end
   end
 

@@ -14,13 +14,22 @@ class UserController < ApplicationController
 
   patch '/users' do
     if logged_in?
-      @user = current_user
-      params[:course_ids].each do |c_id, v|
-        @course = Course.find(c_id.to_i)
-        UserCourse.find_on_join(@user, @course).add_progress(v.to_i) unless v.empty?
+      case
+      when params[:course_ids].values.all? {|v| v.empty?}
+        flash[:bad] = "No hours entered"
+        redirect '/users/homepage'
+      when params[:course_ids].values.any? {|v| !valid_number(v)}
+        flash[:bad] = "Enter numbers only"
+        redirect '/users/homepage'
+      else
+        @user = current_user
+        params[:course_ids].each do |c_id, v|
+          @course = Course.find(c_id)
+          UserCourse.find_on_join(@user, @course).add_progress(v.to_i) unless v.empty?
+        end
+        flash[:good] = "Hours Successfully Added!"
+        redirect '/users/homepage'
       end
-      flash[:good] = "Hours Successfully Added!"
-      redirect '/users/homepage'
     else
       flash[:bad] = "Please log in first"
       redirect '/users/login'
@@ -56,7 +65,7 @@ class UserController < ApplicationController
       flash[:bad] = "Username already taken"
       redirect '/users/signup'
     when !valid_name(params[:user][:username])
-      flash[:bad] = "Invalid username. Letters, numbers, and underscores only"
+      flash[:bad] = "Invalid username. Letters, numbers, spaces, and underscores only"
       redirect '/users/signup'
     when !valid_email(params[:user][:email])
       flash[:bad] = "Invalid email"
@@ -75,5 +84,4 @@ class UserController < ApplicationController
     log_out
     redirect '/users/login'
   end
-
 end

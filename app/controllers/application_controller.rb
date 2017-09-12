@@ -42,11 +42,11 @@ class ApplicationController < Sinatra::Base
     end
 
     def valid_name(name)
-      !!name.match(/\A\w+\z/)
+      !!name.match(/\A[\w ]+\z/)
     end
 
     def valid_number(string)
-      !!string.match(/\A\d+\z/)
+      !!string.match(/\A-?\d+\z/) || string.empty?
     end
 
     def valid_password(password)

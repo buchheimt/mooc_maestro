@@ -12,6 +12,8 @@ class UserCourse < ActiveRecord::Base
     if self.progress_in_hours >= self.course.length_in_hours
       self.progress_in_hours = self.course.length_in_hours
       self.end_date = Time.now
+    elsif self.progress_in_hours < 0
+      self.progress_in_hours = 0
     end
     self.save
   end
