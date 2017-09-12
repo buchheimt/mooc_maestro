@@ -40,7 +40,7 @@ class CourseController < ApplicationController
         @info = params[:course].reject {|k, v| v.empty?}
         @course = @user.courses.build(@info)
 
-        if ! params.include?(:program_id) && params[:program_name].empty?
+        if !params.include?(:program_id) && params[:program_name].empty?
           @program = Program.find_by(name: "Individual Courses")
         elsif params[:program_id].empty?
           @program = Program.new(name: params[:program_name])

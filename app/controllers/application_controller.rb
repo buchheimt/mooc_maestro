@@ -29,8 +29,7 @@ class ApplicationController < Sinatra::Base
     end
 
     def user_created?(topic)
-      @user = current_user
-      @user.id == topic.creator_id
+      current_user.id == topic.creator_id
     end
 
     def name_sort(topics)

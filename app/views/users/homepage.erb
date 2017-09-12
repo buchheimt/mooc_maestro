@@ -18,8 +18,8 @@
           <% @user_course = UserCourse.find_on_join(@user, course) %>
           <% unless course.length_in_hours.nil? || course.length_in_hours == 0 %>
             <input class="hours_of progress col-sm-1" type="text" name="course_ids[<%= course.id %>]">
-            <p class="hours_of col-sm-2"><%= @user_course.hours_of_total %></p>
-            <p class="progress col-sm-1"><%= (@user_course.progress_in_hours / course.length_in_hours * 100).round %>%</p><br>
+            <p class="hours_of col-sm-2"><%= @user_course.get_progress_formatted %></p>
+            <p class="progress col-sm-1"><%= @user_course.get_progress_percent %>%</p><br>
           <% end %>
         </div>
       <% end %>

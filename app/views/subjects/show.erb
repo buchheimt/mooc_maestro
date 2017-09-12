@@ -16,9 +16,9 @@
 <div class="row">
   <p class="col-sm-2"><strong>Courses: </strong></p>
   <div class="col-sm-10">
-    <% @subject.courses.each do |course| %>
+    <% @courses.each do |course| %>
       <span><a href="/courses/<%= course.slug %>"><%= course.name %></a></span>
-      <span><%= "| " unless course == @subject.courses.last %></span>
+      <span><%= "| " unless course == @courses.last %></span>
     <% end %>
   </div>
 </div>
@@ -26,9 +26,9 @@
 <div class="row">
   <p class="col-sm-2"><strong>Programs: </strong></p>
   <div class="col-sm-10">
-    <% @subject.programs.uniq.each do |program| %>
+    <% @programs.each do |program| %>
       <span><a href="/programs/<%= program.slug %>"><%= program.name %></a></span>
-      <span><%= "| " unless program == @subject.programs.uniq.last %></span>
+      <span><%= "| " unless program == @programs.last %></span>
     <% end %>
   </div>
 </div>
@@ -36,9 +36,9 @@
 <div class="row">
   <p class="col-sm-2"><strong>Platforms: </strong></p>
   <div class="col-sm-10">
-    <% @subject.platforms.uniq.each do |platform| %>
+    <% @platforms.each do |platform| %>
       <span><a href="/platforms/<%= platform.slug %>"><%= platform.name %></a></span>
-      <span><%= "| " unless platform == @subject.platforms.uniq.last %></span>
+      <span><%= "| " unless platform == @platforms.last %></span>
     <% end %>
   </div>
 </div>

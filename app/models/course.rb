@@ -8,11 +8,10 @@ class Course < ActiveRecord::Base
   has_many :subjects, through: :course_subjects
 
   def slug
-    return self.name.downcase.split.join("-")
+    name.downcase.split.join("-")
   end
 
   def self.find_by_slug(slug)
-    self.all.detect {|course| course.slug == slug}
+    self.all.detect {|c| c.slug == slug}
   end
-
 end

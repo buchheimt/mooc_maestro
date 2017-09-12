@@ -6,18 +6,15 @@ class Program < ActiveRecord::Base
   has_many :subjects, through: :courses
 
   def slug
-    return self.name.downcase.split.join("-")
+    name.downcase.split.join("-")
   end
 
   def self.find_by_slug(slug)
-    self.all.detect {|program| program.slug == slug}
+    self.all.detect {|pr| pr.slug == slug}
   end
 
   def length
-    return nil if self.courses.any? {|c| c.length_in_hours.nil?} || self.courses.empty?
-    sum = 0
-    self.courses.each {|c| sum += c.length_in_hours}
-    sum
+    return nil if courses.any? {|c| c.length_in_hours.nil?} || courses.empty?
+    courses.inject(0) {|sum, c| sum += c.length_in_hours}
   end
-
 end

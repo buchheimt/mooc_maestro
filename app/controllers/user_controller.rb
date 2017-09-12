@@ -25,7 +25,8 @@ class UserController < ApplicationController
         @user = current_user
         params[:course_ids].each do |c_id, v|
           @course = Course.find(c_id)
-          UserCourse.find_on_join(@user, @course).add_progress(v.to_i) unless v.empty?
+          @user_course = UserCourse.find_on_join(@user, @course)
+          @user_course.add_progress(v.to_i) unless v.empty? || @user_course.nil?
         end
         flash[:good] = "Hours Successfully Added!"
         redirect '/users/homepage'
