@@ -36,5 +36,9 @@ class ApplicationController < Sinatra::Base
     def name_sort(topics)
       topics.sort {|a,b| a.name <=> b.name}
     end
+
+    def validate_email(email)
+      !!email.match(/.+@.+\..+/)
+    end
   end
 end

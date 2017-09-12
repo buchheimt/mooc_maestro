@@ -54,10 +54,13 @@ class UserController < ApplicationController
     if User.find_by(username: params[:user][:username])
       flash[:bad] = "Username already taken"
       redirect '/users/signup'
-    else
+    elsif validate_email(params[:user][:email])
       @user = User.create(params[:user])
       session[:user_id] = @user.id
       redirect '/users/homepage'
+    else
+      flash[:bad] = "Invalid email"
+      redirect '/users/signup'
     end
   end
 
@@ -65,4 +68,5 @@ class UserController < ApplicationController
     log_out
     redirect '/users/login'
   end
+
 end
