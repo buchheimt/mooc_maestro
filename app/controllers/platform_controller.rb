@@ -24,16 +24,26 @@ class PlatformController < ApplicationController
 
   post '/platforms' do
     @name = params[:platform][:name]
-    if !logged_in? || Platform.find_by(name: @name)
-      flash[:bad] = "Platform name already taken"
-      redirect '/platforms/new'
+
+    if logged_in?
+      case
+      when Platform.find_by(name: @name)
+        flash[:bad] = "Platform name already taken"
+        redirect '/platforms/new'
+      when !valid_name(@name)
+        flash[:bad] = "Invalid name. Letters, numbers, spaces, and underscores only"
+        redirect '/platforms/new'
+      else
+        @user = current_user
+        @info = params[:platform].select {|item| ! item.empty?}
+        @platform = Platform.new(@info)
+        @user.make_creator(@platform)
+        flash[:good] = "Platform created!"
+        redirect "/platforms/#{@platform.slug}"
+      end
     else
-      @user = current_user
-      @info = params[:platform].select {|item| ! item.empty?}
-      @platform = Platform.new(@info)
-      @user.make_creator(@platform)
-      flash[:good] = "Platform created!"
-      redirect "/platforms/#{@platform.slug}"
+      flash[:bad] = "Please log in first"
+      redirect '/users/login'
     end
   end
 

@@ -23,16 +23,25 @@ class SubjectController < ApplicationController
 
   post '/subjects' do
     @name = params[:subject][:name]
-    if !logged_in? || @name.empty? || Subject.find_by(name: @name)
-      flash[:bad] = "Subject name already taken"
-      redirect '/subjects/new'
+    if logged_in?
+      case
+      when Subject.find_by(name: @name)
+        flash[:bad] = "Subject name already taken"
+        redirect '/subjects/new'
+      when !valid_name(@name)
+        flash[:bad] = "Invalid name. Letters, numbers, spaces, and underscores only"
+        redirect '/subjects/new'
+      else
+        @user = current_user
+        @info = params[:subject].select {|item| ! item.empty?}
+        @subject = Subject.new(@info)
+        @user.make_creator(@subject)
+        flash[:good] = "Subject created!"
+        redirect "/subjects/#{@subject.slug}"
+      end
     else
-      @user = current_user
-      @info = params[:subject].select {|item| ! item.empty?}
-      @subject = Subject.new(@info)
-      @user.make_creator(@subject)
-      flash[:good] = "Subject created!"
-      redirect "/subjects/#{@subject.slug}"
+      flash[:bad] = "Please log in first"
+      redirect '/users/login'
     end
   end
 
@@ -50,20 +59,21 @@ class SubjectController < ApplicationController
   patch '/subjects/:slug' do
     @subject = Subject.find_by_slug(params[:slug])
     @new_name = params[:subject][:name]
-    if @subject && user_created?(@subject)
-      if @new_name != @subject.name && Subject.find_by(name: @new_name)
-        flash[:bad] = "Subject name entered is already taken"
-        redirect "/subjects/#{@subject.slug}/edit"
-      else
-        @subject.courses.clear
-        @info = params[:subject].select {|item| ! item.empty?}
-        @subject.update(@info)
-
-        flash[:good] = "Subject successfully edited"
-        redirect "/subjects/#{@subject.slug}"
-      end
+    case
+    when !@subject || !user_created?(@subject)
+      flash[:bad] = "You must create a subject to edit or delete it"
+      redirect "/subjects/#{@subject.slug}"
+    when @new_name != @subject.name && Subject.find_by(name: @new_name)
+      flash[:bad] = "Subject name entered is already taken"
+      redirect "/subjects/#{@subject.slug}/edit"
+    when !valid_name(@new_name)
+      flash[:bad] = "Invalid name. Letters, numbers, spaces, and underscores only"
+      redirect "/subjects/#{@subject.slug}/edit"
     else
-      flash[:bad] = "You must create a platform to edit or delete it"
+      @subject.courses.clear
+      @info = params[:subject].select {|item| ! item.empty?}
+      @subject.update(@info)
+      flash[:good] = "Subject successfully edited"
       redirect "/subjects/#{@subject.slug}"
     end
   end
@@ -84,8 +94,8 @@ class SubjectController < ApplicationController
     if @subject && logged_in?
       erb :'subjects/show'
     else
-      flash[:bad] = "Program not found"
-      redirect '/programs'
+      flash[:bad] = "Subject not found"
+      redirect '/subjects'
     end
   end
 end

@@ -30,7 +30,7 @@ class CourseController < ApplicationController
         flash[:bad] = "Course name already taken"
         redirect '/courses/new'
       when !valid_name(@name)
-        flash[:bad] = "Invalid username. Letters, numbers, spaces, and underscores only"
+        flash[:bad] = "Invalid name. Letters, numbers, spaces, and underscores only"
         redirect '/courses/new'
       when !valid_number(params[:course][:length_in_hours]) || params[:course][:length_in_hours].to_f < 0
         flash[:bad] = "Enter only numbers for Course Length, or leave it blank"
@@ -79,19 +79,24 @@ class CourseController < ApplicationController
   patch '/courses/:slug' do
     @course = Course.find_by_slug(params[:slug])
     @new_name = params[:course][:name]
-    if @course && user_created?(@course)
-      if @new_name != @course.name && Course.find_by(name: @new_name)
-        flash[:bad] = "Course name entered is already taken"
-        redirect "/courses/#{@course.slug}/edit"
-      else
-        @info = params[:course].select {|item| ! item.empty?}
-        @course.subjects.clear
-        @course.update(@info)
-        flash[:good] = "Course successfully edited"
-        redirect "/courses/#{@course.slug}"
-      end
-    else
+    case
+    when !@course || !user_created?(@course)
       flash[:bad] = "You must create a course to edit or delete it"
+      redirect "/courses/#{@course.slug}"
+    when @new_name != @course.name && Course.find_by(name: @new_name)
+      flash[:bad] = "Course name entered is already taken"
+      redirect "/courses/#{@course.slug}/edit"
+    when !valid_name(@new_name)
+      flash[:bad] = "Invalid name. Letters, numbers, spaces, and underscores only"
+      redirect "/courses/#{@course.slug}/edit"
+    when !valid_number(params[:course][:length_in_hours]) || params[:course][:length_in_hours].to_f < 0
+      flash[:bad] = "Enter only numbers for Course Length, or leave it blank"
+      redirect "/courses/#{@course.slug}/edit"
+    else
+      @info = params[:course].select {|item| ! item.empty?}
+      @course.subjects.clear
+      @course.update(@info)
+      flash[:good] = "Course successfully edited"
       redirect "/courses/#{@course.slug}"
     end
   end

@@ -24,26 +24,38 @@ class ProgramController < ApplicationController
 
   post '/programs' do
     @name = params[:program][:name]
-    if !logged_in? || Program.find_by(name: @name)
-      flash[:bad] = "Program name already taken"
-      redirect '/programs/new'
-    else
-      @user = current_user
-      @info = params[:program].select {|item| ! item.empty?}
-      @program = Program.new(@info)
-      if ! params.include?(:platform_id) && params[:platform_name].empty?
-        @platform = Platform.new(name: "Unassigned")
-      elsif params[:platform_id].empty?
-        @platform = Platform.new(name: params[:platform_name])
+    if logged_in?
+      case
+      when Program.find_by(name: @name)
+        flash[:bad] = "Program name already taken"
+        redirect '/programs/new'
+      when !valid_name(@name)
+        flash[:bad] = "Invalid name. Letters, numbers, spaces, and underscores only"
+        redirect '/programs/new'
+      when !valid_number(params[:program][:cost]) || params[:program][:cost].to_f < 0
+        flash[:bad] = "Enter only numbers for Cost, or leave it blank"
+        redirect '/programs/new'
       else
-        @platform = Platform.find_by_id(params[:platform_id])
-      end
-      @program.platform = @platform
-      @user.make_creator(@platform)
-      @user.make_creator(@program)
+        @user = current_user
+        @info = params[:program].select {|item| ! item.empty?}
+        @program = Program.new(@info)
+        if ! params.include?(:platform_id) && params[:platform_name].empty?
+          @platform = Platform.new(name: "Unassigned")
+        elsif params[:platform_id].empty?
+          @platform = Platform.new(name: params[:platform_name])
+        else
+          @platform = Platform.find_by_id(params[:platform_id])
+        end
+        @program.platform = @platform
+        @user.make_creator(@platform)
+        @user.make_creator(@program)
 
-      flash[:good] = "Program created!"
-      redirect "/programs/#{@program.slug}"
+        flash[:good] = "Program created!"
+        redirect "/programs/#{@program.slug}"
+      end
+    else
+      flash[:bad] = "Please log in first"
+      redirect '/users/login'
     end
   end
 
@@ -62,23 +74,28 @@ class ProgramController < ApplicationController
   patch '/programs/:slug' do
     @program = Program.find_by_slug(params[:slug])
     @new_name = params[:program][:name]
-    if @program && user_created?(@program)
-      if @new_name != @program.name && Program.find_by(name: @new_name)
-        flash[:bad] = "Program name entered is already taken"
-        redirect "/programs/#{@program.slug}/edit"
-      else
-        @info = params[:program].select {|item| ! item.empty?}
-        @program.courses.clear
-        @program.update(@info)
-        Course.all.select {|c| c.program_id == nil}.each do |c|
-          c.program = Program.find_by(name: "Individual Courses")
-          c.save
-        end
-        flash[:good] = "Program successfully edited"
-        redirect "/programs/#{@program.slug}"
-      end
-    else
+    case
+    when !@program || !user_created?(@program)
       flash[:bad] = "You must create a program to edit or delete it"
+      redirect "/programs/#{@program.slug}"
+    when @new_name != @program.name && Program.find_by(name: @new_name)
+      flash[:bad] = "Program name entered is already taken"
+      redirect "/programs/#{@program.slug}/edit"
+    when !valid_name(@new_name)
+      flash[:bad] = "Invalid name. Letters, numbers, spaces, and underscores only"
+      redirect "/programs/#{@program.slug}/edit"
+    when !valid_number(params[:program][:cost]) || params[:program][:cost].to_f < 0
+      flash[:bad] = "Enter only numbers for Cost, or leave it blank"
+      redirect "/programs/#{@program.slug}/edit"
+    else
+      @info = params[:program].select {|item| ! item.empty?}
+      @program.courses.clear
+      @program.update(@info)
+      Course.all.select {|c| c.program_id == nil}.each do |c|
+        c.program = Program.find_by(name: "Individual Courses")
+        c.save
+      end
+      flash[:good] = "Program successfully edited"
       redirect "/programs/#{@program.slug}"
     end
   end
