@@ -6,7 +6,7 @@ class PlatformController < ApplicationController
       @name = Platform.name.downcase
       erb :index
     else
-      flash[:bad] = "Please Log In First"
+      flash[:bad] = "Please log in first"
       redirect '/users/login'
     end
   end
@@ -17,22 +17,22 @@ class PlatformController < ApplicationController
       @programs = name_sort(@programs)
       erb :'platforms/new'
     else
-      flash[:bad] = "Please Log In First"
+      flash[:bad] = "Please log in first"
       redirect '/users/login'
     end
   end
 
   post '/platforms' do
     @name = params[:platform][:name]
-    if !logged_in? || @name.empty? || Platform.find_by(name: @name)
-      flash[:bad] = "Bad input, Make sure name is unique"
+    if !logged_in? || Platform.find_by(name: @name)
+      flash[:bad] = "Platform name already taken"
       redirect '/platforms/new'
     else
       @user = current_user
       @info = params[:platform].select {|item| ! item.empty?}
       @platform = Platform.new(@info)
       @user.make_creator(@platform)
-      flash[:good] = "Platform Created!"
+      flash[:good] = "Platform created!"
       redirect "/platforms/#{@platform.slug}"
     end
   end
@@ -54,9 +54,9 @@ class PlatformController < ApplicationController
   patch '/platforms/:slug' do
     @platform = Platform.find_by_slug(params[:slug])
     @new_name = params[:platform][:name]
-    if @platform && user_created?(@platform) && ! @new_name.empty?
+    if @platform && user_created?(@platform)
       if @new_name != @platform.name && Platform.find_by(name: @new_name)
-        flash[:bad] = "Name entered is already taken"
+        flash[:bad] = "Platform name entered is already taken"
         redirect "/platforms/#{@platform.slug}/edit"
       else
         @platform.programs.clear
@@ -72,8 +72,8 @@ class PlatformController < ApplicationController
         redirect "/platforms/#{@platform.slug}"
       end
     else
-      flash[:bad] = "Something went wrong, please try again"
-      redirect "/platforms/#{@platform.slug}/edit"
+      flash[:bad] = "You must create a platform to edit or delete it"
+      redirect "/platforms/#{@platform.slug}"
     end
   end
 
@@ -82,8 +82,10 @@ class PlatformController < ApplicationController
     @platform = Platform.find_by_slug(params[:slug])
     if @platform && user_created?(@platform)
       @platform.destroy
+      flash[:good] = "Platform successfully deleted"
+    else
+      flash[:bad] = "You must create a platform to delete it"
     end
-    flash[:bad] = "Platform Successfully Deleted"
     redirect '/platforms'
   end
 
@@ -92,8 +94,8 @@ class PlatformController < ApplicationController
     if @platform && logged_in?
       erb :'platforms/show'
     else
-      flash[:bad] = "Please log in to view platforms"
-      redirect '/users/login'
+      flash[:bad] = "Program not found"
+      redirect '/platforms'
     end
   end
 end

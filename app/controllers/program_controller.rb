@@ -6,7 +6,7 @@ class ProgramController < ApplicationController
       @name = Program.name.downcase
       erb :index
     else
-      flash[:bad] = "Please Log In First"
+      flash[:bad] = "Please log in first"
       redirect '/users/login'
     end
   end
@@ -17,15 +17,15 @@ class ProgramController < ApplicationController
       @platforms = name_sort(Platform.all.reject{|pl| pl.name == "Unassigned"})
       erb :'programs/new'
     else
-      flash[:bad] = "Please Log In First"
+      flash[:bad] = "Please log in first"
       redirect '/users/login'
     end
   end
 
   post '/programs' do
     @name = params[:program][:name]
-    if !logged_in? || @name.empty? || Program.find_by(name: @name)
-      flash[:bad] = "Bad input, Make sure name is unique"
+    if !logged_in? || Program.find_by(name: @name)
+      flash[:bad] = "Program name already taken"
       redirect '/programs/new'
     else
       @user = current_user
@@ -42,7 +42,7 @@ class ProgramController < ApplicationController
       @user.make_creator(@platform)
       @user.make_creator(@program)
 
-      flash[:good] = "Program Created!"
+      flash[:good] = "Program created!"
       redirect "/programs/#{@program.slug}"
     end
   end
@@ -62,9 +62,9 @@ class ProgramController < ApplicationController
   patch '/programs/:slug' do
     @program = Program.find_by_slug(params[:slug])
     @new_name = params[:program][:name]
-    if @program && user_created?(@program) && ! @new_name.empty?
+    if @program && user_created?(@program)
       if @new_name != @program.name && Program.find_by(name: @new_name)
-        flash[:bad] = "Name entered is already taken"
+        flash[:bad] = "Program name entered is already taken"
         redirect "/programs/#{@program.slug}/edit"
       else
         @info = params[:program].select {|item| ! item.empty?}
@@ -78,8 +78,8 @@ class ProgramController < ApplicationController
         redirect "/programs/#{@program.slug}"
       end
     else
-      flash[:bad] = "Something went wrong, please try again"
-      redirect "/programs/#{@program.slug}/edit"
+      flash[:bad] = "You must create a program to edit or delete it"
+      redirect "/programs/#{@program.slug}"
     end
   end
 
@@ -88,8 +88,10 @@ class ProgramController < ApplicationController
     @program = Program.find_by_slug(params[:slug])
     if @program && user_created?(@program)
       @program.destroy
+      flash[:good] = "Program successfully deleted"
+    else
+      flash[:bad] = "You must create a program to delete it"
     end
-    flash[:bad] = "Program Successfully Deleted"
     redirect '/programs'
   end
 
@@ -100,10 +102,9 @@ class ProgramController < ApplicationController
       @program.courses.each do |course|
         UserCourse.establish(@user, course) unless @user.courses.include?(course)
       end
-      flash[:good] = "Program Successfully Joined!"
+      flash[:good] = "Program successfully joined!"
       redirect "/users/homepage"
     else
-      flash[:bad] = "Something went wrong, are you sure you're trying to add a new program?"
       redirect "/programs/#{@program.slug}"
     end
   end
@@ -119,7 +120,7 @@ class ProgramController < ApplicationController
       flash[:good] = "Program Successfully Removed"
       redirect '/users/homepage'
     else
-      flash[:bad] = "Something went wrong, please try again"
+      flash[:bad] = "You cannot leave a program you haven't joined"
       redirect "/programs/#{@program.slug}"
     end
   end
@@ -130,8 +131,8 @@ class ProgramController < ApplicationController
       @user = current_user
       erb :'programs/show'
     else
-      flash[:bad] = "Please log in to view programs"
-      redirect '/users/login'
+      flash[:bad] = "Program not found"
+      redirect '/programs'
     end
   end
 end

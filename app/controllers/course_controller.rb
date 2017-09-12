@@ -6,7 +6,7 @@ class CourseController < ApplicationController
       @name = Course.name.downcase
       erb :index
     else
-      flash[:bad] = "Please Log In First"
+      flash[:bad] = "Please log in first"
       redirect '/users/login'
     end
   end
@@ -17,15 +17,15 @@ class CourseController < ApplicationController
       @subjects = name_sort(Subject.all)
       erb :'courses/new'
     else
-      flash[:bad] = "Please Log In First"
+      flash[:bad] = "Please log in first"
       redirect '/users/login'
     end
   end
 
   post '/courses' do
     @name = params[:course][:name]
-    if !logged_in? || @name.empty? || Course.find_by(name: @name)
-      flash[:bad] = "Bad input, Make sure name is unique"
+    if !logged_in? || Course.find_by(name: @name)
+      flash[:bad] = "Course name already taken"
       redirect '/courses/new'
     else
       @user = current_user
@@ -46,7 +46,7 @@ class CourseController < ApplicationController
       @user.make_creator(@course)
       UserCourse.establish(@user, @course)
 
-      flash[:good] = "Course Created!"
+      flash[:good] = "Course created!"
       redirect "/courses/#{@course.slug}"
     end
   end
@@ -66,9 +66,9 @@ class CourseController < ApplicationController
   patch '/courses/:slug' do
     @course = Course.find_by_slug(params[:slug])
     @new_name = params[:course][:name]
-    if @course && user_created?(@course) && ! @new_name.empty?
+    if @course && user_created?(@course)
       if @new_name != @course.name && Course.find_by(name: @new_name)
-        flash[:bad] = "Name entered is already taken"
+        flash[:bad] = "Course name entered is already taken"
         redirect "/courses/#{@course.slug}/edit"
       else
         @info = params[:course].select {|item| ! item.empty?}
@@ -78,8 +78,8 @@ class CourseController < ApplicationController
         redirect "/courses/#{@course.slug}"
       end
     else
-      flash[:bad] = "Something went wrong, please try again"
-      redirect "/courses/#{@course.slug}/edit"
+      flash[:bad] = "You must create a course to edit or delete it"
+      redirect "/courses/#{@course.slug}"
     end
   end
 
@@ -88,7 +88,9 @@ class CourseController < ApplicationController
     @course = Course.find_by_slug(params[:slug])
     if @course && user_created?(@course)
       @course.destroy
-      flash[:bad] = "Course Successfully Deleted"
+      flash[:good] = "Course successfully deleted"
+    else
+      flash[:bad] = "You must create a course to delete it"
     end
     redirect '/courses'
   end
@@ -98,10 +100,10 @@ class CourseController < ApplicationController
     @course = Course.find_by_slug(params[:slug])
     if @course && logged_in? && ! @user.courses.include?(@course)
       UserCourse.establish(@user, @course)
-      flash[:good] = "Course Successfully Joined!"
+      flash[:good] = "Course successfully joined!"
       redirect "/users/homepage"
     else
-      flash[:bad] = "Something went wrong, are you sure you're trying to add a new course?"
+      flash[:bad] = "You have already joined this course"
       redirect "/courses/#{@course.slug}"
     end
   end
@@ -112,10 +114,10 @@ class CourseController < ApplicationController
     @user_course = UserCourse.find_on_join(@user, @course)
     if @course && logged_in? && @user_course
       @user_course.delete
-      flash[:good] = "Course Successfully Removed"
+      flash[:good] = "Course successfully removed"
       redirect '/users/homepage'
     else
-      flash[:bad] = "Something went wrong, please try again"
+      flash[:bad] = "You cannot leave a course you haven't joined"
       redirect "/courses/#{@course.slug}"
     end
   end
@@ -127,8 +129,8 @@ class CourseController < ApplicationController
       @user_course = UserCourse.find_on_join(@user, @course)
       erb :'courses/show'
     else
-      flash[:bad] = "Please log in to view courses"
-      redirect '/users/login'
+      flash[:bad] = "Course not found"
+      redirect '/courses'
     end
   end
 end

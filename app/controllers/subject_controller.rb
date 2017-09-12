@@ -6,7 +6,7 @@ class SubjectController < ApplicationController
       @name = Subject.name.downcase
       erb :index
     else
-      flash[:bad] = "Please Log In First"
+      flash[:bad] = "Please log in first"
       redirect '/users/login'
     end
   end
@@ -16,7 +16,7 @@ class SubjectController < ApplicationController
       @courses = name_sort(Course.all)
       erb :'subjects/new'
     else
-      flash[:bad] = "Please Log In First"
+      flash[:bad] = "Please log in first"
       redirect '/users/login'
     end
   end
@@ -24,14 +24,14 @@ class SubjectController < ApplicationController
   post '/subjects' do
     @name = params[:subject][:name]
     if !logged_in? || @name.empty? || Subject.find_by(name: @name)
-      flash[:bad] = "Bad input, Make sure name is unique"
+      flash[:bad] = "Subject name already taken"
       redirect '/subjects/new'
     else
       @user = current_user
       @info = params[:subject].select {|item| ! item.empty?}
       @subject = Subject.new(@info)
       @user.make_creator(@subject)
-      flash[:good] = "Subject Created!"
+      flash[:good] = "Subject created!"
       redirect "/subjects/#{@subject.slug}"
     end
   end
@@ -50,9 +50,9 @@ class SubjectController < ApplicationController
   patch '/subjects/:slug' do
     @subject = Subject.find_by_slug(params[:slug])
     @new_name = params[:subject][:name]
-    if @subject && user_created?(@subject) && ! @new_name.empty?
+    if @subject && user_created?(@subject)
       if @new_name != @subject.name && Subject.find_by(name: @new_name)
-        flash[:bad] = "Name entered is already taken"
+        flash[:bad] = "Subject name entered is already taken"
         redirect "/subjects/#{@subject.slug}/edit"
       else
         @subject.courses.clear
@@ -63,8 +63,8 @@ class SubjectController < ApplicationController
         redirect "/subjects/#{@subject.slug}"
       end
     else
-      flash[:bad] = "Something went wrong, please try again"
-      redirect "/subjects/#{@subject.slug}/edit"
+      flash[:bad] = "You must create a platform to edit or delete it"
+      redirect "/subjects/#{@subject.slug}"
     end
   end
 
@@ -73,8 +73,9 @@ class SubjectController < ApplicationController
     @subject = Subject.find_by_slug(params[:slug])
     if @subject && user_created?(@subject)
       @subject.destroy
-      flash[:bad] = "Subject Successfully Deleted"
-      redirect '/subjects'
+      flash[:good] = "Subject successfully deleted"
+    else
+      flash[:bad] = "You must create a subject to delete it"
     end
   end
 
@@ -83,8 +84,8 @@ class SubjectController < ApplicationController
     if @subject && logged_in?
       erb :'subjects/show'
     else
-      flash[:bad] = "Please log in to view subjects"
-      redirect '/users/login'
+      flash[:bad] = "Program not found"
+      redirect '/programs'
     end
   end
 end
