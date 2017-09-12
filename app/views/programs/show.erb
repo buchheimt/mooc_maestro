@@ -23,7 +23,7 @@
 <% if program_length = @program.length %>
   <div class="row">
     <p class="col-sm-2"><strong>Program Length: </strong></p>
-    <p class="col-sm-10"><%= program_length %></p>
+    <p class="col-sm-10"><%= program_length.round %></p>
   </div>
 <% end %>
 
@@ -37,7 +37,7 @@
 <% if @program.cost %>
   <div class="row">
     <p class="col-sm-2"><strong>Cost:</strong></p>
-    <p class="col-sm-10"><%= @program.cost %></p>
+    <p class="col-sm-10">$<%= @program.cost %></p>
   </div>
 <% end %>
 
