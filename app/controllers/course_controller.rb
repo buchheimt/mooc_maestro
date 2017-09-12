@@ -37,7 +37,7 @@ class CourseController < ApplicationController
         redirect '/courses/new'
       else
         @user = current_user
-        @info = params[:course].select {|item| ! item.empty?}
+        @info = params[:course].reject {|k, v| v.empty?}
         @course = @user.courses.build(@info)
 
         if ! params.include?(:program_id) && params[:program_name].empty?
@@ -93,7 +93,7 @@ class CourseController < ApplicationController
       flash[:bad] = "Enter only numbers for Course Length, or leave it blank"
       redirect "/courses/#{@course.slug}/edit"
     else
-      @info = params[:course].select {|item| ! item.empty?}
+      @info = params[:course].reject {|k, v| v.empty?}
       @course.subjects.clear
       @course.update(@info)
       flash[:good] = "Course successfully edited"

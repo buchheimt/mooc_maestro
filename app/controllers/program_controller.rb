@@ -37,7 +37,7 @@ class ProgramController < ApplicationController
         redirect '/programs/new'
       else
         @user = current_user
-        @info = params[:program].select {|item| ! item.empty?}
+        @info = params[:program].reject {|k, v| v.empty?}
         @program = Program.new(@info)
         if ! params.include?(:platform_id) && params[:platform_name].empty?
           @platform = Platform.new(name: "Unassigned")
@@ -88,7 +88,7 @@ class ProgramController < ApplicationController
       flash[:bad] = "Enter only numbers for Cost, or leave it blank"
       redirect "/programs/#{@program.slug}/edit"
     else
-      @info = params[:program].select {|item| ! item.empty?}
+      @info = params[:program].reject {|k, v| v.empty?}
       @program.courses.clear
       @program.update(@info)
       Course.all.select {|c| c.program_id == nil}.each do |c|

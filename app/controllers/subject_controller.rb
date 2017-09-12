@@ -33,7 +33,7 @@ class SubjectController < ApplicationController
         redirect '/subjects/new'
       else
         @user = current_user
-        @info = params[:subject].select {|item| ! item.empty?}
+        @info = params[:subject].reject {|k, v| v.empty?}
         @subject = Subject.new(@info)
         @user.make_creator(@subject)
         flash[:good] = "Subject created!"
@@ -71,7 +71,7 @@ class SubjectController < ApplicationController
       redirect "/subjects/#{@subject.slug}/edit"
     else
       @subject.courses.clear
-      @info = params[:subject].select {|item| ! item.empty?}
+      @info = params[:subject].reject {|k, v| v.empty?}
       @subject.update(@info)
       flash[:good] = "Subject successfully edited"
       redirect "/subjects/#{@subject.slug}"

@@ -48,16 +48,20 @@
   </div>
 <% end %>
 
-<div class="row">
-  <p class="col-sm-2"><strong>Courses: </strong></p>
-</div>
-<ul>
-  <% @program.courses.each do |course| %>
-    <div class="row">
-      <li class="col-sm-offset-2 col-sm-10"><a href="/courses/<%= course.slug %>"><%= course.name %></a></li>
-    </div>
-  <% end %>
-</ul>
+<% unless @program.courses.empty? %>
+  <div class="row">
+    <p class="col-sm-2"><strong>Courses: </strong></p>
+  </div>
+  <ul>
+    <% @program.courses.each do |course| %>
+      <div class="row">
+        <li class="col-sm-offset-2 col-sm-10">
+          <a href="/courses/<%= course.slug %>"><%= course.name %></a>
+        </li>
+      </div>
+    <% end %>
+  </ul>
+<% end %>
 
 <% if @program.platform.name != "Unassigned" %>
   <div class="row">
@@ -66,15 +70,17 @@
   </div>
 <% end %>
 
-<div class="row">
-  <p class="col-sm-2"><strong>Subjects: </strong></p>
-  <div class="col-sm-10">
-    <% @program.subjects.uniq.each do |subject| %>
-      <span><a href="/subjects/<%= subject.slug %>"><%= subject.name %></a></span>
-      <span><%= "| " unless subject == @program.subjects.last %></span>
-    <% end %>
+<% unless @program.subjects.empty? %>
+  <div class="row">
+    <p class="col-sm-2"><strong>Subjects: </strong></p>
+    <div class="col-sm-10">
+      <% @program.subjects.uniq.each do |subject| %>
+        <span><a href="/subjects/<%= subject.slug %>"><%= subject.name %></a></span>
+        <span><%= "| " unless subject == @program.subjects.last %></span>
+      <% end %>
+    </div>
   </div>
-</div>
+<% end %>
 
 <% if @user.programs.include?(@program) %>
   <div class="row">

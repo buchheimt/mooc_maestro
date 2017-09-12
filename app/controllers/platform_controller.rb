@@ -35,7 +35,7 @@ class PlatformController < ApplicationController
         redirect '/platforms/new'
       else
         @user = current_user
-        @info = params[:platform].select {|item| ! item.empty?}
+        @info = params[:platform].reject {|k, v| v.empty?}
         @platform = Platform.new(@info)
         @user.make_creator(@platform)
         flash[:good] = "Platform created!"
@@ -70,7 +70,7 @@ class PlatformController < ApplicationController
         redirect "/platforms/#{@platform.slug}/edit"
       else
         @platform.programs.clear
-        @info = params[:platform].select {|item| ! item.empty?}
+        @info = params[:platform].reject {|k, v| v.empty?}
         @platform.update(@info)
 
         Program.all.select {|pr| pr.platform_id == nil}.each do |pr|
