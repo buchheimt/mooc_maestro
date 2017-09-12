@@ -85,10 +85,10 @@ class ProgramController < ApplicationController
     @user = current_user
     @program = Program.find_by_slug(params[:slug])
     if @program && user_created?(@program)
-      @program.destroy
-      flash[:bad] = "Program Successfully Deleted"
-      redirect '/programs'
+      @program.destroy  
     end
+    flash[:bad] = "Program Successfully Deleted"
+    redirect '/programs'
   end
 
   get '/programs/:slug/join' do
