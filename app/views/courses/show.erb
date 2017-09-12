@@ -19,7 +19,7 @@
   </div>
 <% end %>
 
-<% if @course.length_in_hours %>
+<% if @course.length_in_hours && @course.length_in_hours != 0 %>
   <div class="row">
     <p class="col-sm-2"><strong>Course Length:</strong></p>
     <p class="col-sm-10"><%= @course.length_in_hours.round %> hours</p>
@@ -47,7 +47,7 @@
   </div>
 </div>
 
-<% if current_user.courses.include?(@course) %>
+<% if @user.courses.include?(@course) %>
   <div class="row">
     <h2 class="col-sm-2">My Info</h2>
   </div>
@@ -56,13 +56,13 @@
     <p class="col-sm-2"><strong>Start Date:</strong> </p>
     <p class="col-sm-10"><%= @user_course.start_date.strftime("%F") %></p>
   </div>
-  <% if @course.length_in_hours == @user_course.progress_in_hours %>
+  <% unless @user_course.end_date.nil? %>
     <div class="row">
       <p class="col-sm-2"><strong>End Date:</strong> </p>
       <p class="col-sm-10"><%= @user_course.end_date.strftime("%F") %></p>
     </div>
   <% end %>
-  <% unless @course.length_in_hours.nil? %>
+  <% unless @course.length_in_hours.nil? || @course.length_in_hours == 0 %>
     <div class="row">
       <p class="col-sm-2"><strong>Progress: </strong> </p>
       <p class="col-sm-10"><%= @user_course.get_progress_percent %>%</p>
