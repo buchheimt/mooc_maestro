@@ -1,5 +1,6 @@
-user1 = User.create(username: "TylerB", password: "1234", email: "tb@somesuch", goal: "become a fullstack dev")
-user2 = User.create(username: "JonT", password: "dany", email: "kingindanorf@winterfell.net", goal: "know something")
+user1 = User.create(username: "TylerB", password: "12345", email: "tb@somesuch", goal: "become a fullstack dev")
+user2 = User.create(username: "JonT", password: "dany!", email: "kingindanorf@winterfell.net", goal: "know something")
+user3 = User.create(username: "test", password: "12345", email: "test@test.test")
 
 platform1 = Platform.new(name: "Flatiron School", description: "Coding Bootcamp", creator_id: user1.id)
 platform2 = Platform.new(name: "Udacity", description: "MOOCs and nanodegrees", creator_id: user1.id)
@@ -64,8 +65,6 @@ program4.courses.each {|c| c.subjects << subject6}
 program4.courses.each {|c| c.subjects << subject7}
 course2.subjects << subject8
 course11.subjects << subject8
-course16.subjects << subject1
-course17.subjects << subject1
 
 program1.courses.each {|c| UserCourse.establish(user1, c)}
 program2.courses.each {|c| UserCourse.establish(user1, c)}

@@ -51,16 +51,23 @@ class UserController < ApplicationController
   end
 
   post '/users' do
-    if User.find_by(username: params[:user][:username])
+    case
+    when User.find_by(username: params[:user][:username])
       flash[:bad] = "Username already taken"
       redirect '/users/signup'
-    elsif validate_email(params[:user][:email])
+    when !valid_name(params[:user][:username])
+      flash[:bad] = "Invalid username. Letters, numbers, and underscores only"
+      redirect '/users/signup'
+    when !valid_email(params[:user][:email])
+      flash[:bad] = "Invalid email"
+      redirect '/users/signup'
+    when !valid_password(params[:user][:password])
+      flash[:bad] = "Password must be at least 5 characters, come on now"
+      redirect '/users/signup'
+    else
       @user = User.create(params[:user])
       session[:user_id] = @user.id
       redirect '/users/homepage'
-    else
-      flash[:bad] = "Invalid email"
-      redirect '/users/signup'
     end
   end
 

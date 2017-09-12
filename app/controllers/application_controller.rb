@@ -37,8 +37,20 @@ class ApplicationController < Sinatra::Base
       topics.sort {|a,b| a.name <=> b.name}
     end
 
-    def validate_email(email)
+    def valid_email(email)
       !!email.match(/.+@.+\..+/)
+    end
+
+    def valid_name(name)
+      !!name.match(/\A\w+\z/)
+    end
+
+    def valid_number(string)
+      !!string.match(/\A\d+\z/)
+    end
+
+    def valid_password(password)
+      password.length > 4
     end
   end
 end

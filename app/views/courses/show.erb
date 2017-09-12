@@ -31,6 +31,9 @@
     <p class="col-sm-2"><strong>Program: </strong></p>
     <p class="col-sm-10"><a href="/programs/<%= @course.program.slug %>"><%= @course.program.name %></a></p>
   </div>
+<% end %>
+
+<% if @course.platform.name!= "Unassigned" %>
   <div class="row">
     <p class="col-sm-2"><strong>Platform: </strong></p>
     <p class="col-sm-10"><a href="/platforms/<%= @course.platform.slug %>"><%= @course.platform.name %></a></p>

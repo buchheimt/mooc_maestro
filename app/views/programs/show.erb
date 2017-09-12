@@ -23,7 +23,7 @@
 <% if program_length = @program.length %>
   <div class="row">
     <p class="col-sm-2"><strong>Program Length: </strong></p>
-    <p class="col-sm-10"><%= program_length.round %></p>
+    <p class="col-sm-10"><%= program_length.round %> hours</p>
   </div>
 <% end %>
 
@@ -59,7 +59,7 @@
   <% end %>
 </ul>
 
-<% if @program.platform %>
+<% if @program.platform.name != "Unassigned" %>
   <div class="row">
     <p class="col-sm-2"><strong>Platform: </strong></p>
     <p class="col-sm-10"><a href="/platforms/<%= @program.platform.slug %>"><%= @program.platform.name %></a></p>
