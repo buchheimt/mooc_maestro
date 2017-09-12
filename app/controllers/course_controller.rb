@@ -33,14 +33,16 @@ class CourseController < ApplicationController
       @course = @user.courses.build(@info)
 
       if ! params.include?(:program_id) && params[:program_name].empty?
-        @course.program = Program.find_by(name: "Individual Courses")
+        @program = Program.find_by(name: "Individual Courses")
       elsif params[:program_id].empty?
-        @course.program = Program.new(name: params[:program_name])
+        @program = Program.new(name: params[:program_name])
+        @program.platform = Platform.find_by(name: "Unassigned")
       else
-        @course.program = Program.find_by_id(params[:program_id])
+        @program = Program.find_by_id(params[:program_id])
       end
       @course.subjects << Subject.create(name: params[:subject_name]) unless params[:subject_name].empty?
-
+      @course.program = @program
+      @user.make_creator(@program)
       @user.make_creator(@course)
       UserCourse.establish(@user, @course)
 

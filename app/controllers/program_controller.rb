@@ -32,12 +32,14 @@ class ProgramController < ApplicationController
       @info = params[:program].select {|item| ! item.empty?}
       @program = Program.new(@info)
       if ! params.include?(:platform_id) && params[:platform_name].empty?
-        @program.platform = Platform.new(name: "Unassigned")
+        @platform = Platform.new(name: "Unassigned")
       elsif params[:platform_id].empty?
-        @program.platform = Platform.new(name: params[:platform_name])
+        @platform = Platform.new(name: params[:platform_name])
       else
-        @program.platform = Platform.find_by_id(params[:platform_id])
+        @platform = Platform.find_by_id(params[:platform_id])
       end
+      @program.platform = @platform
+      @user.make_creator(@platform)
       @user.make_creator(@program)
 
       flash[:good] = "Program Created!"
@@ -85,7 +87,7 @@ class ProgramController < ApplicationController
     @user = current_user
     @program = Program.find_by_slug(params[:slug])
     if @program && user_created?(@program)
-      @program.destroy  
+      @program.destroy
     end
     flash[:bad] = "Program Successfully Deleted"
     redirect '/programs'

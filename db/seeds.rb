@@ -15,6 +15,7 @@ program3 = platform3.programs.build(name: "Python For Everybody", certification:
 program4 = platform2.programs.build(name: "Android Developer Nanodegree", certification: "nanodegree", affiliation: "Google",
                           description: "Learn full stack web development in Ruby and Javascript", cost: 6000, creator_id: user1.id)
 program5 = platform4.programs.build(name: "Individual Courses")
+program6 = platform4.programs.build(name: "Computer Science 101", creator_id: user1.id)
 
 course1 = program1.courses.build(name: "Ruby", description: "An intro to Ruby", length_in_hours: 150, creator_id: user1.id)
 course2 = program1.courses.build(name: "Sinatra", description: "Sinatra, SQL, ActiveRecord", length_in_hours: 150, creator_id: user1.id)
@@ -31,11 +32,13 @@ course12 = program4.courses.build(name: "Developing Android Apps", description: 
 course13 = program4.courses.build(name: "Advanced Android Development", description: "Add responsiveness to your apps", length_in_hours: 80, creator_id: user1.id)
 course14 = program4.courses.build(name: "Gradle For Android and Java", description: "Learn Gradle Builds", length_in_hours: 80, creator_id: user1.id)
 course15 = program5.courses.build(name: "Learn Python the Hard Way", description: "Learn Python", length_in_hours: 80, creator_id: user1.id)
-
+course16 = program6.courses.build(name: "Algos 101", length_in_hours: 80, creator_id: user1.id)
+course17 = program6.courses.build(name: "Data Structures 101", length_in_hours: 80, creator_id: user1.id)
 
 platform1.save
 platform2.save
 platform3.save
+platform4.save
 platform4.save
 
 subject1 = Subject.new(name: "Computer Science", creator_id: user1.id)
@@ -61,6 +64,8 @@ program4.courses.each {|c| c.subjects << subject6}
 program4.courses.each {|c| c.subjects << subject7}
 course2.subjects << subject8
 course11.subjects << subject8
+course16.subjects << subject1
+course17.subjects << subject1
 
 program1.courses.each {|c| UserCourse.establish(user1, c)}
 program2.courses.each {|c| UserCourse.establish(user1, c)}
