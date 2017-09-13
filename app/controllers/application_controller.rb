@@ -9,8 +9,6 @@ class ApplicationController < Sinatra::Base
     set :views, 'app/views'
   end
 
-
-
   get '/' do
     redirect '/users/login'
   end
@@ -45,11 +43,15 @@ class ApplicationController < Sinatra::Base
     end
 
     def valid_number(string)
-      !!string.match(/\A-?\d+\.?\d+?\z/) || string.empty?
+      !!string.match(/\A-?\d+\.?\d*?\z/) || string.empty?
     end
 
     def valid_password(password)
       password.length > 4
+    end
+
+    def clean(info)
+      info.reject {|k, v| v.empty?}
     end
   end
 end

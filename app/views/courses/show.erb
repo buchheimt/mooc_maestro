@@ -70,7 +70,7 @@
       <p class="title">Subjects:</p>
     </div>
     <div class="col-sm-10">
-      <% @course.subjects.each do |subject| %>
+      <% @subjects.each do |subject| %>
         <span><a href="/subjects/<%= subject.slug %>"><%= subject.name %></a></span>
         <span><%= "| " unless subject == @subjects.last %></span>
       <% end %>

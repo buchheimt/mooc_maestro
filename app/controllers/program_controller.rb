@@ -2,7 +2,7 @@ class ProgramController < ApplicationController
 
   get '/programs' do
     if logged_in?
-      @topics = name_sort(Program.all.reject {|pr| pr.name == "Individual Courses"})
+      @topics = name_sort(Program.all.select {|pr| pr.if_assigned})
       @name = Program.name.downcase
       erb :index
     else
@@ -40,7 +40,7 @@ class ProgramController < ApplicationController
         @info = params[:program].reject {|k, v| v.empty?}
         @program = Program.new(@info)
         if ! params.include?(:platform_id) && params[:platform_name].empty?
-          @platform = Platform.new(name: "Unassigned")
+          @platform = Platform.find_by(name: "Unassigned")
         elsif params[:platform_id].empty?
           @platform = Platform.new(name: params[:platform_name])
         else
@@ -62,8 +62,8 @@ class ProgramController < ApplicationController
   get '/programs/:slug/edit' do
     @program = Program.find_by_slug(params[:slug])
     if @program && user_created?(@program)
-      @platforms = name_sort(Platform.all.reject {|pl| pl.name == "Unassigned"})
-      @courses = name_sort(Course.all.select {|c| c.program.name == "Individual Courses" || c.program == @program})
+      @platforms = name_sort(Platform.all)
+      @courses = name_sort(Course.all.select {|c| !c.program.if_assigned || c.program == @program})
       erb :'programs/edit'
     else
       flash[:bad] = "You must create a program to edit or delete it"
@@ -150,8 +150,8 @@ class ProgramController < ApplicationController
       @courses = name_sort(@program.courses)
       @platform = @program.platform.if_assigned
       @subjects = name_sort(@program.subjects.uniq)
-      @first_course = UserCourse.find_on_join(@user, @courses.first).start_date
-      @last_course = UserCourse.find_on_join(@user, @courses.last).end_date
+      @first_course = UserCourse.find_on_join(@user, @courses.first).start_date if UserCourse.find_on_join(@user, @courses.first)
+      @last_course = UserCourse.find_on_join(@user, @courses.last).end_date if UserCourse.find_on_join(@user, @courses.last)
       @program_progress = @user.program_progress_percentage(@program)
       erb :'programs/show'
     else

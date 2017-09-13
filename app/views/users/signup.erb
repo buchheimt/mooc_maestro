@@ -1,22 +1,44 @@
 <div class="row">
-  <h2 class="col-sm-6">Welcome to MOOC Maestro!</h2>
+  <div class="col-sm-6">
+    <h2>Welcome to MOOC Maestro!</h2>
+  </div>
 </div>
 
 <form action="/users" method="POST">
+
   <div class="row">
-    <label class="col-sm-2" for="username">*Username: </label>
-    <input class="col-sm-3" type="text" name="user[username]" id="username" required>
+    <div class="col-sm-2">
+      <label for="username">*Username:</label>
+    </div>
+    <div class="col-sm-3">
+      <input type="text" name="user[username]" id="username" required>
+    </div>
   </div>
+
   <div class="row">
-    <label class="col-sm-2" for="email">*Email: </label>
-    <input class="col-sm-3" type="text" name="user[email]" id="email" required>
+    <div class="col-sm-2">
+      <label for="email">*Email:</label>
+    </div>
+    <div class="col-sm-3">
+      <input type="text" name="user[email]" id="email" required>
+    </div>
   </div>
+
   <div class="row">
-    <label class="col-sm-2" for="password">*Password: </label>
-    <input class="col-sm-3" type="password" name="user[password]" id="password" required>
+    <div class="col-sm-2">
+      <label for="password">*Password: </label>
+    </div>
+    <div class="col-sm-3">
+      <input type="password" name="user[password]" id="password" required>
+    </div>
   </div>
+
   <div class="row">
-    <input class="form-button col-sm-1 col-sm-offset-2" type="submit" name="submit" value="Sign Up">
-    <div class="button col-sm-2"><a href="/users/login">Returning User?</a></div>
+    <div class="col-sm-1 col-sm-offset-2">
+      <input class="form-button" type="submit" name="submit" value="Sign Up">
+    </div>
+    <div class="col-sm-2">
+      <a class="button" href="/users/login">Returning User?</a>
+    </div>
   </div>
 </form>

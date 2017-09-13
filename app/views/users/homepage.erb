@@ -1,39 +1,63 @@
 <div class="row">
-  <h2 class="col-sm-5"><%= @user.username %></h2>
+  <div class="col-sm-5">
+    <h2><%= @user.username %></h2>
+  </div>
 </div>
 
 <form action="/users" method="POST">
   <input type="hidden" name="_method" value="PATCH" id="hidden">
+
   <% @programs.each do |program| %>
     <div class="row">
-      <a class="col-sm-9" href="/programs/<%= program.slug %>"><h4><%= program.name %></h4></a>
-      <p class="hours_of program col-sm-2"> <strong><%= @user.program_progress_formatted(program) %></strong></p>
-      <p class="progress program col-sm-1"> <strong><%= @user.program_progress_percentage(program) %></strong></p>
+      <div class="col-sm-9">
+        <a class="homepage" href="/programs/<%= program.slug %>"><h4><%= program.name %></h4></a>
+      </div>
+      <div class="col-sm-2">
+        <p class="hours-of program title"><%= @user.program_progress_formatted(program) %></p>
+      </div>
+      <div class="col-sm-1">
+        <p class="program title"><%= @user.program_progress_percentage(program) %></p>
+      </div>
     </div>
 
     <% program.courses.each do |course| %>
-      <% if @user.courses.include?(course) %>
+      <% if @courses.include?(course) %>
         <div class="row">
-          <a class="col-sm-8" href="/courses/<%= course.slug %>"><%= course.name %></a>
+          <div class="col-sm-9">
+            <a class="homepage" href="/courses/<%= course.slug %>"><%= course.name %></a>
+          </div>
           <% @user_course = UserCourse.find_on_join(@user, course) %>
-          <% unless course.length_in_hours.nil? || course.length_in_hours == 0 %>
-            <input class="hours_of progress col-sm-1" type="text" name="course_ids[<%= course.id %>]">
-            <p class="hours_of col-sm-2"><%= @user_course.get_progress_formatted %></p>
-            <p class="progress col-sm-1"><%= @user_course.get_progress_percent %>%</p><br>
+          <% if course.get_length %>
+            <div class="col-sm-1">
+              <input class="hours-of progress" type="text" name="course_ids[<%= course.id %>]">
+            </div>
+            <div class="course col-sm-1">
+              <p class="hours-of"><%= @user_course.get_progress_formatted %></p>
+            </div>
+            <div class="course col-sm-1">
+              <p><%= @user_course.get_progress_percent %>%</p><br>
+            </div>
           <% end %>
         </div>
       <% end %>
-    <% end %>
-    <br>
+    <% end %><br>
   <% end %>
+
   <div class="row">
     <% if @courses.empty? %>
-      <p class="col-sm-6">Get started by adding <a href="/courses">courses</a> or <a href="/programs">programs</a> now.</p>
+      <div class="col-sm-6">
+        <p>Get started by adding <a href="/courses">courses</a> or <a href="/programs">programs</a> now.</p>
+      </div>
     <% else %>
-      <input class="form-button col-sm-offset-8 col-sm-2" type="submit" name="submit" value="Add Progress">
+      <div class="col-sm-offset-9 col-sm-3">
+        <input class="update form-button" type="submit" name="submit" value="Add Progress">
+      </div>
     <% end %>
   </div>
-  </form><br>
+</form><br>
+
 <div class="row">
-  <div class="logout button col-sm-2"><a href="/users/logout">Logout</a></div>
+  <div class="col-sm-2">
+    <a class="logout button" href="/users/logout">Logout</a>
+  </div>
 </div>

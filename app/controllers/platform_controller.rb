@@ -2,7 +2,7 @@ class PlatformController < ApplicationController
 
   get '/platforms' do
     if logged_in?
-      @topics = name_sort(Platform.all.reject {|pl| pl.name == "Unassigned"})
+      @topics = name_sort(Platform.all.select {|pl| pl.if_assigned})
       @name = Platform.name.downcase
       erb :index
     else
@@ -13,7 +13,7 @@ class PlatformController < ApplicationController
 
   get '/platforms/new' do
     if logged_in?
-      @programs = Program.all.select {|pr| pr.platform.name == "Unassigned" && pr.name != "Individual Courses"}
+      @programs = name_sort(Program.all.select {|pr| !pr.platform.if_assigned && !pr.if_assigned})
       @programs = name_sort(@programs)
       erb :'platforms/new'
     else
@@ -24,7 +24,6 @@ class PlatformController < ApplicationController
 
   post '/platforms' do
     @name = params[:platform][:name]
-
     if logged_in?
       case
       when Platform.find_by(name: @name)
@@ -35,8 +34,7 @@ class PlatformController < ApplicationController
         redirect '/platforms/new'
       else
         @user = current_user
-        @info = params[:platform].reject {|k, v| v.empty?}
-        @platform = Platform.new(@info)
+        @platform = Platform.new(clean(params[:platform]))
         @user.make_creator(@platform)
         flash[:good] = "Platform created!"
         redirect "/platforms/#{@platform.slug}"
@@ -50,9 +48,7 @@ class PlatformController < ApplicationController
   get '/platforms/:slug/edit' do
     @platform = Platform.find_by_slug(params[:slug])
     if @platform && user_created?(@platform)
-      @programs = Program.all.select do |pr|
-        pr.platform.name == "Unassigned" || pr.platform == @platform
-      end.reject {|pr| pr.name == "Individual Courses"}
+      @programs = Program.all.select {|pr| (!pr.platform.if_assigned || pr.platform == @platform) && pr.if_assigned}
       @programs = name_sort(@programs)
       erb :'platforms/edit'
     else
@@ -69,9 +65,7 @@ class PlatformController < ApplicationController
         flash[:bad] = "Platform name entered is already taken"
         redirect "/platforms/#{@platform.slug}/edit"
       else
-        @platform.programs.clear
-        @info = params[:platform].reject {|k, v| v.empty?}
-        @platform.update(@info)
+        @platform.update(clean(params[:platform]))
 
         Program.all.select {|pr| pr.platform_id == nil}.each do |pr|
           pr.platform = Platform.find_by(name: "Unassigned")

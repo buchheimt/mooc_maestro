@@ -16,4 +16,8 @@ class Platform < ActiveRecord::Base
   def self.find_by_slug(slug)
     self.all.detect {|pl| pl.slug == slug}
   end
+
+  def self.all_assigned
+    self.all.reject {|pl| pl.if_assigned}
+  end
 end

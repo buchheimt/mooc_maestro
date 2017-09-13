@@ -96,6 +96,12 @@ footer {
   float: right;
 }
 
+.update {
+  width: 100%;
+  text-align: center;
+  margin: 0 auto;
+}
+
 .form-button {
   color: white;
   padding: 5px;
@@ -111,9 +117,17 @@ footer {
   transition: background 0.65s, color 0.65s;
 }
 
+.course {
+  height: 30px;
+}
+
 .button  {
   display: inline-block;
   padding-right: 20px;
+}
+
+.homepage {
+  width: 100%;
 }
 
 .list {
@@ -161,6 +175,10 @@ input[type="text"] {
   width: 100%;
 }
 
+input[type="password"] {
+  width: 100%;
+}
+
 input[type="checkbox"] {
   display: inline;
   margin: 5px;
@@ -175,8 +193,28 @@ input + label {
   font-weight: normal;
 }
 
-.hours_of {
+.hours-of {
   text-align: center;
+}
+
+.course {
+  padding: 0;
+}
+
+.col-sm-1 .hours-of {
+  font-size: 13px;
+  margin: 0;
+  padding-top: 5px;
+}
+
+.course p {
+  font-size: 13px;
+  margin: 0;
+  padding-top: 5px;
+}
+
+.course:last-child {
+  padding: 0 15px;
 }
 
 .flash {
