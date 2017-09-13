@@ -1,44 +1,64 @@
 <div class="row">
-  <h2 class="col-sm-8"><%= @subject.name %></h2>
+  <div class="col-sm-6">
+    <h2><%= @subject.name %></h2>
+  </div>
 
   <% if user_created?(@subject)  %>
-    <div class="head button col-sm-2"><a href="/subjects/<%= @subject.slug %>/edit">Edit As Creator</a></div>
+    <div class="col-sm-2">
+      <a class="head button" href="/subjects/<%= @subject.slug %>/edit">Edit As Creator</a>
+    </div>
   <% end %>
 </div>
 
 <% if @subject.description %>
   <div class="row">
-    <p class="col-sm-2"><strong>Description:</strong></p>
-    <p class="col-sm-10"><%= @subject.description %></p>
+    <div class="col-sm-2">
+      <p class="title">Description:</p>
+    </div>
+    <div class="col-sm-10">
+      <p><%= @subject.description %></p>
+    </div>
   </div>
 <% end %>
 
-<div class="row">
-  <p class="col-sm-2"><strong>Courses: </strong></p>
-  <div class="col-sm-10">
-    <% @courses.each do |course| %>
-      <span><a href="/courses/<%= course.slug %>"><%= course.name %></a></span>
-      <span><%= "| " unless course == @courses.last %></span>
-    <% end %>
-  </div>
-</div>
+<% unless @courses.empty? %>
+  <div class="row">
+    <div class="col-sm-2">
+      <p class="title">Courses:</p>
+    </div>
+    <div class="col-sm-10">
+      <% @courses.each do |course| %>
+        <span><a href="/courses/<%= course.slug %>"><%= course.name %></a></span>
+        <span><%= "| " unless course == @courses.last %></span>
+      <% end %>
+    </div>
+  </div><br>
+<% end %>
 
-<div class="row">
-  <p class="col-sm-2"><strong>Programs: </strong></p>
-  <div class="col-sm-10">
-    <% @programs.each do |program| %>
-      <span><a href="/programs/<%= program.slug %>"><%= program.name %></a></span>
-      <span><%= "| " unless program == @programs.last %></span>
-    <% end %>
-  </div>
-</div>
+<% unless @programs.empty? %>
+  <div class="row">
+    <div class="col-sm-2">
+      <p class="title">Programs:</p>
+    </div>
+    <div class="col-sm-10">
+      <% @programs.each do |program| %>
+        <span><a href="/programs/<%= program.slug %>"><%= program.name %></a></span>
+        <span><%= "| " unless program == @programs.last %></span>
+      <% end %>
+    </div>
+  </div><br>
+<% end %>
 
-<div class="row">
-  <p class="col-sm-2"><strong>Platforms: </strong></p>
-  <div class="col-sm-10">
-    <% @platforms.each do |platform| %>
-      <span><a href="/platforms/<%= platform.slug %>"><%= platform.name %></a></span>
-      <span><%= "| " unless platform == @platforms.last %></span>
-    <% end %>
+<% unless @platforms.empty? %>
+  <div class="row">
+    <div class="col-sm-2">
+      <p class="title">Platforms:</p>
+    </div>
+    <div class="col-sm-10">
+      <% @platforms.each do |platform| %>
+        <span><a href="/platforms/<%= platform.slug %>"><%= platform.name %></a></span>
+        <span><%= "| " unless platform == @platforms.last %></span>
+      <% end %>
+    </div>
   </div>
-</div>
+<% end %>

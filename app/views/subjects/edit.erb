@@ -1,36 +1,50 @@
 <div class="row">
-  <h2 class="col-sm-8">Edit <%= @subject.name %></h2>
-  <div class="head button col-sm-2"><a href="/subjects/<%= @subject.slug %>/delete">Delete Subject</a></div>
+  <div class="col-sm-8">
+    <h2>Edit <%= @subject.name %></h2>
+  </div>
+  <div class="col-sm-2">
+    <a class="head button" href="/subjects/<%= @subject.slug %>/delete">Delete Subject</a>
+  </div>
 </div>
 
 <form action="/subjects/<%= @subject.slug %>" method="POST">
   <input type="hidden" name="_method" value="PATCH" id="hidden">
+
   <div class="row">
-    <label class="col-sm-2" for="name">*Name: </label>
-    <input class="col-sm-4" type="text" name="subject[name]" id="name" value="<%= @subject.name %>" required>
+    <div class="col-sm-2">
+      <label for="name">*Name:</label>
+    </div>
+    <div class="col-sm-4">
+      <input type="text" name="subject[name]" id="name" value="<%= @subject.name %>" required>
+    </div>
   </div>
 
   <div class="row">
-    <label class="col-sm-2" for="description">Description: </label>
-    <input class="col-sm-4" type="text" name="subject[description]" id="description" value="<%= @subject.description %>">
+    <div class="col-sm-2">
+      <label for="description">Description:</label>
+    </div>
+    <div class="col-sm-4">
+      <input type="text" name="subject[description]" id="description" value="<%= @subject.description %>">
+    </div>
   </div>
 
   <div class="row">
     <div class="col-sm-3">
-      <h4>Courses: </h4>
+      <h4>Courses:</h4>
     </div>
   </div>
+  <div class="row">
+    <% @courses.each do |course| %>
+      <div class="col-sm-4">
+        <input type="checkbox" name="subject[course_ids][]" value="<%= course.id %>" id="<%= course.name %>" <%= 'checked' if @subject.courses.include?(course) %>>
+        <label for="<%= course.name %>"><%= course.name %></label>
+      </div>
+    <% end %>
+  </div><br><br>
 
   <div class="row">
-    <div class="col-sm-12">
-      <% @courses.each do |course| %>
-        <input type="checkbox" name="subject[course_ids][]" value="<%= course.id %>" id="<%= course.name %>" <%= 'checked' if @subject.courses.include?(course) %>>
-          <%= course.name %>
-        </input>
-      <% end %><br><br>
+    <div class="col-sm-2 col-sm-offset-5">
+      <input class="form-button" type="submit" name="submit" value="Edit Subject">
     </div>
-  </div>
-  <div class="row">
-    <input class="form-button col-sm-2 col-sm-offset-5" type="submit" name="submit" value="Edit Subject">
   </div>
 </form>

@@ -92,9 +92,9 @@ class SubjectController < ApplicationController
   get '/subjects/:slug' do
     @subject = Subject.find_by_slug(params[:slug])
     if @subject && logged_in?
-      @courses = @subject.courses
-      @programs = @subject.programs.uniq.reject {|pr| pr.name == "Individual Courses"}
-      @platforms = @subject.platforms.uniq.reject {|pl| pl.name == "Unassigned"}
+      @courses = name_sort(@subject.courses)
+      @programs = name_sort(@subject.programs.uniq.select {|pr| pr.if_assigned})
+      @platforms = name_sort(@subject.platforms.uniq.select {|pl| pl.if_assigned})
       erb :'subjects/show'
     else
       flash[:bad] = "Subject not found"
