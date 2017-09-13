@@ -9,12 +9,12 @@
     </div>
   <% end %>
 
-  <% if @program.courses.any? {|c| @user.courses.include?(c)} %>
+  <% if @courses.any? {|c| @user.courses.include?(c)} %>
     <div class="col-sm-2">
       <a class="head button" href="/programs/<%= @program.slug %>/leave">Leave All Joined</a>
     </div>
   <% end %>
-  <% unless @program.courses.all? {|c| @user.courses.include?(c)} %>
+  <% unless @courses.all? {|c| @user.courses.include?(c)} %>
     <div class="col-sm-2">
       <a class="head button" href="/programs/<%= @program.slug %>/join">Join All Open</a>
     </div>
@@ -60,7 +60,7 @@
       <p class="title">Cost:</p>
     </div>
     <div class="col-sm-10">
-      <p>$<%= @program.cost %></p>
+      <p>$<%= @program.cost.round %></p>
     </div>
   </div>
 <% end %>
@@ -82,7 +82,7 @@
       <p class="title">Courses:</p>
     </div>
   </div>
-  <% @program.courses.each do |course| %>
+  <% @courses.each do |course| %>
     <div class="row">
       <div class="col-sm-offset-2 col-sm-10">
         <li><a href="/courses/<%= course.slug %>"><%= course.name %></a></li>
@@ -91,13 +91,13 @@
   <% end %><br>
 <% end %>
 
-<% if @program %>
+<% if @platform %>
   <div class="row">
     <div class="col-sm-2">
       <p class="title">Platform:</p>
     </div>
     <div class="col-sm-10">
-      <a href="/platforms/<%= @program.platform.slug %>"><%= @program.platform.name %></a>
+      <a href="/platforms/<%= @program.platform.slug %>"><%= @platform.name %></a>
     </div>
   </div>
 <% end %>
@@ -122,23 +122,23 @@
       <h3>My Info</h3>
     </div>
   </div>
-  <% if @first_course %>
+  <% if @first_course && @first_course.start_date %>
     <div class="row">
       <div class="col-sm-2">
         <p class="title">Start Date:</p>
       </div>
       <div class="col-sm-10">
-        <p><%= @first_course.strftime("%F") %></p>
+        <p><%= @first_course.start_date.strftime("%F") %></p>
       </div>
     </div>
   <% end %>
-  <% if @last_course %>
+  <% if @last_course && @last_course.end_date %>
     <div class="row">
       <div class="col-sm-2">
         <p class="title">End Date:</p>
       </div>
       <div class="col-sm-10">
-        <p><%= @last_course.strftime("%F") %></p>
+        <p><%= @last_course.end_date.strftime("%F") %></p>
       </div>
     </div>
   <% end %>

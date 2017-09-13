@@ -9,6 +9,11 @@ class Program < ActiveRecord::Base
     self unless name == "Individual Courses"
   end
 
+  def length
+    return nil if courses.any? {|c| c.length_in_hours.nil?} || courses.empty?
+    courses.inject(0) {|sum, c| sum += c.length_in_hours}
+  end
+
   def slug
     name.downcase.split.join("-")
   end
@@ -17,8 +22,11 @@ class Program < ActiveRecord::Base
     self.all.detect {|pr| pr.slug == slug}
   end
 
-  def length
-    return nil if courses.any? {|c| c.length_in_hours.nil?} || courses.empty?
-    courses.inject(0) {|sum, c| sum += c.length_in_hours}
+  def self.all_assigned
+    self.all.select {|pr| pr.if_assigned}
+  end
+
+  def self.all_open
+    self.all.reject {|pr| pr.if_assigned}
   end
 end

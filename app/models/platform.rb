@@ -18,6 +18,10 @@ class Platform < ActiveRecord::Base
   end
 
   def self.all_assigned
+    self.all.select {|pl| pl.if_assigned}
+  end
+
+  def self.all_open
     self.all.reject {|pl| pl.if_assigned}
   end
 end

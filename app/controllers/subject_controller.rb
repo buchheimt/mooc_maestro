@@ -33,8 +33,7 @@ class SubjectController < ApplicationController
         redirect '/subjects/new'
       else
         @user = current_user
-        @info = params[:subject].reject {|k, v| v.empty?}
-        @subject = Subject.new(@info)
+        @subject = Subject.new(clean(params[:subject]))
         @user.make_creator(@subject)
         flash[:good] = "Subject created!"
         redirect "/subjects/#{@subject.slug}"
@@ -70,9 +69,7 @@ class SubjectController < ApplicationController
       flash[:bad] = "Invalid name. Letters, numbers, spaces, and underscores only"
       redirect "/subjects/#{@subject.slug}/edit"
     else
-      @subject.courses.clear
-      @info = params[:subject].reject {|k, v| v.empty?}
-      @subject.update(@info)
+      @subject.update(clean(params[:subject]))
       flash[:good] = "Subject successfully edited"
       redirect "/subjects/#{@subject.slug}"
     end

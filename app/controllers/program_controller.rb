@@ -2,7 +2,7 @@ class ProgramController < ApplicationController
 
   get '/programs' do
     if logged_in?
-      @topics = name_sort(Program.all.select {|pr| pr.if_assigned})
+      @topics = name_sort(Program.all_assigned)
       @name = Program.name.downcase
       erb :index
     else
@@ -13,8 +13,8 @@ class ProgramController < ApplicationController
 
   get '/programs/new' do
     if logged_in?
-      @courses = name_sort(Course.all.select {|c| c.program.name == "Individual Courses"})
-      @platforms = name_sort(Platform.all.reject{|pl| pl.name == "Unassigned"})
+      @courses = name_sort(Course.all.select {|c| !c.program.if_assigned})
+      @platforms = name_sort(Platform.all_assigned)
       erb :'programs/new'
     else
       flash[:bad] = "Please log in first"
@@ -37,8 +37,8 @@ class ProgramController < ApplicationController
         redirect '/programs/new'
       else
         @user = current_user
-        @info = params[:program].reject {|k, v| v.empty?}
-        @program = Program.new(@info)
+        @program = Program.new(clean(params[:program]))
+
         if ! params.include?(:platform_id) && params[:platform_name].empty?
           @platform = Platform.find_by(name: "Unassigned")
         elsif params[:platform_id].empty?
@@ -46,6 +46,7 @@ class ProgramController < ApplicationController
         else
           @platform = Platform.find_by_id(params[:platform_id])
         end
+
         @program.platform = @platform
         @user.make_creator(@platform)
         @user.make_creator(@program)
@@ -88,9 +89,7 @@ class ProgramController < ApplicationController
       flash[:bad] = "Enter only numbers for Cost, or leave it blank"
       redirect "/programs/#{@program.slug}/edit"
     else
-      @info = params[:program].reject {|k, v| v.empty?}
-      @program.courses.clear
-      @program.update(@info)
+      @program.update(clean(params[:program]))
       Course.all.select {|c| c.program_id == nil}.each do |c|
         c.program = Program.find_by(name: "Individual Courses")
         c.save
@@ -150,8 +149,8 @@ class ProgramController < ApplicationController
       @courses = name_sort(@program.courses)
       @platform = @program.platform.if_assigned
       @subjects = name_sort(@program.subjects.uniq)
-      @first_course = UserCourse.find_on_join(@user, @courses.first).start_date if UserCourse.find_on_join(@user, @courses.first)
-      @last_course = UserCourse.find_on_join(@user, @courses.last).end_date if UserCourse.find_on_join(@user, @courses.last)
+      @first_course = UserCourse.find_on_join(@user, @courses.first) unless @courses.empty?
+      @last_course = UserCourse.find_on_join(@user, @courses.last) unless @courses.empty?
       @program_progress = @user.program_progress_percentage(@program)
       erb :'programs/show'
     else

@@ -2,7 +2,7 @@ class PlatformController < ApplicationController
 
   get '/platforms' do
     if logged_in?
-      @topics = name_sort(Platform.all.select {|pl| pl.if_assigned})
+      @topics = name_sort(Platform.all_assigned)
       @name = Platform.name.downcase
       erb :index
     else
@@ -13,7 +13,7 @@ class PlatformController < ApplicationController
 
   get '/platforms/new' do
     if logged_in?
-      @programs = name_sort(Program.all.select {|pr| !pr.platform.if_assigned && !pr.if_assigned})
+      @programs = name_sort(Program.all_assigned.select {|pr| !pr.platform.if_assigned})
       @programs = name_sort(@programs)
       erb :'platforms/new'
     else
@@ -48,7 +48,7 @@ class PlatformController < ApplicationController
   get '/platforms/:slug/edit' do
     @platform = Platform.find_by_slug(params[:slug])
     if @platform && user_created?(@platform)
-      @programs = Program.all.select {|pr| (!pr.platform.if_assigned || pr.platform == @platform) && pr.if_assigned}
+      @programs = Program.all_assigned.select {|pr| (!pr.platform.if_assigned || pr.platform == @platform)}
       @programs = name_sort(@programs)
       erb :'platforms/edit'
     else

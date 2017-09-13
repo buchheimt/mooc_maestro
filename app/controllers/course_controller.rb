@@ -13,7 +13,7 @@ class CourseController < ApplicationController
 
   get '/courses/new' do
     if logged_in?
-      @programs = name_sort(Program.all.select {|pr| pr.if_assigned})
+      @programs = name_sort(Program.all_assigned)
       @subjects = name_sort(Subject.all)
       erb :'courses/new'
     else
