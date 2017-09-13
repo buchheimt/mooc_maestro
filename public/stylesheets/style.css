@@ -1,59 +1,13 @@
-h4 {
-  font-weight: bold;
-}
-
-h2  {
-  margin-bottom: 30px;
-}
-
-h1  {
-  margin-bottom: 30px;
-}
-
-label {
-  display: inline;
-  text-align: left
-  padding: 0;
-}
-
-.wrapper a {
-  margin-bottom: 10px;
-  display: inline-block;
-  color: black;
-  text-decoration: none;
-}
-
-a h3 {
-  margin: 10px;
-}
-
-a:hover {
-  text-decoration: none;
-  color: white;
-  background: #648CB2;
-  transition: background 0.65s, color 0.65s;
-}
-
-.row {
-  margin: 0;
-}
-
-.row .row div {
-  padding: 0;
-}
-
-nav .row {
-  margin: 0;
-}
-
-body {
-  background: #A8D4FF;
-}
+/*-- Nav --*/
 
 nav {
   margin: 30px 30px 0 30px;
   padding: 0;
   background: #648CB2;
+}
+
+nav .row {
+  margin: 0;
 }
 
 nav .row div {
@@ -70,100 +24,43 @@ nav p {
   background: #05607A;
 }
 
-nav a {
-  display: inline-block;
+/*-- Flash --*/
+
+.flash {
   text-align: center;
-  width: 100%;
-  margin: 0 auto;
-  padding: 20px 0;
-  background: #648CB2;
-  color: white;
+  margin-top: 20px;
 }
 
-nav a:hover {
-  text-decoration: none;
-  background: #05607A;
+p.good {
+  color: #159448;
+  background: #6BEB9E;
 }
 
-.wrapper {
-  margin: 0 30px;
-  background: #E4F2FF;
-  padding: 10px 25px 25px 25px;
+p.bad {
+  color: #B24640;
+  background: #FFE3E2;
 }
 
-footer {
-  margin: 5px 30px;
-  float: right;
+/*-- Headers --*/
+
+h1  {
+  margin-bottom: 30px;
 }
 
-.update {
-  width: 100%;
-  text-align: center;
-  margin: 0 auto;
+h2  {
+  margin-bottom: 30px;
 }
 
-.form-button {
-  color: white;
-  padding: 5px;
-  background: #648CB2;
-  border-radius: 5px;
-  border: 1px solid #666;
+h4 {
+  font-weight: bold;
 }
 
-.form-button:hover {
-  background: #05607A;
-  border-color: black;
-  cursor: pointer;
-  transition: background 0.65s, color 0.65s;
-}
+/*-- Forms --*/
 
-.course {
-  height: 30px;
-}
-
-.button  {
-  display: inline-block;
-  padding-right: 20px;
-}
-
-.homepage {
-  width: 100%;
-}
-
-.list {
-  width: 100%;
-}
-
-a.button {
-  color: white;
-  padding: 5px;
-  background: #648CB2;
-  border-radius: 5px;
-  border: 1px solid #666;
-}
-
-a.button:hover {
-  text-decoration: none;
-  background: #05607A;
-  border-color: black;
-}
-
-.progress {
-  vertical-align: middle;
-  margin-bottom: 10px;
-}
-
-.logout {
-  clear: both;
-  float: left;
-}
-
-.head {
-  margin-top: 25px;
-}
-
-div p.progress_header {
-  margin-top: 30px;
+label {
+  display: inline;
+  text-align: left
+  padding: 0;
 }
 
 input {
@@ -193,6 +90,134 @@ input + label {
   font-weight: normal;
 }
 
+/*-- Containers --*/
+
+body {
+  background: #A8D4FF;
+}
+
+.wrapper {
+  margin: 0 30px;
+  background: #E4F2FF;
+  padding: 10px 25px 25px 25px;
+}
+
+.row {
+  margin: 0;
+}
+
+.row .row div {
+  padding: 0;
+}
+
+footer {
+  margin: 5px 30px;
+  float: right;
+}
+
+/* Links and Buttons */
+
+nav a {
+  display: inline-block;
+  text-align: center;
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px 0;
+  background: #648CB2;
+  color: white;
+}
+
+nav a:hover {
+  text-decoration: none;
+  background: #05607A;
+}
+
+a h3 {
+  margin: 10px;
+}
+
+.wrapper a {
+  margin-bottom: 10px;
+  display: inline-block;
+  color: black;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+  color: white;
+  background: #648CB2;
+  transition: background 0.65s, color 0.65s;
+}
+
+a.button {
+  color: white;
+  padding: 5px;
+  background: #648CB2;
+  border-radius: 5px;
+  border: 1px solid #666;
+}
+
+a.button:hover {
+  text-decoration: none;
+  background: #05607A;
+  border-color: black;
+}
+
+.button  {
+  display: inline-block;
+  padding-right: 20px;
+}
+
+.form-button {
+  color: white;
+  padding: 5px;
+  background: #648CB2;
+  border-radius: 5px;
+  border: 1px solid #666;
+}
+
+.form-button:hover {
+  background: #05607A;
+  border-color: black;
+  cursor: pointer;
+  transition: background 0.65s, color 0.65s;
+}
+
+/* Custom Classes */
+
+.update {
+  width: 100%;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.course {
+  height: 30px;
+}
+
+.homepage {
+  width: 100%;
+}
+
+.list {
+  width: 100%;
+}
+
+.progress {
+  vertical-align: middle;
+  margin-bottom: 10px;
+}
+
+.logout {
+  clear: both;
+  float: left;
+}
+
+.head {
+  margin-top: 25px;
+}
+
 .hours-of {
   text-align: center;
 }
@@ -217,21 +242,10 @@ input + label {
   padding: 0 15px;
 }
 
-.flash {
-  text-align: center;
-  margin-top: 20px;
-}
-
-p.good {
-  color: #159448;
-  background: #6BEB9E;
-}
-
-p.bad {
-  color: #B24640;
-  background: #FFE3E2;
-}
-
 .title {
   font-weight: bold;
+}
+
+div p.progress_header {
+  margin-top: 30px;
 }

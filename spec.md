@@ -14,7 +14,7 @@ Specs:
 - [X] Ensure that users can't modify content created by other users
       *-App redirects to index and provides flash message when this occurs*
 - [X] Include user input validations
-      *-Validations on required fields, and checks to make sure names are unique*
+      *-Validations on required fields, and checks for proper input types*
 - [X] Display validation failures to user with error message (example form URL e.g. /posts/new)
       *-Flashes provide error messages, and controllers properly redirect*
 - [X] Your README.md includes a short description, install instructions, a contributors guide and a link to the license for your code

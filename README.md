@@ -2,7 +2,7 @@
 A Sinatra web application for managing and tracking online courses.
 
 ## Getting Started
-Start by cloning this repo to your machine. Navigate into your local directory and execute:
+Start by cloning this repo to your machine. Navigate into your local repo and execute:
 
     $ bundle install
 
@@ -14,7 +14,7 @@ This will start up a local server. From here use your favorite browser and navig
 
 ## Usage
 
-Start by making an account, then add courses and/or programs you would like to track your progress in. Add hours of progress to your selected courses through the homepage tab, and create new courses, programs, platforms, or subjects through their respective tabs. Any item that you personally create you can edit or delete at any time, while any course or program you join can only be removed from tracking on your account.
+Start by making an account, then add courses and/or programs you would like to track your progress in. Add hours of progress to your selected courses through the homepage tab, and it is also possible to create new courses, programs, platforms, or subjects through their respective tabs. Any item that you personally create is available to edit or delete at any time, while any course or program you join can only be removed from tracking on your account.
 
 ## Contributing
 

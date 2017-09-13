@@ -1,5 +1,4 @@
-user1 = User.create(username: "TylerB", password: "12345", email: "tb@somesuch", goal: "become a fullstack dev")
-user2 = User.create(username: "JonT", password: "dany!", email: "kingindanorf@winterfell.net", goal: "know something")
+user1 = User.create(username: "TylerB", password: "12345", email: "tb@somesuch")
 user3 = User.create(username: "test", password: "12345", email: "test@test.test")
 
 platform1 = Platform.new(name: "Flatiron School", description: "Coding Bootcamp", creator_id: user1.id)

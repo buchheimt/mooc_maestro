@@ -17,10 +17,12 @@ class User < ActiveRecord::Base
   end
 
   def program_progress_percentage(program)
-    "#{(get_program_progress(program) / program.length * 100).round}%" if program.length
+    length = program.length
+    "#{(get_program_progress(program) / length * 100).round}%" if length
   end
 
   def program_progress_formatted(program)
-    "#{get_program_progress(program).round} / #{program.length.round}" if program.length
+    length = program.length
+    "#{get_program_progress(program).round} / #{length.round}" if length
   end
 end

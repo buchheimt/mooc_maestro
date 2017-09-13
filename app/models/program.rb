@@ -10,6 +10,7 @@ class Program < ActiveRecord::Base
   end
 
   def length
+    courses = self.courses
     return nil if courses.any? {|c| c.length_in_hours.nil?} || courses.empty?
     courses.inject(0) {|sum, c| sum += c.length_in_hours}
   end
