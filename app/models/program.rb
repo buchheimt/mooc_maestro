@@ -5,6 +5,10 @@ class Program < ActiveRecord::Base
   belongs_to :platform
   has_many :subjects, through: :courses
 
+  def if_assigned
+    self unless name == "Individual Courses"
+  end
+
   def slug
     name.downcase.split.join("-")
   end

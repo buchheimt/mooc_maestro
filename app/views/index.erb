@@ -2,11 +2,10 @@
   <div class="col-sm-4">
     <h2><%= @name.capitalize %> Index</h2>
   </div>
-  <div class="head button col-sm-3">
-    <a href="/<%= @name %>s/new">Create New <%= @name.capitalize %></a>
+  <div class="col-sm-3">
+    <a class="head button" href="/<%= @name %>s/new">Create New <%= @name.capitalize %></a>
   </div>
 </div>
-
 
 <% @topics.each do |topic| %>
   <div class="row">

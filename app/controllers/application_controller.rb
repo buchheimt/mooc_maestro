@@ -45,7 +45,7 @@ class ApplicationController < Sinatra::Base
     end
 
     def valid_number(string)
-      !!string.match(/\A-?\d+\z/) || string.empty?
+      !!string.match(/\A-?\d+\.?\d+?\z/) || string.empty?
     end
 
     def valid_password(password)

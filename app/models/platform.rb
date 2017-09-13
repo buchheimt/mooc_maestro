@@ -5,6 +5,10 @@ class Platform < ActiveRecord::Base
   has_many :users, through: :courses
   has_many :subjects, through: :courses
 
+  def if_assigned
+    self unless name == "Unassigned"
+  end
+
   def slug
     name.downcase.split.join("-")
   end

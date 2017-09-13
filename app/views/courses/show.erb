@@ -1,76 +1,115 @@
 <div class="row">
-  <h2 class="col-sm-8"><%= @course.name %></h2>
+  <div class="col-sm-8">
+    <h2><%= @course.name %></h2>
+  </div>
 
   <% if user_created?(@course)  %>
-    <div class="head button col-sm-2"><a href="/courses/<%= @course.slug %>/edit">Edit As Creator</a></div>
+    <div class="col-sm-2">
+      <a class='head button' href="/courses/<%= @course.slug %>/edit">Edit As Creator</a>
+    </div>
   <% end %>
 
   <% if current_user.courses.include?(@course) %>
-    <div class="head button col-sm-2"><a href="/courses/<%= @course.slug %>/leave">Leave Course</a></div>
+    <div class="col-sm-2">
+      <a class="head button" href="/courses/<%= @course.slug %>/leave">Leave Course</a>
+    </div>
   <% else %>
-    <div class="head button col-sm-2"><a href="/courses/<%= @course.slug %>/join">Join Course</a></div>
+    <div class="col-sm-2">
+      <a class="head button" href="/courses/<%= @course.slug %>/join">Join Course</a>
+    </div>
   <% end %>
 </div>
 
 <% if @course.description %>
   <div class="row">
-    <p class="col-sm-2"><strong>Description:</strong></p>
-    <p class="col-sm-10"><%= @course.description %></p>
+    <div class="col-sm-2">
+      <p class="title">Description:</p>
+    </div>
+    <div class="col-sm-10">
+      <p><%= @course.description %></p>
+    </div>
   </div>
 <% end %>
 
-<% if @course.length_in_hours && @course.length_in_hours != 0 %>
+<% if @length %>
   <div class="row">
-    <p class="col-sm-2"><strong>Course Length:</strong></p>
-    <p class="col-sm-10"><%= @course.length_in_hours.round %> hours</p>
+    <div class="col-sm-2">
+      <p class="title">Course Length:</p>
+    </div>
+    <div class="col-sm-10">
+      <p><%= @length.round %> hours</p>
+    </div>
   </div>
 <% end %>
 
-<% if @course.program.name != "Individual Courses" %>
+<% if @program %>
   <div class="row">
-    <p class="col-sm-2"><strong>Program: </strong></p>
-    <p class="col-sm-10"><a href="/programs/<%= @course.program.slug %>"><%= @course.program.name %></a></p>
+    <div class="col-sm-2">
+      <p class="title">Program:</p>
+    </div>
+    <div class="col-sm-10">
+      <a href="/programs/<%= @program.slug %>"><%= @program.name %></a>
+    </div>
   </div>
 <% end %>
 
-<% if @course.platform.name!= "Unassigned" %>
+<% if @platform %>
   <div class="row">
-    <p class="col-sm-2"><strong>Platform: </strong></p>
-    <p class="col-sm-10"><a href="/platforms/<%= @course.platform.slug %>"><%= @course.platform.name %></a></p>
+    <div class="col-sm-2">
+      <p class="title">Platform:</p>
+    </div>
+    <div class="col-sm-10">
+      <a href="/platforms/<%= @platform.slug %>"><%= @platform.name %></a>
+    </div>
   </div>
 <% end %>
 
-<% unless @course.subjects.empty? %>
-<div class="row">
-  <p class="col-sm-2"><strong>Subjects: </strong></p>
-  <div class="col-sm-10">
-    <% @course.subjects.each do |subject| %>
-      <span><a href="/subjects/<%= subject.slug %>"><%= subject.name %></a></span>
-      <span><%= "| " unless subject == @course.subjects.last %></span>
-    <% end %>
+<% unless @subjects.empty? %>
+  <div class="row">
+    <div class="col-sm-2">
+      <p class="title">Subjects:</p>
+    </div>
+    <div class="col-sm-10">
+      <% @course.subjects.each do |subject| %>
+        <span><a href="/subjects/<%= subject.slug %>"><%= subject.name %></a></span>
+        <span><%= "| " unless subject == @subjects.last %></span>
+      <% end %>
+    </div>
   </div>
-</div>
 <% end %>
 
-<% if @user.courses.include?(@course) %>
+<% if @user_course %>
   <div class="row">
-    <h2 class="col-sm-2">My Info</h2>
+    <div class="col-sm-3">
+      <h3>My Info</h3>
+    </div>
   </div>
-
   <div class="row">
-    <p class="col-sm-2"><strong>Start Date:</strong> </p>
-    <p class="col-sm-10"><%= @user_course.start_date.strftime("%F") %></p>
+    <div class="col-sm-2">
+      <p class="title">Start Date:</p>
+    </div>
+    <div class="col-sm-10">
+      <p><%= @user_course.start_date.strftime("%F") %></p>
+    </div>
   </div>
   <% unless @user_course.end_date.nil? %>
     <div class="row">
-      <p class="col-sm-2"><strong>End Date:</strong> </p>
-      <p class="col-sm-10"><%= @user_course.end_date.strftime("%F") %></p>
+      <div class="col-sm-2">
+        <p class="title">End Date:</p>
+      </div>
+      <div class="col-sm-10">
+        <p><%= @user_course.end_date.strftime("%F") %></p>
+      </div>
     </div>
   <% end %>
-  <% unless @course.length_in_hours.nil? || @course.length_in_hours == 0 %>
+  <% if @length %>
     <div class="row">
-      <p class="col-sm-2"><strong>Progress: </strong> </p>
-      <p class="col-sm-10"><%= @user_course.get_progress_percent %>%</p>
+      <div class="col-sm-2">
+        <p class="title">Progress:</p>
+      </div>
+      <div class="col-sm-10">
+        <p><%= @user_course.get_progress_percent %>%</p>
+      </div>
     </div>
   <% end %>
 <% end %>

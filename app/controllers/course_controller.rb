@@ -145,6 +145,10 @@ class CourseController < ApplicationController
     if @course && logged_in?
       @user = current_user
       @user_course = UserCourse.find_on_join(@user, @course)
+      @length = @course.get_length
+      @program = @course.program.if_assigned
+      @platform = @course.platform.if_assigned
+      @subjects = @course.subjects
       erb :'courses/show'
     else
       flash[:bad] = "Course not found"

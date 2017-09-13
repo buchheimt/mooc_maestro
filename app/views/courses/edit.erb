@@ -1,53 +1,76 @@
 <div class="row">
-  <h2 class="col-sm-8">Edit <%= @course.name %></h2>
-  <div class="head button col-sm-2"><a href="/courses/<%= @course.slug %>/delete">Delete Course</a></div>
+  <div class="col-sm-8">
+    <h2>Edit <%= @course.name %></h2>
+  </div>
+  <div class="col-sm-2">
+    <a class="head button" href="/courses/<%= @course.slug %>/delete">Delete Course</a>
+  </div>
 </div>
 
 <form action="/courses/<%= @course.slug %>" method="POST">
   <input type="hidden" name="_method" value="PATCH" id="hidden">
-  <div class="row">
-    <label class="col-sm-2" for="name">*Name: </label>
-    <input class="col-sm-4" type="text" name="course[name]" id="name" value="<%= @course.name %>" required>
-  </div>
 
   <div class="row">
-    <label class="col-sm-2" for="description">Description: </label>
-    <input class="col-sm-4" type="text" name="course[description]" id="description" value="<%= @course.description %>">
-  </div>
-
-  <div class="row">
-    <label class="col-sm-2" for="length_in_hours">Course Length: </label>
-    <input class="col-sm-1" type="text" name="course[length_in_hours]" id="length_in_hours" value="<%= @course.length_in_hours %>">
-    <p class="col-sm-1">Hours</p>
-  </div>
-
-  <div class="row">
-    <h4 class="col-sm-3">Program: </h4>
-  </div>
-  <div class="row">
-    <div class="col-sm-12">
-    <% @programs.each do |program| %>
-      <input type="radio" name="course[program_id]" value="<%= program.id %>" id="<%= program.name %>" <%= 'checked' if @course.program == program %>>
-        <%= program.name %>
-      </input>
-    <% end %>
+    <div class="col-sm-2">
+      <label for="name">*Name:</label>
     </div>
+    <div class="col-sm-5">
+      <input type="text" name="course[name]" id="name" value="<%= @course.name %>" required>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-2">
+      <label for="description">Description:</label>
+    </div>
+    <div class="col-sm-5">
+      <input type="text" name="course[description]" id="description" value="<%= @course.description %>">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-2">
+      <label for="length_in_hours">Course Length:</label>
+    </div>
+    <div class="col-sm-1">
+      <input type="text" name="course[length_in_hours]" id="length_in_hours" value="<%= @course.length_in_hours %>">
+    </div>
+    <div class="col-sm-1">
+      <p>hours</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-3">
+      <h4>Program:</h4>
+    </div>
+  </div>
+  <div class="row">
+    <% @programs.each do |program| %>
+      <div class="col-sm-4">
+        <input type="radio" name="course[program_id]" value="<%= program.id %>" id="<%= program.name %>" <%= 'checked' if @course.program == program %>>
+        <label for="<%= program.name %>"><%= program.name %></label>
+      </div>
+    <% end %>
   </div><br>
 
-
   <div class="row">
-    <h4 class="col-sm-3">Subjects: </h4>
-  </div>
-  <div class="row">
-    <div class="col-sm-12">
-      <% @subjects.each do |subject| %>
-        <input type="checkbox" name="course[subject_ids][]" value="<%= subject.id %>" id="<%= subject.name %>" <%= 'checked' if @course.subjects.include?(subject) %>>
-          <%= subject.name %>
-        </input>
-      <% end %><br><br>
+    <div class="col-sm-3">
+      <h4>Subjects:</h4>
     </div>
   </div>
   <div class="row">
-    <input class="form-button col-sm-2 col-sm-offset-5" type="submit" name="submit" value="Edit Course">
+    <% @subjects.each do |subject| %>
+      <div class="col-sm-3">
+        <input type="checkbox" name="course[subject_ids][]" value="<%= subject.id %>" id="<%= subject.name %>" <%= 'checked' if @course.subjects.include?(subject) %>>
+        <label for="<%= subject.name %>"><%= subject.name %></label>
+      </div>
+    <% end %>
+  </div><br><br>
+
+  <div class="row">
+    <div class="col-sm-2 col-sm-offset-5">
+      <input class="form-button" type="submit" name="submit" value="Edit Course">
+    </div>
   </div>
 </form>

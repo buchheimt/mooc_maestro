@@ -1,55 +1,82 @@
 <div class="row">
-  <h2 class="col-sm-12">Add a New Course</h2>
+  <div class="col-sm-12">
+    <h2>Add a New Course</h2>
+  </div>
 </div>
 
 <form action="/courses" method="POST">
+
   <div class="row">
-    <label class="col-sm-2" for="name">*Name: </label>
-    <input class="col-sm-4" type="text" name="course[name]" id="name" required>
+    <div class="col-sm-2">
+      <label for="name">*Name:</label>
+    </div>
+    <div class="col-sm-5">
+      <input type="text" name="course[name]" id="name" required>
+    </div>
   </div>
 
   <div class="row">
-    <label class="col-sm-2" for="description">Description: </label>
-    <input class="col-sm-4" type="text" name="course[description]" id="description">
+    <div class="col-sm-2">
+      <label for="description">Description:</label>
+    </div>
+    <div class="col-sm-5">
+      <input type="text" name="course[description]" id="description">
+    </div>
   </div>
 
   <div class="row">
-    <label class="col-sm-2" for="length_in_hours">Course Length: </label>
-    <input class="col-sm-1" type="text" name="course[length_in_hours]" id="length_in_hours">
-    <p class="col-sm-1">hours</p>
+    <div class="col-sm-2">
+      <label for="length_in_hours">Course Length:</label>
+    </div>
+    <div class="col-sm-1">
+      <input type="text" name="course[length_in_hours]" id="length_in_hours">
+    </div>
+    <div class="col-sm-1">
+      <p>hours</p>
+    </div>
   </div>
 
   <div class="row">
-    <h4 class="col-sm-3">Program: </h4>
+    <div class="col-sm-3">
+      <h4>Program:</h4>
+    </div>
   </div>
   <div class="row">
-    <div class="col-sm-12">
-      <% @programs.each do |program| %>
+    <% @programs.each do |program| %>
+      <div class="col-sm-4">
         <input type="radio" name="program_id" value="<%= program.id %>" id="<%= program.name %>">
-          <%= program.name %>
-        </input>
-      <% end %><br>
-      <input type="radio" name="program_id" value="" id=""></input>
-      <span>New Program Name: </span>
+        <label for="<%= program.name %>"><%= program.name %></label>
+      </div>
+    <% end %>
+    <div class="col-sm-4">
+      <input type="radio" name="program_id" value="" id="">
+      <label for="program_name">New Program Name:</label>
       <input type="text" name="program_name" id="program_name">
     </div>
-  </div>
+  </div><br>
 
   <div class="row">
-    <h4 class="col-sm-3">Subjects: </h4>
-  </div>
-  <div class="row">
-    <div class="col-sm-12">
-      <% @subjects.each do |subject| %>
-        <input type="checkbox" name="course[subject_ids][]" value="<%= subject.id %>" id="<%= subject.name %>">
-          <%= subject.name %>
-        </input>
-      <% end %><br>
-      <span>New Subject Name: </span>
-      <input type="text" name="subject_name" id="subject_name"><br><br>
+    <div class="col-sm-3">
+      <h4>Subjects:</h4>
     </div>
   </div>
   <div class="row">
-    <input class="form-button col-sm-2 col-sm-offset-5" type="submit" name="submit" value="Create Course">
+    <% @subjects.each do |subject| %>
+      <div class="col-sm-3">
+        <input type="checkbox" name="course[subject_ids][]" value="<%= subject.id %>" id="<%= subject.name %>">
+        <label for="<%= subject.name %>"><%= subject.name %></label>
+      </div>
+    <% end %>
+    <div class="col-sm-3">
+      <input type="checkbox" name="subject_id" value="" id="">
+      <label for="subject_name">New Subject Name:</label>
+      <input type="text" name="subject_name" id="subject_name">
+    </div>
+  </div><br><br>
+
+  <div class="row">
+    <div class="col-sm-2 col-sm-offset-5">
+      <input class="form-button" type="submit" name="submit" value="Create Course">
+    </div>
   </div>
 </form>

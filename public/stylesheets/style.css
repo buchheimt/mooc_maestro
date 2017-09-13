@@ -1,3 +1,7 @@
+h4 {
+  font-weight: bold;
+}
+
 h2  {
   margin-bottom: 30px;
 }
@@ -7,6 +11,7 @@ h1  {
 }
 
 label {
+  display: inline;
   text-align: left
   padding: 0;
 }
@@ -27,11 +32,14 @@ a:hover {
   color: white;
   background: #648CB2;
   transition: background 0.65s, color 0.65s;
-
 }
 
 .row {
   margin: 0;
+}
+
+.row .row div {
+  padding: 0;
 }
 
 nav .row {
@@ -108,7 +116,11 @@ footer {
   padding-right: 20px;
 }
 
-.button a {
+.list {
+  width: 100%;
+}
+
+a.button {
   color: white;
   padding: 5px;
   background: #648CB2;
@@ -116,7 +128,7 @@ footer {
   border: 1px solid #666;
 }
 
-.button a:hover {
+a.button:hover {
   text-decoration: none;
   background: #05607A;
   border-color: black;
@@ -132,11 +144,6 @@ footer {
   float: left;
 }
 
-input {
-  border-radius: 5px;
-  margin-bottom: 10px;
-}
-
 .head {
   margin-top: 25px;
 }
@@ -145,14 +152,27 @@ div p.progress_header {
   margin-top: 30px;
 }
 
+input {
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+input[type="text"] {
+  width: 100%;
+}
+
 input[type="checkbox"] {
-  display: inline-block;
-  margin: 0 5px;
+  display: inline;
+  margin: 5px;
 }
 
 input[type="radio"] {
-  display: inline-block;
-  margin: 0 5px;
+  display: inline;
+  margin: 5px;
+}
+
+input + label {
+  font-weight: normal;
 }
 
 .hours_of {
@@ -172,4 +192,8 @@ p.good {
 p.bad {
   color: #B24640;
   background: #FFE3E2;
+}
+
+.title {
+  font-weight: bold;
 }

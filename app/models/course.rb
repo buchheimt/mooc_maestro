@@ -14,4 +14,8 @@ class Course < ActiveRecord::Base
   def self.find_by_slug(slug)
     self.all.detect {|c| c.slug == slug}
   end
+
+  def get_length
+    length_in_hours unless length_in_hours.nil? || length_in_hours <= 0
+  end
 end
