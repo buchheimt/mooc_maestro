@@ -1,63 +1,92 @@
 <div class="row">
-  <h2 class="col-sm-12">Add a New Program</h2>
+  <div class="col-sm-12">
+    <h2>Add a New Program</h2>
+  </div>
 </div>
 
 <form action="/programs" method="POST">
+
   <div class="row">
-    <label class="col-sm-2" for="name">*Name: </label>
-    <input class="col-sm-4" type="text" name="program[name]" id="name" required>
+    <div class="col-sm-2">
+      <label for="name">*Name:</label>
+    </div>
+    <div class="col-sm-4">
+      <input type="text" name="program[name]" id="name" required>
+    </div>
   </div>
 
   <div class="row">
-    <label class="col-sm-2" for="description">Description: </label>
-    <input class="col-sm-4" type="text" name="program[description]" id="description">
+    <div class="col-sm-2">
+      <label for="description">Description:</label>
+    </div>
+    <div class="col-sm-4">
+      <input type="text" name="program[description]" id="description">
+    </div>
   </div>
 
   <div class="row">
-    <label class="col-sm-2" for="certification">Certification: </label>
-    <input class="col-sm-2" type="text" name="program[certification]" id="certification">
+    <div class="col-sm-2">
+      <label for="certification">Certification:</label>
+    </div>
+    <div class="col-sm-2">
+      <input type="text" name="program[certification]" id="certification">
+    </div>
   </div>
 
   <div class="row">
-    <label class="col-sm-2" for="cost">Cost: </label>
-    <input class="col-sm-2" type="text" name="program[cost]" id="cost">
+    <div class="col-sm-2">
+      <label for="cost">Cost:</label>
+    </div>
+    <div class="col-sm-2">
+      <input type="text" name="program[cost]" id="cost">
+    </div>
   </div>
 
   <div class="row">
-    <label class="col-sm-2" for="affiliation">Affiliation: </label>
-    <input class="col-sm-2" type="text" name="program[affiliation]" id="affiliation">
+    <div class="col-sm-2">
+      <label for="affiliation">Affiliation:</label>
+    </div>
+    <div class="col-sm-2">
+      <input type="text" name="program[affiliation]" id="affiliation">
+    </div>
   </div>
 
   <div class="row">
-    <h4 class="col-sm-3">Platform: </h4>
+    <div class="col-sm-3">
+      <h4>Platform:</h4>
+    </div>
   </div>
   <div class="row">
-    <div class="col-sm-12">
-      <% @platforms.each do |platform| %>
+    <% @platforms.each do |platform| %>
+      <div class="col-sm-4">
         <input type="radio" name="platform_id" value="<%= platform.id %>" id="<%= platform.name %>">
-          <%= platform.name %>
-        </input>
-      <% end %><br>
+        <label for="<%= platform.name %>"><%= platform.name %></label>
+      </div>
+    <% end %><br>
+    <div class="col-sm-4">
       <input type="radio" name="platform_id" value="" id="">
-        Add New Platform
-      </input>
+      <label for=platform_name"">New Platform Name</label>
       <input type="text" name="platform_name" id="platform_name">
     </div>
-  </div>
+  </div><br>
 
   <div class="row">
-    <h4 class="col-sm-3">Courses: </h4>
-  </div>
-  <div class="row">
-    <div class="col-sm-12">
-      <% @courses.each do |course| %>
-        <input type="checkbox" name="program[course_ids][]" value="<%= course.id %>" id="<%= course.name %>">
-          <%= course.name %>
-        </input>
-      <% end %><br><br>
+    <div class="col-sm-3">
+      <h4>Courses:</h4>
     </div>
   </div>
   <div class="row">
-    <input class="form-button col-sm-2 col-sm-offset-5" type="submit" name="submit" value="Create Program">
+    <% @courses.each do |course| %>
+      <div class="col-sm-4">
+        <input type="checkbox" name="program[course_ids][]" value="<%= course.id %>" id="<%= course.name %>">
+        <label for="<%= course.name %>"><%= course.name %></label>
+      </div>
+    <% end %>
+  </div><br><br>
+
+  <div class="row">
+    <div class="col-sm-2 col-sm-offset-5">
+      <input class="form-button" type="submit" name="submit" value="Create Program">
+    </div>
   </div>
 </form>

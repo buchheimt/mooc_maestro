@@ -9,7 +9,7 @@
     </div>
   <% end %>
 
-  <% if current_user.courses.include?(@course) %>
+  <% if @user.courses.include?(@course) %>
     <div class="col-sm-2">
       <a class="head button" href="/courses/<%= @course.slug %>/leave">Leave Course</a>
     </div>

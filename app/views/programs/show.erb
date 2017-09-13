@@ -1,82 +1,116 @@
 <div class="row">
-  <h2 class="col-sm-6"><%= @program.name %></h2>
+  <div class="col-sm-6">
+    <h2><%= @program.name %></h2>
+  </div>
 
   <% if user_created?(@program)  %>
-    <div class="head button col-sm-2"><a href="/programs/<%= @program.slug %>/edit">Edit As Creator</a></div>
+  <div class="col-sm-2">
+    <a class="head button" href="/programs/<%= @program.slug %>/edit">Edit As Creator</a>
+  </div>
   <% end %>
 
   <% if @program.courses.any? {|c| @user.courses.include?(c)} %>
-    <div class="head button col-sm-2"><a href="/programs/<%= @program.slug %>/leave">Leave All Joined</a></div>
+    <div class="col-sm-2">
+      <a class="head button" href="/programs/<%= @program.slug %>/leave">Leave All Joined</a>
+    </div>
   <% end %>
   <% unless @program.courses.all? {|c| @user.courses.include?(c)} %>
-    <div class="head button col-sm-2"><a href="/programs/<%= @program.slug %>/join">Join All Open</a></div>
+    <div class="col-sm-2">
+      <a class="head button" href="/programs/<%= @program.slug %>/join">Join All Open</a>
+    </div>
   <% end %>
 </div>
 
 <% if @program.description %>
   <div class="row">
-    <p class="col-sm-2"><strong>Description:</strong></p>
-    <p class="col-sm-10"><%= @program.description %></p>
+    <div class="col-sm-2">
+      <p class="title">Description:</p>
+    </div>
+    <div class="col-sm-10">
+      <p><%= @program.description %></p>
+    </div>
   </div>
 <% end %>
 
-<% if program_length = @program.length %>
+<% if @program_length %>
   <div class="row">
-    <p class="col-sm-2"><strong>Program Length: </strong></p>
-    <p class="col-sm-10"><%= program_length.round %> hours</p>
+    <div class="col-sm-2">
+      <p class="title">Program Length:</p>
+    </div>
+    <div class="col-sm-10">
+      <p><%= @program_length.round %> hours</p>
+    </div>
   </div>
 <% end %>
 
 <% if @program.certification %>
   <div class="row">
-    <p class="col-sm-2"><strong>Certification:</strong></p>
-    <p class="col-sm-10"><%= @program.certification %></p>
+    <div class="col-sm-2">
+      <p class="title">Certification:</p>
+    </div>
+    <div class="col-sm-10">
+      <p><%= @program.certification %></p>
+    </div>
   </div>
 <% end %>
 
 <% if @program.cost %>
   <div class="row">
-    <p class="col-sm-2"><strong>Cost:</strong></p>
-    <p class="col-sm-10">$<%= @program.cost %></p>
+    <div class="col-sm-2">
+      <p class="title">Cost:</p>
+    </div>
+    <div class="col-sm-10">
+      <p>$<%= @program.cost %></p>
+    </div>
   </div>
 <% end %>
 
 <% if @program.affiliation %>
   <div class="row">
-    <p class="col-sm-2"><strong>Affiliation:</strong></p>
-    <p class="col-sm-10"><%= @program.affiliation %></p>
-  </div>
-<% end %>
-
-<% unless @program.courses.empty? %>
-  <div class="row">
-    <p class="col-sm-2"><strong>Courses: </strong></p>
-  </div>
-  <ul>
-    <% @program.courses.each do |course| %>
-      <div class="row">
-        <li class="col-sm-offset-2 col-sm-10">
-          <a href="/courses/<%= course.slug %>"><%= course.name %></a>
-        </li>
-      </div>
-    <% end %>
-  </ul>
-<% end %>
-
-<% if @program.platform.name != "Unassigned" %>
-  <div class="row">
-    <p class="col-sm-2"><strong>Platform: </strong></p>
-    <p class="col-sm-10"><a href="/platforms/<%= @program.platform.slug %>"><%= @program.platform.name %></a></p>
-  </div>
-<% end %>
-
-<% unless @program.subjects.empty? %>
-  <div class="row">
-    <p class="col-sm-2"><strong>Subjects: </strong></p>
+    <div class="col-sm-2">
+      <p class="title">Affiliation:</p>
+    </div>
     <div class="col-sm-10">
-      <% @program.subjects.uniq.each do |subject| %>
+      <p><%= @program.affiliation %></p>
+    </div>
+  </div>
+<% end %>
+
+<% unless @courses.empty? %>
+  <div class="row">
+    <div class="col-sm-2">
+      <p class="title">Courses:</p>
+    </div>
+  </div>
+  <% @program.courses.each do |course| %>
+    <div class="row">
+      <div class="col-sm-offset-2 col-sm-10">
+        <li><a href="/courses/<%= course.slug %>"><%= course.name %></a></li>
+      </div>
+    </div>
+  <% end %><br>
+<% end %>
+
+<% if @program %>
+  <div class="row">
+    <div class="col-sm-2">
+      <p class="title">Platform:</p>
+    </div>
+    <div class="col-sm-10">
+      <a href="/platforms/<%= @program.platform.slug %>"><%= @program.platform.name %></a>
+    </div>
+  </div>
+<% end %>
+
+<% unless @subjects.empty? %>
+  <div class="row">
+    <div class="col-sm-2">
+      <p class="title">Subjects:</p>
+    </div>
+    <div class="col-sm-10">
+      <% @subjects.each do |subject| %>
         <span><a href="/subjects/<%= subject.slug %>"><%= subject.name %></a></span>
-        <span><%= "| " unless subject == @program.subjects.last %></span>
+        <span><%= "| " unless subject == @subjects.last %></span>
       <% end %>
     </div>
   </div>
@@ -84,22 +118,38 @@
 
 <% if @user.programs.include?(@program) %>
   <div class="row">
-    <h2 class="col-sm-3">My Info</h2>
+    <div class="col-sm-3">
+      <h3>My Info</h3>
+    </div>
   </div>
-  <% if first_course = UserCourse.find_on_join(@user, @program.courses.first) %>
+  <% if @first_course %>
     <div class="row">
-      <p class="col-sm-2"><strong>Start Date:</strong> </p>
-      <p class="col-sm-10"><%= first_course.start_date.strftime("%F") %></p>
+      <div class="col-sm-2">
+        <p class="title">Start Date:</p>
+      </div>
+      <div class="col-sm-10">
+        <p><%= @first_course.strftime("%F") %></p>
+      </div>
     </div>
   <% end %>
-  <% if last_finish = UserCourse.find_on_join(@user, @program.courses.last).end_date %>
+  <% if @last_course %>
     <div class="row">
-      <p class="col-sm-2"><strong>End Date:</strong> </p>
-      <p class="col-sm-10"><%= last_finish.strftime("%F") %></p>
+      <div class="col-sm-2">
+        <p class="title">End Date:</p>
+      </div>
+      <div class="col-sm-10">
+        <p><%= @last_course.strftime("%F") %></p>
+      </div>
     </div>
   <% end %>
-  <div class="row">
-    <p class="col-sm-2"><strong>Progress: </strong></p>
-    <p class="col-sm-10"><%= @user.program_progress_percentage(@program) %></p>
-  </div>
+  <% if @program_progress %>
+    <div class="row">
+      <div class="col-sm-2">
+        <p class="title">Progress:</p>
+      </div>
+      <div class="col-sm-10">
+        <p><%= @program_progress %></p>
+      </div>
+    </div>
+  <% end %>
 <% end %>

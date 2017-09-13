@@ -146,6 +146,13 @@ class ProgramController < ApplicationController
     @program = Program.find_by_slug(params[:slug])
     if @program && logged_in?
       @user = current_user
+      @program_length = @program.length
+      @courses = @program.courses
+      @platform = @program.platform.if_assigned
+      @subjects = @program.subjects.uniq
+      @first_course = UserCourse.find_on_join(@user, @courses.first).start_date
+      @last_course = UserCourse.find_on_join(@user, @courses.last).end_date
+      @program_progress = @user.program_progress_percentage(@program)
       erb :'programs/show'
     else
       flash[:bad] = "Program not found"
