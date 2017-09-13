@@ -1,35 +1,50 @@
 <div class="row">
-  <h2 class="col-sm-8">Edit <%= @platform.name %></h2>
-  <div class="head button col-sm-2"><a href="/platforms/<%= @platform.slug %>/delete">Delete Platform</a></div>
+  <div class="col-sm-8">
+    <h2>Edit <%= @platform.name %></h2>
+  </div>
+  <div class="col-sm-2">
+    <a class="head button" href="/platforms/<%= @platform.slug %>/delete">Delete Platform</a>
+  </div>
 </div>
 
 <form action="/platforms/<%= @platform.slug %>" method="POST">
   <input type="hidden" name="_method" value="PATCH" id="hidden">
+
   <div class="row">
-    <label class="col-sm-2" for="name">*Name: </label>
-    <input class="col-sm-4" type="text" name="platform[name]" id="name" value="<%= @platform.name %>" required>
+    <div class="col-sm-2">
+      <label for="name">*Name:</label>
+    </div>
+    <div class="col-sm-4">
+      <input type="text" name="platform[name]" id="name" value="<%= @platform.name %>" required>
+    </div>
   </div>
 
   <div class="row">
-    <label class="col-sm-2" for="description">Description: </label>
-    <input class="col-sm-4" type="text" name="platform[description]" id="description" value="<%= @platform.description %>">
+    <div class="col-sm-2">
+      <label for="description">Description:</label>
+    </div>
+    <div class="col-sm-4">
+      <input type="text" name="platform[description]" id="description" value="<%= @platform.description %>">
+    </div>
   </div>
 
   <div class="row">
     <div class="col-sm-3">
-      <h4>Programs: </h4>
+      <h4>Programs:</h4>
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-12">
-      <% @programs.each do |program| %>
-        <input type="checkbox" name="platform[program_ids][]" value="<%= program.id %>" id="<%= program.name %>" <%= 'checked' if @platform.programs.include?(program) %>>
-          <%= program.name %>
-        </input>
-      <% end %><br><br>
+    <% @programs.each do |program| %>
+    <div class="col-sm-4">
+      <input type="checkbox" name="platform[program_ids][]" value="<%= program.id %>" id="<%= program.name %>" <%= 'checked' if @platform.programs.include?(program) %>>
+      <label for="<%= program.name %>"><%= program.name %></label>
     </div>
-  </div>
+    <% end %>
+  </div><br><br>
+
   <div class="row">
-    <input class="form-button col-sm-2 col-sm-offset-5" type="submit" name="submit" value="Edit Platform">
+    <div class="col-sm-2 col-sm-offset-5">
+      <input class="form-button" type="submit" name="submit" value="Edit Platform">
+    </div>
   </div>
 </form>

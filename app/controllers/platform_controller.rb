@@ -102,6 +102,8 @@ class PlatformController < ApplicationController
   get '/platforms/:slug' do
     @platform = Platform.find_by_slug(params[:slug])
     if @platform && logged_in?
+      @programs = name_sort(@platform.programs)
+      @subjects = name_sort(@platform.subjects.uniq)
       erb :'platforms/show'
     else
       flash[:bad] = "Program not found"

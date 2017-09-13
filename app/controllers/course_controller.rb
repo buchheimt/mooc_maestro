@@ -148,7 +148,7 @@ class CourseController < ApplicationController
       @length = @course.get_length
       @program = @course.program.if_assigned
       @platform = @course.platform.if_assigned
-      @subjects = @course.subjects
+      @subjects = name_sort(@course.subjects)
       erb :'courses/show'
     else
       flash[:bad] = "Course not found"

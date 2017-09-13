@@ -4,9 +4,9 @@
   </div>
 
   <% if user_created?(@program)  %>
-  <div class="col-sm-2">
-    <a class="head button" href="/programs/<%= @program.slug %>/edit">Edit As Creator</a>
-  </div>
+    <div class="col-sm-2">
+      <a class="head button" href="/programs/<%= @program.slug %>/edit">Edit As Creator</a>
+    </div>
   <% end %>
 
   <% if @program.courses.any? {|c| @user.courses.include?(c)} %>

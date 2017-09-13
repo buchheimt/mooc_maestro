@@ -1,33 +1,46 @@
 <div class="row">
-  <h2 class="col-sm-12">Add a New Platform</h2>
+  <div class="col-sm-12">
+    <h2>Add a New Platform</h2>
+  </div>
 </div>
 
 <form action="/platforms" method="POST">
+
   <div class="row">
-    <label class="col-sm-2" for="name">*Name: </label>
-    <input class="col-sm-4" type="text" name="platform[name]" id="name" required>
+    <div class="col-sm-2">
+      <label for="name">*Name:</label>
+    </div>
+    <div class="col-sm-4">
+      <input type="text" name="platform[name]" id="name" required>
+    </div>
   </div>
 
   <div class="row">
-    <label class="col-sm-2" for="description">Description: </label>
-    <input class="col-sm-4" type="text" name="platform[description]" id="description">
+    <div class="col-sm-2">
+      <label for="description">Description:</label>
+    </div>
+    <div class="col-sm-4">
+      <input type="text" name="platform[description]" id="description">
+    </div>
   </div>
 
   <div class="row">
     <div class="col-sm-3">
-      <h4>Programs: </h4>
+      <h4>Programs:</h4>
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-12">
-      <% @programs.each do |program| %>
+    <% @programs.each do |program| %>
+      <div class="col-sm-4">
         <input type="checkbox" name="platform[program_ids][]" value="<%= program.id %>" id="<%= program.name %>">
-          <%= program.name %>
-        </input>
-      <% end %><br><br>
-    </div>
-  </div>
+        <label for="<%= program.name %>"><%= program.name %></label>
+      </div>
+    <% end %>
+  </div><br><br>
+
   <div class="row">
-    <input class="form-button col-sm-2 col-sm-offset-5" type="submit" name="submit" value="Create Platform">
+    <div class="col-sm-2 col-sm-offset-5">
+      <input class="form-button" type="submit" name="submit" value="Create Platform">
+    </div>
   </div>
 </form>

@@ -147,9 +147,9 @@ class ProgramController < ApplicationController
     if @program && logged_in?
       @user = current_user
       @program_length = @program.length
-      @courses = @program.courses
+      @courses = name_sort(@program.courses)
       @platform = @program.platform.if_assigned
-      @subjects = @program.subjects.uniq
+      @subjects = name_sort(@program.subjects.uniq)
       @first_course = UserCourse.find_on_join(@user, @courses.first).start_date
       @last_course = UserCourse.find_on_join(@user, @courses.last).end_date
       @program_progress = @user.program_progress_percentage(@program)
