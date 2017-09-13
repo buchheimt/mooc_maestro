@@ -71,9 +71,6 @@ program3.courses.each {|c| UserCourse.establish(user1, c)}
 program4.courses.each {|c| UserCourse.establish(user1, c)}
 program5.courses.each {|c| UserCourse.establish(user1, c)}
 
-program1.courses.each {|c| UserCourse.establish(user2, c)}
-program2.courses.each {|c| UserCourse.establish(user2, c)}
-
 platform1.save
 platform2.save
 platform3.save
