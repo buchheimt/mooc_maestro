@@ -48,9 +48,15 @@ nav {
   background: #648CB2;
 }
 
-nav span {
-  text-align: center;
+nav .row div {
+  padding: 0;
+}
+
+nav p {
   display: inline-block;
+  text-align: center;
+  width: 100%;
+  margin: 0 auto;
   color: white;
   padding: 20px 0;
   background: #05607A;
@@ -59,6 +65,8 @@ nav span {
 nav a {
   display: inline-block;
   text-align: center;
+  width: 100%;
+  margin: 0 auto;
   padding: 20px 0;
   background: #648CB2;
   color: white;
