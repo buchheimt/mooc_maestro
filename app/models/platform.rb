@@ -1,5 +1,8 @@
 class Platform < ActiveRecord::Base
 
+  include Slugifiable::InstanceMethods
+  extend Slugifiable::ClassMethods
+
   has_many :programs
   has_many :courses, through: :programs
   has_many :users, through: :courses
@@ -7,14 +10,6 @@ class Platform < ActiveRecord::Base
 
   def if_assigned
     self unless name == "Unassigned"
-  end
-
-  def slug
-    name.downcase.split.join("-")
-  end
-
-  def self.find_by_slug(slug)
-    self.all.detect {|pl| pl.slug == slug}
   end
 
   def self.all_assigned
