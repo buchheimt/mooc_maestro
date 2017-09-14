@@ -11,18 +11,4 @@ class User < ActiveRecord::Base
     topic.creator_id = id
     topic.save
   end
-
-  def get_program_progress(program)
-    program.courses.inject(0) {|sum, c| sum += UserCourse.get_progress(self, c)}
-  end
-
-  def program_progress_percentage(program)
-    length = program.length
-    "#{(get_program_progress(program) / length * 100).round}%" if length
-  end
-
-  def program_progress_formatted(program)
-    length = program.length
-    "#{get_program_progress(program).round} / #{length.round}" if length
-  end
 end

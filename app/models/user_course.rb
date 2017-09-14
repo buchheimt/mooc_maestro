@@ -38,4 +38,18 @@ class UserCourse < ActiveRecord::Base
     user_course = self.find_on_join(user, course)
     user_course.nil? ? 0 : user_course.progress_in_hours
   end
+
+  def self.get_program_progress(user, program)
+    program.courses.inject(0) {|sum, c| sum += self.get_progress(user, c)}
+  end
+
+  def self.program_progress_percentage(user, program)
+    length = program.length
+    "#{(get_program_progress(user, program) / length * 100).round}%" if length
+  end
+
+  def self.program_progress_formatted(user, program)
+    length = program.length
+    "#{get_program_progress(user, program).round} / #{length.round}" if length
+  end
 end

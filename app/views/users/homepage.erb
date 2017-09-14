@@ -13,10 +13,10 @@
         <a class="homepage" href="/programs/<%= program.slug %>"><h4><%= program.name %></h4></a>
       </div>
       <div class="col-sm-2">
-        <p class="hours-of program title"><%= @user.program_progress_formatted(program) %></p>
+        <p class="hours-of program title"><%= UserCourse.program_progress_formatted(@user, program) %></p>
       </div>
       <div class="col-sm-1">
-        <p class="program title"><%= @user.program_progress_percentage(program) %></p>
+        <p class="program title"><%= UserCourse.program_progress_percentage(@user, program) %></p>
       </div>
     </div>
 

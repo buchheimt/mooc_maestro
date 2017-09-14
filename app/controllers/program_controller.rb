@@ -151,7 +151,7 @@ class ProgramController < ApplicationController
       @subjects = name_sort(@program.subjects.uniq)
       @first_course = UserCourse.find_on_join(@user, @courses.first) unless @courses.empty?
       @last_course = UserCourse.find_on_join(@user, @courses.last) unless @courses.empty?
-      @program_progress = @user.program_progress_percentage(@program)
+      @program_progress = UserCourse.program_progress_percentage(@user, @program)
       erb :'programs/show'
     else
       flash[:bad] = "Program not found"
